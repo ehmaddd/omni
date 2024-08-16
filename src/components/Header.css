@@ -1,0 +1,22 @@
+/* Styling for the header */
+.header {
+    background: linear-gradient(135deg, #3498db, #e8f0f2); /* Gradient background */
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Subtle shadow for depth */
+    border-bottom: 2px solid #3498db; /* Bottom border for separation */
+  }
+  
+  .header-title {
+    font-size: 3rem;
+    color: #ffffff; /* White text color */
+    font-weight: 700;
+    margin: 0;
+    transition: transform 0.3s ease, color 0.3s ease; /* Smooth transition for hover effect */
+  }
+  
+  .header-title:hover {
+    transform: scale(1.1); /* Slightly enlarge the title on hover */
+    color: #f0f0f0; /* Change text color on hover */
+  }
+  

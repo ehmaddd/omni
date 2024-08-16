@@ -1,0 +1,144 @@
+/* Ensure the html and body cover the full height of the viewport */
+html, body {
+  height: 100%;
+  margin: 0;
+  font-family: Arial, sans-serif; /* Ensure consistent font */
+}
+
+/* Main container to fill the height and center content horizontally */
+.calculator-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Center horizontally */
+  min-height: 100vh; /* Ensure it covers at least the viewport height */
+  padding: 20px;
+  box-sizing: border-box; /* Include padding in the height calculation */
+  justify-content: flex-start; /* Align items at the top */
+}
+
+/* Title Styling */
+.calculator-title {
+  font-size: 2.5rem;
+  color: #333;
+  margin-bottom: 20px;
+  font-weight: 700;
+}
+
+/* Main body of the calculator */
+.calculator-body {
+  background-color: #ffffff;
+  border-radius: 15px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+  padding: 30px;
+  width: 100%;
+  max-width: 420px;
+  text-align: center;
+}
+
+/* Input fields styling */
+.calculator-input {
+  width: calc(100% - 20px);
+  padding: 12px;
+  margin: 12px 0;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Container for operation buttons */
+.operation-buttons {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap; /* Allows buttons to wrap on smaller screens */
+  margin: 20px 0;
+}
+
+/* Radio button labels styling */
+.radio-label {
+  display: flex;
+  align-items: center;
+  margin: 5px 10px;
+  font-size: 1.1rem;
+  color: #555;
+}
+
+/* Button styling */
+.calculate-button {
+  background-color: #28a745; /* Green */
+  color: #fff;
+  border: none;
+  padding: 12px 24px;
+  font-size: 1.1rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.calculate-button:hover {
+  background-color: #218838; /* Darker green */
+  transform: scale(1.05);
+}
+
+/* Result box styling */
+.result-box {
+  background-color: #b3e0ff; /* Light sky blue */
+  color: #333;
+  border-radius: 12px;
+  padding: 20px;
+  margin-top: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+/* Interactive card styling (for quotes) */
+.interactive-card {
+  max-width: 700px;
+  background: #e8f0f2; /* Light green background to match calculator */
+  border-radius: 15px;
+  color: #333; /* Dark text color for contrast */
+  padding: 30px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  margin-top: 5vh;
+}
+
+/* Hover Effects for Interactive Card */
+.interactive-card:hover {
+  transform: scale(1.05) skew(-3deg, -3deg);
+  box-shadow: 0 20px 30px rgba(0, 0, 0, 0.3);
+}
+
+.interactive-card:before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0) 70%);
+  transform: rotate(45deg);
+}
+
+/* Quote Text Styling */
+.quote-text {
+  font-size: 1.7rem;
+  font-style: italic;
+  line-height: 1.5;
+  color: #333; /* Dark text color for better visibility */
+  max-height: 120px;
+  overflow: hidden; /* No scrollbar needed */
+}
+
+/* Footer Styling for Quotes */
+.blockquote-footer {
+  color: #555; /* Slightly lighter text for the author */
+  font-weight: bold;
+  font-size: 1.2rem;
+  position: absolute;
+  bottom: 15px;
+  right: 30px;
+}
