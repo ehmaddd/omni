@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
-import { setWeather, setError, addToHistory } from './redux/weatherSlice'; // Correctly import addToHistory
+import { setWeather, setError, addToHistory } from './redux/weatherSlice';
 import './Weather.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 

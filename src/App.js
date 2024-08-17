@@ -7,6 +7,8 @@ import Navbar from './components/Navbar';
 import Calculator from './components/Calculator';
 import Quote from './components/Quote';
 import Weather from './components/Weather';
+import FloatingSocialMenu from './components/FloatingSocialMenu';
+import './components/styles.css';
 
 function App() {
   return (
@@ -20,6 +22,7 @@ function App() {
           <Route path="/weather" element={<Weather />} />
         </Routes>
       </Router>
+      <FloatingSocialMenu />
     </>
   );
 }

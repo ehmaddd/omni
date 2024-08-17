@@ -1,0 +1,23 @@
+/* styles.css */
+.floating-social-media-menu {
+    position: fixed; /* Fix the menu position */
+    bottom: 20px; /* Adjust the distance from the bottom */
+    right: 20px; /* Adjust the distance from the right */
+    display: flex; /* Display icons in a row */
+    gap: 10px; /* Space between icons */
+    z-index: 1000; /* Ensure the menu stays above other content */
+  }
+  
+  .floating-social-media-menu a {
+    color: #fff; /* Set icon color */
+    font-size: 24px; /* Adjust icon size */
+    background-color: #333; /* Set background color */
+    padding: 10px; /* Add padding around icons */
+    border-radius: 50%; /* Make icons circular */
+    transition: background-color 0.3s; /* Smooth background color transition */
+  }
+  
+  .floating-social-media-menu a:hover {
+    background-color: #555; /* Change background color on hover */
+  }
+  
