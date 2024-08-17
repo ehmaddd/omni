@@ -7,6 +7,7 @@
   align-items: left;
   gap: 10px;
   z-index: 1000;
+  pointer-events: none; /* Prevent the menu from blocking interactions with components behind it */
 }
 
 .social-button {
@@ -20,9 +21,10 @@
   color: #fff;
   font-size: 24px;
   text-align: center;
-  transition: transform 0.3s; /* Only transform transition */
+  transition: transform 1s ease-in-out; /* Only transform transition */
   position: relative;
   overflow: hidden;
+  pointer-events: auto; /* Allow interaction with individual buttons */
 }
 
 .social-button:hover {
