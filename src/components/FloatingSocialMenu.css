@@ -7,6 +7,10 @@
   align-items: left;
   gap: 10px;
   z-index: 1000;
+  width: 3.5rem;
+  height: 17rem;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
   pointer-events: none; /* Prevent the menu from blocking interactions with components behind it */
 }
 

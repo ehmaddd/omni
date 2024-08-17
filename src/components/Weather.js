@@ -70,8 +70,8 @@ const Weather = () => {
           icon: fetchedWeather.current.condition.icon,
           text: fetchedWeather.current.condition.text,
           humidity: fetchedWeather.current.humidity,
-          lat: latitude,
-          lon: longitude
+          lat: latitude, // Latitude is stored
+          lon: longitude // Longitude is stored
         };
 
         dispatch(setWeather(weatherObj));
@@ -160,20 +160,22 @@ const Weather = () => {
                 <thead className="thead-dark">
                   <tr>
                     <th>Location</th>
-                    <th>Country</th>
                     <th>Condition</th>
                     <th>Humidity</th>
                     <th>Icon</th>
+                    <th>Latitude</th> {/* New Header */}
+                    <th>Longitude</th> {/* New Header */}
                   </tr>
                 </thead>
                 <tbody>
                   {history.map((entry, index) => (
                     <tr key={index}>
-                      <td>{entry.location}</td>
-                      <td>{entry.country}</td>
+                      <td>{entry.location}, {entry.country}</td>
                       <td>{entry.text}</td>
                       <td>{entry.humidity}%</td>
                       <td><img src={entry.icon} alt="Weather Icon" /></td>
+                      <td>{entry.lat}</td> {/* New Data */}
+                      <td>{entry.lon}</td> {/* New Data */}
                     </tr>
                   ))}
                 </tbody>
