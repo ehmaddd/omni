@@ -1,0 +1,56 @@
+.floating-social-media-menu {
+  position: fixed;
+  left: 0;
+  top: 200px;
+  display: flex;
+  flex-direction: column;
+  align-items: left;
+  gap: 10px;
+  z-index: 1000;
+}
+
+.social-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 50px; /* Default width for the button */
+  height: 50px; /* Default height for the button */
+  border-radius: 25px; /* Circular buttons */
+  background-color: #333 !important; /* Default background color with !important */
+  color: #fff;
+  font-size: 24px;
+  text-align: center;
+  transition: transform 0.3s; /* Only transform transition */
+  position: relative;
+  overflow: hidden;
+}
+
+.social-button:hover {
+  transform: translateX(10px); /* Move the button to the right on hover */
+  background-color: #333 !important; /* Ensure background color stays the same on hover */
+}
+
+.social-button .tooltip {
+  position: absolute;
+  left: 60px; /* Position tooltip to the right of the button */
+  white-space: nowrap;
+  opacity: 0;
+  visibility: hidden;
+  background-color: #333;
+  color: #fff;
+  padding: 5px;
+  border-radius: 5px;
+  transition: opacity 0.3s, visibility 0.3s;
+  font-size: 14px;
+}
+
+.social-button:hover .tooltip {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Specific background colors for each button */
+.social-button.facebook { background-color: #3b5998 !important; }
+.social-button.twitter { background-color: #1da1f2 !important; }
+.social-button.linkedin { background-color: #0077b5 !important; }
+.social-button.instagram { background-color: #e4405f !important; }
