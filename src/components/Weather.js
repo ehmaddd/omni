@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
 import { setWeather, setError } from './redux/weatherSlice';
@@ -6,13 +6,39 @@ import './Weather.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 const Weather = () => {
-  const [lat, setLat] = useState(0);
-  const [lon, setLon] = useState(0);
+  const [lat, setLat] = useState(null);
+  const [lon, setLon] = useState(null);
   const dispatch = useDispatch();
   const weather = useSelector((state) => state.weather.data);
   const error = useSelector((state) => state.weather.error);
-  const history = useSelector((state) => state.weather.history);  // Get history from Redux state
+  const history = useSelector((state) => state.weather.history);
   const APIKey = 'd9323e0f1cdc4028b3292349241608';
+
+  useEffect(() => {
+    const isWeatherFetched = localStorage.getItem('isWeatherFetched');
+
+    if (!isWeatherFetched) {
+      // Fetch user's current location only if weather data hasn't been fetched before
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+          (position) => {
+            const { latitude, longitude } = position.coords;
+            setLat(latitude);
+            setLon(longitude);
+            fetchWeather(latitude, longitude); // Automatically fetch weather for the current location
+          },
+          (error) => {
+            console.error("Error fetching location:", error);
+            dispatch(setError('Failed to fetch your location.'));
+          }
+        );
+        // Mark that the weather has been fetched
+        localStorage.setItem('isWeatherFetched', 'true');
+      } else {
+        dispatch(setError('Geolocation is not supported by this browser.'));
+      }
+    }
+  }, [dispatch]);
 
   const handleLatChange = (e) => {
     setLat(parseFloat(e.target.value));
@@ -22,12 +48,12 @@ const Weather = () => {
     setLon(parseFloat(e.target.value));
   };
 
-  const fetchWeather = async () => {
+  const fetchWeather = async (latitude = lat, longitude = lon) => {
     try {
       const response = await axios.get('http://api.weatherapi.com/v1/current.json', {
         params: {
           key: APIKey,
-          q: `${lat},${lon}`,
+          q: `${latitude},${longitude}`,
           aqi: 'no'
         }
       });
@@ -75,6 +101,7 @@ const Weather = () => {
                 style={{ width: '100%', height: '40px' }}
                 placeholder="Enter latitude"
                 className="form-control"
+                value={lat !== null ? lat : ''}
               />
             </div>
             <div className="form-group mb-3">
@@ -90,9 +117,10 @@ const Weather = () => {
                 style={{ width: '100%', height: '40px' }}
                 placeholder="Enter longitude"
                 className="form-control"
+                value={lon !== null ? lon : ''}
               />
             </div>
-            <button className="btn btn-primary btn-block" onClick={fetchWeather}>
+            <button className="btn btn-primary btn-block" onClick={() => fetchWeather(lat, lon)}>
               Get Weather
             </button>
           </div>
