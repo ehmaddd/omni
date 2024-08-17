@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
-import { setWeather, setError } from './redux/weatherSlice';
+import { setWeather, setError, addToHistory } from './redux/weatherSlice'; // Correctly import addToHistory
 import './Weather.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -13,32 +13,29 @@ const Weather = () => {
   const error = useSelector((state) => state.weather.error);
   const history = useSelector((state) => state.weather.history);
   const APIKey = 'd9323e0f1cdc4028b3292349241608';
+  const initialFetchDone = useRef(false);
 
   useEffect(() => {
-    const isWeatherFetched = localStorage.getItem('isWeatherFetched');
-
-    if (!isWeatherFetched) {
-      // Fetch user's current location only if weather data hasn't been fetched before
+    if (!lat && !lon && !initialFetchDone.current) {
       if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(
           (position) => {
             const { latitude, longitude } = position.coords;
             setLat(latitude);
             setLon(longitude);
-            fetchWeather(latitude, longitude); // Automatically fetch weather for the current location
+            fetchWeather(latitude, longitude);
+            initialFetchDone.current = true;
           },
           (error) => {
             console.error("Error fetching location:", error);
             dispatch(setError('Failed to fetch your location.'));
           }
         );
-        // Mark that the weather has been fetched
-        localStorage.setItem('isWeatherFetched', 'true');
       } else {
         dispatch(setError('Geolocation is not supported by this browser.'));
       }
     }
-  }, [dispatch]);
+  }, [lat, lon, dispatch]);
 
   const handleLatChange = (e) => {
     setLat(parseFloat(e.target.value));
@@ -48,36 +45,48 @@ const Weather = () => {
     setLon(parseFloat(e.target.value));
   };
 
-  const fetchWeather = async (latitude = lat, longitude = lon) => {
-    try {
-      const response = await axios.get('http://api.weatherapi.com/v1/current.json', {
-        params: {
-          key: APIKey,
-          q: `${latitude},${longitude}`,
-          aqi: 'no'
-        }
-      });
+  const fetchWeather = async (latitude, longitude) => {
+    const existingEntry = history.find(
+      (entry) => entry.lat === latitude && entry.lon === longitude
+    );
 
-      const fetchedWeather = response.data;
-      const weatherObj = {
-        country: fetchedWeather.location.country,
-        location: fetchedWeather.location.name,
-        icon: fetchedWeather.current.condition.icon,
-        text: fetchedWeather.current.condition.text,
-        humidity: fetchedWeather.current.humidity
-      };
-
-      dispatch(setWeather(weatherObj));
+    if (existingEntry) {
+      dispatch(setWeather(existingEntry));
       dispatch(setError(null));
-    } catch (err) {
-      dispatch(setError('Failed to fetch weather data'));
-      dispatch(setWeather({
-        country: '',
-        location: '',
-        icon: '',
-        text: '',
-        humidity: ''
-      }));
+    } else {
+      try {
+        const response = await axios.get('http://api.weatherapi.com/v1/current.json', {
+          params: {
+            key: APIKey,
+            q: `${latitude},${longitude}`,
+            aqi: 'no'
+          }
+        });
+
+        const fetchedWeather = response.data;
+        const weatherObj = {
+          country: fetchedWeather.location.country,
+          location: fetchedWeather.location.name,
+          icon: fetchedWeather.current.condition.icon,
+          text: fetchedWeather.current.condition.text,
+          humidity: fetchedWeather.current.humidity,
+          lat: latitude,
+          lon: longitude
+        };
+
+        dispatch(setWeather(weatherObj));
+        dispatch(setError(null));
+        dispatch(addToHistory(weatherObj));  // Add new weather data to history
+      } catch (err) {
+        dispatch(setError('Failed to fetch weather data'));
+        dispatch(setWeather({
+          country: '',
+          location: '',
+          icon: '',
+          text: '',
+          humidity: ''
+        }));
+      }
     }
   };
 
