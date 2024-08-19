@@ -11,6 +11,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 const PrayerWeather = () => {
   const [lat, setLat] = useState(null);
   const [lon, setLon] = useState(null);
+  const [history, setHistory] = useState([]); // State to store history
   const dispatch = useDispatch();
 
   const prayerTimes = useSelector((state) => state.prayer?.data);
@@ -86,15 +87,30 @@ const PrayerWeather = () => {
           isha: fetchedData.timings.Isha,
         };
 
-
         dispatch(setPrayerTimes(prayerObj));
         dispatch(setPrayerError(null));
+
+        // Update history
+        setHistory(prevHistory => {
+          const existingIndex = prevHistory.findIndex(record => record.lat === latitude && record.lon === longitude);
+          if (existingIndex > -1) {
+            const newHistory = [...prevHistory];
+            newHistory[existingIndex] = { ...newHistory[existingIndex], ...prayerObj };
+            return newHistory;
+          } else {
+            const weatherData = prevHistory.find(record => record.lat === latitude && record.lon === longitude);
+            if (weatherData) {
+              return [...prevHistory, { ...weatherData, ...prayerObj }];
+            }
+            return [...prevHistory, { ...prayerObj, lat: latitude, lon: longitude }];
+          }
+        });
       } else {
         dispatch(setPrayerError('No prayer times found for today.'));
         dispatch(setPrayerTimes(null));
       }
     } catch (err) {
-      console.error("Error fetching prayer times:", err); // Debugging line
+      console.error("Error fetching prayer times:", err);
       dispatch(setPrayerError('Failed to fetch prayer times'));
       dispatch(setPrayerTimes(null));
     }
@@ -108,7 +124,7 @@ const PrayerWeather = () => {
           q: `${latitude},${longitude}`,
         }
       });
-  
+
       const fetchedData = response.data.astronomy.astro;
       const location = response.data.location; // Assuming location data is available
       const sunriseSunsetObj = {
@@ -117,11 +133,23 @@ const PrayerWeather = () => {
         city: location.name,
         country: location.country,
       };
-  
+
       dispatch(setWeather(sunriseSunsetObj));
       dispatch(setWeatherError(null));
+
+      // Update history
+      setHistory(prevHistory => {
+        const existingIndex = prevHistory.findIndex(record => record.lat === latitude && record.lon === longitude);
+        if (existingIndex > -1) {
+          const newHistory = [...prevHistory];
+          newHistory[existingIndex] = { ...newHistory[existingIndex], ...sunriseSunsetObj };
+          return newHistory;
+        } else {
+          return [...prevHistory, { ...sunriseSunsetObj, lat: latitude, lon: longitude }];
+        }
+      });
     } catch (err) {
-      console.error("Error fetching sunrise and sunset data:", err); // Debugging line
+      console.error("Error fetching sunrise and sunset data:", err);
       dispatch(setWeatherError('Failed to fetch sunrise and sunset data'));
       dispatch(setWeather(null));
     }
@@ -214,8 +242,43 @@ const PrayerWeather = () => {
               <p>Isha: {prayerTimes.isha}</p>
             </div>
           ) : (
-            <p className="text-danger text-center">{prayerError || 'No prayer times available.'}</p>
+            <p className="text-danger">Prayer times are not available.</p>
           )}
+        </div>
+      </div>
+  
+      {/* History Table */}
+      <div className="row mt-4">
+        <div className="col-md-12">
+          <div className="card p-4">
+            <h2>History</h2>
+            <table className="table">
+              <thead>
+                <tr>
+                  <th>Location</th>
+                  <th>Sunrise/Sunset</th>
+                  <th>Fajr</th>
+                  <th>Dhuhr</th>
+                  <th>Asr</th>
+                  <th>Maghrib</th>
+                  <th>Isha</th>
+                </tr>
+              </thead>
+              <tbody>
+                {history.map((record, index) => (
+                  <tr key={index}>
+                    <td>{record.city || '-'}, {record.country || '-'}</td>
+                    <td>{record.sunrise || '-'} / {record.sunset || '-'}</td>
+                    <td>{record.fajr || '-'}</td>
+                    <td>{record.dhuhr || '-'}</td>
+                    <td>{record.asr || '-'}</td>
+                    <td>{record.maghrib || '-'}</td>
+                    <td>{record.isha || '-'}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     </div>
