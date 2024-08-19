@@ -3,8 +3,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
 import { setPrayerTimes, setError as setPrayerError } from './redux/prayerSlice';
 import { setWeather, setError as setWeatherError } from './redux/weatherSlice';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSun } from '@fortawesome/free-solid-svg-icons';
+import sunrise from '../images/sunrise.png';
+import sunset from '../images/sunset.png';
+import location from '../images/location.png';
 import './Prayer.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -214,14 +215,14 @@ const PrayerWeather = () => {
             {weather ? (
               <>
                 <br></br>
-                <p>Location: {weather.city}, {weather.country}</p>
+                <p><img src={location} alt="Location" style={{ width: '30px', height: '40px', marginRight: '10px' }} /> {weather.city}, {weather.country}</p>
                 <br></br>
                 <div className="d-flex align-items-center">
-                  <FontAwesomeIcon icon={faSun} size="lg" className="mr-2" />
+                  <img src={sunrise} alt="Sunrise" style={{ width: '45px', height: '40px', marginRight: '10px' }} />
                   <p className="mb-0">Sunrise: {weather.sunrise}</p>
                 </div>
                 <div className="d-flex align-items-center mt-2">
-                  <FontAwesomeIcon icon={faSun} size="lg" className="mr-2" />
+                  <img src={sunset} alt="Sunset" style={{ width: '55px', height: '40px', marginRight: '10px' }} />
                   <p className="mb-0">Sunset: {weather.sunset}</p>
                 </div>
               </>
