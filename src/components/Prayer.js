@@ -11,7 +11,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 const PrayerWeather = () => {
   const [lat, setLat] = useState(null);
   const [lon, setLon] = useState(null);
-  const [history, setHistory] = useState([]); // State to store history
+  const [history, setHistory] = useState([]);
   const dispatch = useDispatch();
 
   const prayerTimes = useSelector((state) => state.prayer?.data);
@@ -206,44 +206,29 @@ const PrayerWeather = () => {
           </div>
         </div>
   
-        {/* Sunrise/Sunset Information on the Right */}
+        {/* Combined Prayer and Sunrise/Sunset Information on the Right */}
         <div className="col-md-6">
-          {weather && weather.sunrise ? (
-            <div className="card p-4">
-              <h2>Sunrise and Sunset Times</h2>
-              <p>Date: {new Date().toLocaleDateString()}</p>
-              <p>Location: {weather.city}, {weather.country}</p> {/* Display city and country */}
-              <div className="d-flex align-items-center">
-                <FontAwesomeIcon icon={faSun} size="lg" className="mr-2" />
-                <p className="mb-0">Sunrise: {weather.sunrise}</p>
-              </div>
-              <div className="d-flex align-items-center mt-2">
-                <FontAwesomeIcon icon={faSun} size="lg" className="mr-2" />
-                <p className="mb-0">Sunset: {weather.sunset}</p>
-              </div>
-            </div>
-          ) : (
-            <p className="text-danger">Sunrise and sunset information is not available.</p>
-          )}
-        </div>
-      </div>
-  
-      {/* Prayer Information at the Bottom */}
-      <div className="row mt-4">
-        <div className="col-md-12">
-          {prayerTimes ? (
-            <div className="card p-4">
-              <h2>Today's Prayer Times</h2>
-              <p>Date: {prayerTimes.date}</p>
-              <p>Fajr: {prayerTimes.fajr}</p>
-              <p>Dhuhr: {prayerTimes.dhuhr}</p>
-              <p>Asr: {prayerTimes.asr}</p>
-              <p>Maghrib: {prayerTimes.maghrib}</p>
-              <p>Isha: {prayerTimes.isha}</p>
-            </div>
-          ) : (
-            <p className="text-danger">Prayer times are not available.</p>
-          )}
+          <div className="card p-4">
+            <h2>Today's Information</h2>
+            <h5>{new Date().toLocaleDateString()}</h5>
+            {weather ? (
+              <>
+                <br></br>
+                <p>Location: {weather.city}, {weather.country}</p>
+                <br></br>
+                <div className="d-flex align-items-center">
+                  <FontAwesomeIcon icon={faSun} size="lg" className="mr-2" />
+                  <p className="mb-0">Sunrise: {weather.sunrise}</p>
+                </div>
+                <div className="d-flex align-items-center mt-2">
+                  <FontAwesomeIcon icon={faSun} size="lg" className="mr-2" />
+                  <p className="mb-0">Sunset: {weather.sunset}</p>
+                </div>
+              </>
+            ) : (
+              <p className="text-danger">Sunrise and sunset information is not available.</p>
+            )}
+          </div>
         </div>
       </div>
   
@@ -256,7 +241,8 @@ const PrayerWeather = () => {
               <thead>
                 <tr>
                   <th>Location</th>
-                  <th>Sunrise/Sunset</th>
+                  <th>Sunrise</th>
+                  <th>Sunset</th>
                   <th>Fajr</th>
                   <th>Dhuhr</th>
                   <th>Asr</th>
@@ -268,7 +254,8 @@ const PrayerWeather = () => {
                 {history.map((record, index) => (
                   <tr key={index}>
                     <td>{record.city || '-'}, {record.country || '-'}</td>
-                    <td>{record.sunrise || '-'} / {record.sunset || '-'}</td>
+                    <td>{record.sunrise || '-'}</td>
+                    <td>{record.sunset || '-'}</td>
                     <td>{record.fajr || '-'}</td>
                     <td>{record.dhuhr || '-'}</td>
                     <td>{record.asr || '-'}</td>
