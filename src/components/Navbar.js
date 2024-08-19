@@ -15,6 +15,9 @@ const Nav = () => {
         <li>
           <Link to="/weather">Weather</Link>
         </li>
+        <li>
+          <Link to="/prayer">Prayer Time</Link>
+        </li>
       </ul>
     </nav>
   );

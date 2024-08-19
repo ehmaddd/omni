@@ -1,16 +1,16 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-  data: null,
+  data: null,   // Ensures that `state.prayer.data` is not undefined
   error: null,
   history: []
 };
 
-const weatherSlice = createSlice({
-  name: 'weather',
+const prayerSlice = createSlice({
+  name: 'prayer',
   initialState,
   reducers: {
-    setWeather: (state, action) => {
+    setPrayerTimes: (state, action) => {
       state.data = action.payload;
     },
     setError: (state, action) => {
@@ -22,5 +22,5 @@ const weatherSlice = createSlice({
   }
 });
 
-export const { setWeather, setError, addToHistory } = weatherSlice.actions;
-export default weatherSlice.reducer;
+export const { setPrayerTimes, setError, addToHistory } = prayerSlice.actions;
+export default prayerSlice.reducer;
