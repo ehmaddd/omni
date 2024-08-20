@@ -15,9 +15,13 @@ function Login() {
         username,
         password,
       });
-      const userId = res.data.userId;
-      localStorage.setItem('token', userId);
-      navigate(`/dashboard/${userId}`);
+      const token = res.data.token; // Ensure the backend sends a token
+      if (token) {
+        localStorage.setItem('token', token);
+        navigate(`/dashboard/${res.data.userId}`);
+      } else {
+        alert('Login failed!');
+      }
     } catch (err) {
       console.error(err);
       alert('Login failed!');

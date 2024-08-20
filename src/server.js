@@ -5,12 +5,28 @@ const bodyParser = require('body-parser');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const pool = require('./db');
-const authenticateToken = require('./authMiddleware');
 const PORT = 5000;
 
 const app = express();
 app.use(cors());
 app.use(bodyParser.json());
+app.use(express.json());
+
+app.post('/verify-token', (req, res) => {
+  const token = req.headers.authorization?.split(' ')[1];
+  
+  if (!token) {
+    return res.status(401).json({ valid: false });
+  }
+  
+  jwt.verify(token, 'secret', (err, decoded) => {
+    if (err) {
+      return res.status(401).json({ valid: false });
+    }
+    // Optionally, check if the user is still active or has other validations
+    res.json({ valid: true });
+  });
+});
 
 app.post('/register', async (req, res) => {
   const { username, password } = req.body;
