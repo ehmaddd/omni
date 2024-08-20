@@ -5,6 +5,7 @@ const bodyParser = require('body-parser');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const pool = require('./db');
+const authenticateToken = require('./authMiddleware');
 const PORT = 5000;
 
 const app = express();
@@ -25,6 +26,10 @@ app.post('/register', async (req, res) => {
     res.status(500).json({ message: 'Error registering user' });
   }
 });
+
+app.get('/dashboard/:userId', authenticateToken, (req, res) => {
+  const { userId } = req.params;
+}
 
 // Login route
 app.post('/login', async (req, res) => {

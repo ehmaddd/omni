@@ -28,7 +28,7 @@ function App() {
           <Route path="/prayer" element={<Prayer />} />
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
-          <Route path="/dashboard/:userId" element={<Dashboard />} />
+          <PrivateRoute path="/dashboard/:userId" component={Dashboard} />
           <Route path="/signout" element={<Signout />} />
         </Routes>
       </Router>
