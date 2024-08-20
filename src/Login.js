@@ -16,6 +16,7 @@ function Login() {
         password,
       });
       const userId = res.data.userId;
+      console.log(userId);
       // localStorage.setItem('token', userId);
       // navigate(`/dashboard/${userId}`);
     } catch (err) {
