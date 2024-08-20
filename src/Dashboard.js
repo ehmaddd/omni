@@ -3,6 +3,8 @@ import { useParams, Link } from 'react-router-dom';
 
 function Dashboard() {
   const { userId } = useParams();
+  const token = localStorage.getItem('token');
+  console.log(token);
 
   return (
     <div>
