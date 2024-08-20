@@ -8,8 +8,12 @@ import Calculator from './components/Calculator';
 import Quote from './components/Quote';
 import Weather from './components/Weather';
 import Prayer from './components/Prayer';
+import Register from './Register';
+import Login from './Login';
 import FloatingSocialMenu from './components/FloatingSocialMenu';
 import './components/styles.css';
+import Dashboard from './Dashboard';
+import Signout from './Signout';
 
 function App() {
   return (
@@ -22,6 +26,10 @@ function App() {
           <Route path="/quote" element={<Quote />} />
           <Route path="/weather" element={<Weather />} />
           <Route path="/prayer" element={<Prayer />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/dashboard/:userId" element={<Dashboard />} />
+          <Route path="/signout" element={<Signout />} />
         </Routes>
       </Router>
       <FloatingSocialMenu />
