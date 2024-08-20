@@ -17,7 +17,7 @@ function Login() {
       });
       const userId = res.data.userId;
       localStorage.setItem('token', userId);
-      navigate(`/dashboard/${userId}`);
+      // navigate(`/dashboard/${userId}`);
     } catch (err) {
       console.error(err);
       alert('Login failed!');
