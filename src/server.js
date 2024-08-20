@@ -32,16 +32,20 @@ app.post('/login', async (req, res) => {
   try {
     const result = await pool.query('SELECT * FROM login WHERE username = $1', [username]);
     const user = result.rows[0];
-    console.log(user);
+    
     if (!user) {
       return res.status(404).json({ message: 'User not found' });
     }
+    
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
       return res.status(401).json({ message: 'Invalid credentials' });
     }
+    
     const token = jwt.sign({ username }, 'secret', { expiresIn: '1h' });
-    res.json({ token });
+    
+    // Include the userId in the response
+    res.json({ token, userId: user.id });
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: 'Error logging in' });
