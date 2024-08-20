@@ -29,7 +29,7 @@ app.post('/register', async (req, res) => {
 
 app.get('/dashboard/:userId', authenticateToken, (req, res) => {
   const { userId } = req.params;
-}
+});
 
 // Login route
 app.post('/login', async (req, res) => {
