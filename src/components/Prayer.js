@@ -29,8 +29,7 @@ const Prayer = () => {
             const { latitude, longitude } = position.coords;
             setLat(latitude);
             setLon(longitude);
-            fetchPrayerTimes(latitude, longitude);
-            fetchSunriseSunset(latitude, longitude);
+            fetchData(latitude, longitude);
             initialFetchDone.current = true;
           },
           (error) => {
@@ -52,93 +51,65 @@ const Prayer = () => {
     setLon(parseFloat(e.target.value));
   };
 
-  const fetchPrayerTimes = async (latitude, longitude) => {
-    if (latitude === null || longitude === null) {
-      dispatch(setError('Please enter valid latitude and longitude.'));
-      return;
-    }
-
-    const date = new Date();
-    const year = date.getFullYear();
-    const month = date.getMonth() + 1;
-    const day = date.getDate();
-
+  const fetchData = async (latitude, longitude) => {
     try {
-      const response = await axios.get(`http://api.aladhan.com/v1/calendar/${year}/${month}`, {
+      // Fetch prayer times
+      const prayerResponse = await axios.get(`http://api.aladhan.com/v1/calendar/${new Date().getFullYear()}/${new Date().getMonth() + 1}`, {
         params: {
           latitude,
           longitude
         }
       });
 
-      const fetchedData = response.data.data.find(d => d.date.gregorian.day === String(day));
-      
-      if (fetchedData) {
-        const prayerObj = {
-          date: fetchedData.date.readable,
-          fajr: fetchedData.timings.Fajr,
-          dhuhr: fetchedData.timings.Dhuhr,
-          asr: fetchedData.timings.Asr,
-          maghrib: fetchedData.timings.Maghrib,
-          isha: fetchedData.timings.Isha,
-        };
-
-        const locationData = {
-          city: sunriseSunsetData?.city || 'Unknown',
-          country: sunriseSunsetData?.country || 'Unknown'
-        };
-
-        dispatch(setPrayerTimes(prayerObj));
-        dispatch(setError(null));
-        dispatch(addToHistory({ lat: latitude, lon: longitude, ...prayerObj, ...locationData }));
-      } else {
+      const fetchedPrayerData = prayerResponse.data.data.find(d => d.date.gregorian.day === String(new Date().getDate()));
+      if (!fetchedPrayerData) {
         dispatch(setError('No prayer times found for today.'));
         dispatch(setPrayerTimes(null));
+        return;
       }
-    } catch (err) {
-      console.error("Error fetching prayer times:", err);
-      dispatch(setError('Failed to fetch prayer times'));
-      dispatch(setPrayerTimes(null));
-    }
-  };
 
-  const fetchSunriseSunset = async (latitude, longitude) => {
-    try {
-      const response = await axios.get(`https://api.weatherapi.com/v1/astronomy.json`, {
+      const prayerObj = {
+        date: fetchedPrayerData.date.readable,
+        fajr: fetchedPrayerData.timings.Fajr,
+        dhuhr: fetchedPrayerData.timings.Dhuhr,
+        asr: fetchedPrayerData.timings.Asr,
+        maghrib: fetchedPrayerData.timings.Maghrib,
+        isha: fetchedPrayerData.timings.Isha,
+      };
+
+      // Fetch sunrise and sunset times
+      const sunResponse = await axios.get(`https://api.weatherapi.com/v1/astronomy.json`, {
         params: {
           key: APIKey,
           q: `${latitude},${longitude}`,
         }
       });
 
-      const fetchedData = response.data.astronomy.astro;
-      const locationData = response.data.location;
-      
-      // Ensure location data is correctly set
-      if (fetchedData && locationData) {
-        setSunriseSunsetData({
-          sunrise: fetchedData.sunrise,
-          sunset: fetchedData.sunset,
-          city: locationData.name || 'Unknown',
-          country: locationData.country || 'Unknown',
-        });
-      } else {
-        setSunriseSunsetData({
-          sunrise: 'Unknown',
-          sunset: 'Unknown',
-          city: 'Unknown',
-          country: 'Unknown',
-        });
-      }
+      const fetchedSunData = sunResponse.data.astronomy.astro;
+      const locationData = sunResponse.data.location;
+
+      const sunriseSunset = {
+        sunrise: fetchedSunData.sunrise,
+        sunset: fetchedSunData.sunset,
+        city: locationData.name || 'Unknown',
+        country: locationData.country || 'Unknown',
+      };
+
+      // Set state and dispatch actions
+      setSunriseSunsetData(sunriseSunset);
+      dispatch(setPrayerTimes(prayerObj));
+      dispatch(setError(null));
+      dispatch(addToHistory({
+        lat: latitude,
+        lon: longitude,
+        ...prayerObj,
+        ...sunriseSunset
+      }));
+
     } catch (err) {
-      console.error("Error fetching sunrise and sunset data:", err);
-      dispatch(setError('Failed to fetch sunrise and sunset data'));
-      setSunriseSunsetData({
-        sunrise: 'Unknown',
-        sunset: 'Unknown',
-        city: 'Unknown',
-        country: 'Unknown',
-      });
+      console.error("Error fetching data:", err);
+      dispatch(setError('Failed to fetch prayer and location data'));
+      dispatch(setPrayerTimes(null));
     }
   };
 
@@ -183,10 +154,7 @@ const Prayer = () => {
             </div>
             <button
               className="btn btn-primary btn-block"
-              onClick={() => {
-                fetchPrayerTimes(lat, lon);
-                fetchSunriseSunset(lat, lon);
-              }}
+              onClick={() => fetchData(lat, lon)}
             >
               Get Prayer Times
             </button>
@@ -195,31 +163,54 @@ const Prayer = () => {
 
         {/* Prayer Times Display on the Right */}
         <div className="col-md-6">
-          {prayerTimes && (
-            <div className="card p-4">
-              <h2 className="mb-4">Prayer Times</h2>
-              {/* Display Sunrise and Sunset */}
-              {sunriseSunsetData && (
-                <div className="mt-4">
-                  <h3>Sunrise and Sunset</h3>
-                  <div className="d-flex justify-content-between">
-                    <div className="text-center">
-                      <img src={sunrise} alt="Sunrise" className="img-fluid" />
-                      <p><strong>Sunrise:</strong> {sunriseSunsetData.sunrise}</p>
-                    </div>
-                    <div className="text-center">
-                      <img src={sunset} alt="Sunset" className="img-fluid" />
-                      <p><strong>Sunset:</strong> {sunriseSunsetData.sunset}</p>
-                    </div>
+          <div className="card p-4">
+            {sunriseSunsetData && (
+              <div className="text-right">
+                <h3>Sunrise and Sunset</h3>
+                <div className="d-flex justify-content-end mb-4">
+                  <div className="text-center mr-3">
+                    <img src={sunrise} alt="Sunrise" className="img-fluid" />
+                    <p><strong>Sunrise:</strong> {sunriseSunsetData.sunrise}</p>
                   </div>
-                  <div className="text-center mt-3">
-                    <img src={location} alt="Location" className="img-fluid" />
-                    <p><strong>Location:</strong> {sunriseSunsetData.city}, {sunriseSunsetData.country}</p>
+                  <div className="text-center">
+                    <img src={sunset} alt="Sunset" className="img-fluid" />
+                    <p><strong>Sunset:</strong> {sunriseSunsetData.sunset}</p>
                   </div>
                 </div>
-              )}
-            </div>
-          )}
+                <div className="text-center mt-3">
+                  <img src={location} alt="Location" className="img-fluid" />
+                  <p><strong>Location:</strong> {sunriseSunsetData.city}, {sunriseSunsetData.country}</p>
+                </div>
+              </div>
+            )}
+            {prayerTimes && (
+              <div className="mt-4">
+                <h2 className="mb-4">Prayer Times</h2>
+                <table className="table">
+                  <thead>
+                    <tr>
+                      <th>Date</th>
+                      <th>Fajr</th>
+                      <th>Dhuhr</th>
+                      <th>Asr</th>
+                      <th>Maghrib</th>
+                      <th>Isha</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>{prayerTimes.date}</td>
+                      <td>{prayerTimes.fajr}</td>
+                      <td>{prayerTimes.dhuhr}</td>
+                      <td>{prayerTimes.asr}</td>
+                      <td>{prayerTimes.maghrib}</td>
+                      <td>{prayerTimes.isha}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            )}
+          </div>
         </div>
       </div>
 
@@ -239,6 +230,7 @@ const Prayer = () => {
                   <th>Isha</th>
                   <th>Latitude</th>
                   <th>Longitude</th>
+                  <th>Location</th> {/* New column for location */}
                 </tr>
               </thead>
               <tbody>
@@ -252,18 +244,12 @@ const Prayer = () => {
                     <td>{entry.isha}</td>
                     <td>{entry.lat}</td>
                     <td>{entry.lon}</td>
+                    <td>{entry.city}, {entry.country}</td> {/* Display location */}
                   </tr>
                 ))}
               </tbody>
             </table>
           </div>
-        </div>
-      )}
-
-      {/* Display error messages */}
-      {prayerError && (
-        <div className="alert alert-danger mt-4" role="alert">
-          {prayerError}
         </div>
       )}
     </div>
