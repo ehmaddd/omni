@@ -1,89 +1,105 @@
 /* Basic styling for the card component */
 .card {
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    margin-bottom: 20px;
-  }
-  
-  /* Styling for form elements */
-  .form-group label {
-    font-weight: bold;
-    margin-bottom: 5px;
-  }
-  
-  .form-control {
-    border-radius: 4px;
-    padding: 10px;
-    font-size: 16px;
-  }
-  
-  /* Button styling */
-  .btn-block {
-    padding: 10px;
-    font-size: 18px;
-    font-weight: bold;
-    background-color: #007bff;
-    border: none;
-    border-radius: 4px;
-    color: #fff;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
-  
-  .btn-block:hover {
-    background-color: #0056b3;
-  }
-  
-  /* Table styling */
-  .table {
-    margin-top: 20px;
-  }
-  
-  .table thead th {
-    background-color: #343a40;
-    color: #fff;
-  }
-  
-  .table tbody tr {
-    transition: background-color 0.3s ease;
-  }
-  
-  .table tbody tr:hover {
-    background-color: #f1f1f1;
-  }
-  
-  /* Text styling */
-  .text-center {
-    text-align: center;
-  }
-  
-  .text-danger {
-    color: #dc3545;
-  }
-  
-  .card {
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-  }
-  
-  .card h2 {
-    margin-bottom: 20px;
-  }
-  
-  .d-flex {
-    display: flex;
-    align-items: center;
-  }
-  
-  .mr-2 {
-    margin-right: 8px;
-  }
-  
-  .mt-2 {
-    margin-top: 8px;
-  }
-  
-  .img-fluid {
-    width: 80px;
-    height: 80px;
-  }
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+}
+
+/* Styling for form elements */
+.form-group label {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.form-control {
+  border-radius: 4px;
+  padding: 10px;
+  font-size: 16px;
+}
+
+/* Button styling */
+.btn-block {
+  padding: 10px;
+  font-size: 18px;
+  font-weight: bold;
+  background-color: #007bff;
+  border: none;
+  border-radius: 4px;
+  color: #fff;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.btn-block:hover {
+  background-color: #0056b3;
+}
+
+/* Table styling */
+.table {
+  margin-top: 20px;
+}
+
+.table thead th {
+  background-color: #343a40;
+  color: #fff;
+}
+
+.table tbody tr {
+  transition: background-color 0.3s ease;
+}
+
+.table tbody tr:hover {
+  background-color: #f1f1f1;
+}
+
+/* Text styling */
+.text-center {
+  text-align: center;
+}
+
+.text-danger {
+  color: #dc3545;
+}
+
+.card {
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.card h2 {
+  margin-bottom: 20px;
+}
+
+.d-flex {
+  display: flex;
+  align-items: center;
+}
+
+.mr-2 {
+  margin-right: 8px;
+}
+
+.mt-2 {
+  margin-top: 8px;
+}
+
+.img-fluid {
+  width: 70%;
+  height: 70%;
+}
+
+d-flex {
+  flex-direction: row;
+}
+
+.flex-container {
+  display: flex;
+  flex-wrap: nowrap;
+}
+
+.flex-container > div {
+  width: 25%;
+  margin: 10px;
+  text-align: center;
+  font-size: 15px;
+}

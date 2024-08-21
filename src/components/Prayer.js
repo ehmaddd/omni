@@ -165,30 +165,30 @@ const Prayer = () => {
         <div className="col-md-6">
           <div className="card p-4">
             {sunriseSunsetData && (
-              <div className="text-right">
-                <div className="d-flex justify-content-end mb-4">
+                <div className="d-flex justify-content-between mb-4 flex-container">
+                  <div className="text-center">
+                    <img src={location} alt="Location" className="img-fluid" />
+                    <p>{sunriseSunsetData.city}, {sunriseSunsetData.country}</p>
+                  </div>
+                  <div></div>
                   <div className="text-center mr-3">
                     <img src={sunrise} alt="Sunrise" className="img-fluid" />
-                    <p><strong>Sunrise:</strong> {sunriseSunsetData.sunrise}</p>
+                    <p>{sunriseSunsetData.sunrise}</p>
                   </div>
                   <div className="text-center">
                     <img src={sunset} alt="Sunset" className="img-fluid" />
-                    <p><strong>Sunset:</strong> {sunriseSunsetData.sunset}</p>
+                    <p>{sunriseSunsetData.sunset}</p>
                   </div>
                 </div>
-                <div className="text-center mt-3">
-                  <img src={location} alt="Location" className="img-fluid" />
-                  <p><strong>Location:</strong> {sunriseSunsetData.city}, {sunriseSunsetData.country}</p>
-                </div>
-              </div>
             )}
             {prayerTimes && (
               <div className="mt-4">
-                <h2 className="mb-4">Prayer Times</h2>
+                <h2 className="mb-4 d-inline">Prayer Times</h2>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                <h5 className="d-inline ml-3">( {prayerTimes.date} )</h5>
                 <table className="table">
                   <thead>
                     <tr>
-                      <th>Date</th>
                       <th>Fajr</th>
                       <th>Dhuhr</th>
                       <th>Asr</th>
@@ -198,7 +198,6 @@ const Prayer = () => {
                   </thead>
                   <tbody>
                     <tr>
-                      <td>{prayerTimes.date}</td>
                       <td>{prayerTimes.fajr}</td>
                       <td>{prayerTimes.dhuhr}</td>
                       <td>{prayerTimes.asr}</td>
