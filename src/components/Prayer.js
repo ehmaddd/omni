@@ -83,9 +83,14 @@ const Prayer = () => {
           isha: fetchedData.timings.Isha,
         };
 
+        const locationData = {
+          city: sunriseSunsetData?.city || 'Unknown',
+          country: sunriseSunsetData?.country || 'Unknown'
+        };
+
         dispatch(setPrayerTimes(prayerObj));
         dispatch(setError(null));
-        dispatch(addToHistory({ lat: latitude, lon: longitude, ...prayerObj }));
+        dispatch(addToHistory({ lat: latitude, lon: longitude, ...prayerObj, ...locationData }));
       } else {
         dispatch(setError('No prayer times found for today.'));
         dispatch(setPrayerTimes(null));
@@ -108,15 +113,32 @@ const Prayer = () => {
 
       const fetchedData = response.data.astronomy.astro;
       const locationData = response.data.location;
-      setSunriseSunsetData({
-        sunrise: fetchedData.sunrise,
-        sunset: fetchedData.sunset,
-        city: locationData.name,
-        country: locationData.country,
-      });
+      
+      // Ensure location data is correctly set
+      if (fetchedData && locationData) {
+        setSunriseSunsetData({
+          sunrise: fetchedData.sunrise,
+          sunset: fetchedData.sunset,
+          city: locationData.name || 'Unknown',
+          country: locationData.country || 'Unknown',
+        });
+      } else {
+        setSunriseSunsetData({
+          sunrise: 'Unknown',
+          sunset: 'Unknown',
+          city: 'Unknown',
+          country: 'Unknown',
+        });
+      }
     } catch (err) {
       console.error("Error fetching sunrise and sunset data:", err);
       dispatch(setError('Failed to fetch sunrise and sunset data'));
+      setSunriseSunsetData({
+        sunrise: 'Unknown',
+        sunset: 'Unknown',
+        city: 'Unknown',
+        country: 'Unknown',
+      });
     }
   };
 
@@ -166,75 +188,82 @@ const Prayer = () => {
                 fetchSunriseSunset(lat, lon);
               }}
             >
-              Get Information
+              Get Prayer Times
             </button>
           </div>
         </div>
 
-        {/* Right Pane: Sunrise, Sunset, and Location Information */}
+        {/* Prayer Times Display on the Right */}
         <div className="col-md-6">
-          <div className="card p-4">
-            <h2>Today's Information</h2>
-            <h6>{new Date().toLocaleDateString()}</h6>
-            {sunriseSunsetData ? (
-              <>
-                <br></br>
-                <p><img src={location} alt="Location" style={{ width: '30px', height: '40px', marginRight: '10px' }} /> {sunriseSunsetData.city}, {sunriseSunsetData.country}</p>
-                <br></br>
-                <div className="d-flex align-items-center">
-                  <img src={sunrise} alt="Sunrise" style={{ width: '45px', height: '40px', marginRight: '10px' }} />
-                  <p><b>Sunrise : </b>{sunriseSunsetData.sunrise}</p>
+          {prayerTimes && (
+            <div className="card p-4">
+              <h2 className="mb-4">Prayer Times</h2>
+              {/* Display Sunrise and Sunset */}
+              {sunriseSunsetData && (
+                <div className="mt-4">
+                  <h3>Sunrise and Sunset</h3>
+                  <div className="d-flex justify-content-between">
+                    <div className="text-center">
+                      <img src={sunrise} alt="Sunrise" className="img-fluid" />
+                      <p><strong>Sunrise:</strong> {sunriseSunsetData.sunrise}</p>
+                    </div>
+                    <div className="text-center">
+                      <img src={sunset} alt="Sunset" className="img-fluid" />
+                      <p><strong>Sunset:</strong> {sunriseSunsetData.sunset}</p>
+                    </div>
+                  </div>
+                  <div className="text-center mt-3">
+                    <img src={location} alt="Location" className="img-fluid" />
+                    <p><strong>Location:</strong> {sunriseSunsetData.city}, {sunriseSunsetData.country}</p>
+                  </div>
                 </div>
-                <div className="d-flex align-items-center mt-2">
-                  <img src={sunset} alt="Sunset" style={{ width: '45px', height: '40px', marginRight: '10px' }} />
-                  <p><b>Sunset : </b>{sunriseSunsetData.sunset}</p>
-                </div>
-              </>
-            ) : (
-              <p>No sunrise and sunset data available</p>
-            )}
-          </div>
+              )}
+            </div>
+          )}
         </div>
       </div>
 
-      {/* Prayer Times History at the Bottom */}
+      {/* Display History */}
       {history.length > 0 && (
-        <div className="row mt-4">
-          <div className="col-md-12">
-            <div className="card p-4">
-              <h2 className="text-center">Prayer Times History</h2>
-              <table className="table table-bordered table-striped">
-                <thead className="thead-dark">
-                  <tr>
-                    <th>Location</th>
-                    <th>Fajr</th>
-                    <th>Dhuhr</th>
-                    <th>Asr</th>
-                    <th>Maghrib</th>
-                    <th>Isha</th>
-                    <th>Latitude</th>
-                    <th>Longitude</th>
+        <div className="mt-4">
+          <h2>History</h2>
+          <div className="card p-4">
+            <table className="table">
+              <thead>
+                <tr>
+                  <th>Date</th>
+                  <th>Fajr</th>
+                  <th>Dhuhr</th>
+                  <th>Asr</th>
+                  <th>Maghrib</th>
+                  <th>Isha</th>
+                  <th>Latitude</th>
+                  <th>Longitude</th>
+                </tr>
+              </thead>
+              <tbody>
+                {history.map((entry, index) => (
+                  <tr key={index}>
+                    <td>{entry.date}</td>
+                    <td>{entry.fajr}</td>
+                    <td>{entry.dhuhr}</td>
+                    <td>{entry.asr}</td>
+                    <td>{entry.maghrib}</td>
+                    <td>{entry.isha}</td>
+                    <td>{entry.lat}</td>
+                    <td>{entry.lon}</td>
                   </tr>
-                </thead>
-                <tbody>
-                  {history.map((entry, index) => (
-                    <tr key={index}>
-                      {sunriseSunsetData ? (
-                      <td>{sunriseSunsetData.city}, {sunriseSunsetData.country}</td>
-                      ):null}
-                      <td>{entry.fajr}</td>
-                      <td>{entry.dhuhr}</td>
-                      <td>{entry.asr}</td>
-                      <td>{entry.maghrib}</td>
-                      <td>{entry.isha}</td>
-                      <td>{entry.lat}</td>
-                      <td>{entry.lon}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
+                ))}
+              </tbody>
+            </table>
           </div>
+        </div>
+      )}
+
+      {/* Display error messages */}
+      {prayerError && (
+        <div className="alert alert-danger mt-4" role="alert">
+          {prayerError}
         </div>
       )}
     </div>

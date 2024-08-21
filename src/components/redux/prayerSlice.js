@@ -1,14 +1,13 @@
+// prayerSlice.js
 import { createSlice } from '@reduxjs/toolkit';
-
-const initialState = {
-  data: null,   // Ensures that `state.prayer.data` is not undefined
-  error: null,
-  history: []   // Array to store historical prayer times
-};
 
 const prayerSlice = createSlice({
   name: 'prayer',
-  initialState,
+  initialState: {
+    data: null,
+    error: null,
+    history: [],
+  },
   reducers: {
     setPrayerTimes: (state, action) => {
       state.data = action.payload;
@@ -17,10 +16,18 @@ const prayerSlice = createSlice({
       state.error = action.payload;
     },
     addToHistory: (state, action) => {
-      // Optionally, check for duplicates or ensure uniqueness
-      state.history.push(action.payload);
-    }
-  }
+      const entry = action.payload;
+
+      // Check for duplicates
+      const isDuplicate = state.history.some(
+        (item) => item.lat === entry.lat && item.lon === entry.lon && item.date === entry.date
+      );
+
+      if (!isDuplicate) {
+        state.history.push(entry);
+      }
+    },
+  },
 });
 
 export const { setPrayerTimes, setError, addToHistory } = prayerSlice.actions;

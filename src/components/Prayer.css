@@ -83,3 +83,7 @@
     margin-top: 8px;
   }
   
+  .img-fluid {
+    width: 80px;
+    height: 80px;
+  }
