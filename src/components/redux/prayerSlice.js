@@ -3,7 +3,7 @@ import { createSlice } from '@reduxjs/toolkit';
 const initialState = {
   data: null,   // Ensures that `state.prayer.data` is not undefined
   error: null,
-  history: []
+  history: []   // Array to store historical prayer times
 };
 
 const prayerSlice = createSlice({
@@ -17,6 +17,7 @@ const prayerSlice = createSlice({
       state.error = action.payload;
     },
     addToHistory: (state, action) => {
+      // Optionally, check for duplicates or ensure uniqueness
       state.history.push(action.payload);
     }
   }
