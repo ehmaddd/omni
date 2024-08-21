@@ -4,23 +4,29 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import './App.css';
 import Header from './components/Header';
 import Navbar from './components/Navbar';
+import DashNav from './components/DashNav';
 import Calculator from './components/Calculator';
 import Quote from './components/Quote';
 import Weather from './components/Weather';
 import Prayer from './components/Prayer';
 import Register from './Register';
 import Login from './Login';
+import { useLocation } from 'react-router-dom';
 import FloatingSocialMenu from './components/FloatingSocialMenu';
 import './components/styles.css';
 import Dashboard from './Dashboard';
 import Signout from './Signout';
 
 function App() {
+  const location = useLocation();
+  const isDashboardPath = location.pathname.startsWith('/dashboard');
+
   return (
     <>
       <Header />
-      <Router>
-        <Navbar />
+        {!isDashboardPath && <Navbar />}
+        {isDashboardPath && <DashNav />}
+
         <Routes>
           <Route path="/" element={<Calculator />} />
           <Route path="/quote" element={<Quote />} />
@@ -31,8 +37,7 @@ function App() {
           <Route path="/dashboard/:userId" element={<Dashboard />} />
           <Route path="/signout" element={<Signout />} />
         </Routes>
-      </Router>
-      <FloatingSocialMenu />
+        {!isDashboardPath && <FloatingSocialMenu />}
     </>
   );
 }
