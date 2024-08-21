@@ -12,6 +12,7 @@ const Weather = () => {
   const weather = useSelector((state) => state.weather.data);
   const error = useSelector((state) => state.weather.error);
   const history = useSelector((state) => state.weather.history);
+  const { location } = useSelector((state) => state.location || { location: "defaultLocation" });
   const APIKey = 'd9323e0f1cdc4028b3292349241608';
   const initialFetchDone = useRef(false);
 
@@ -137,7 +138,7 @@ const Weather = () => {
 
         {/* Weather Information on the Right */}
         <div className="col-md-6">
-          {weather.location && (
+          {weather && (
             <div className="card p-4">
               <h2>Weather Information</h2>
               <p>Country: {weather.country}</p>
