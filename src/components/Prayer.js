@@ -11,6 +11,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 const Prayer = () => {
   const [lat, setLat] = useState(null);
   const [lon, setLon] = useState(null);
+  const [sunriseSunsetData, setSunriseSunsetData] = useState(null);
   const dispatch = useDispatch();
 
   const prayerTimes = useSelector((state) => state.prayer.data);
@@ -56,12 +57,12 @@ const Prayer = () => {
       dispatch(setError('Please enter valid latitude and longitude.'));
       return;
     }
-  
+
     const date = new Date();
     const year = date.getFullYear();
     const month = date.getMonth() + 1;
     const day = date.getDate();
-  
+
     try {
       const response = await axios.get(`http://api.aladhan.com/v1/calendar/${year}/${month}`, {
         params: {
@@ -69,9 +70,9 @@ const Prayer = () => {
           longitude
         }
       });
-  
+
       const fetchedData = response.data.data.find(d => d.date.gregorian.day === String(day));
-  
+      
       if (fetchedData) {
         const prayerObj = {
           date: fetchedData.date.readable,
@@ -81,22 +82,10 @@ const Prayer = () => {
           maghrib: fetchedData.timings.Maghrib,
           isha: fetchedData.timings.Isha,
         };
-  
-        // Check for duplicates before dispatching
-        const isDuplicate = history.some(
-          (entry) =>
-            entry.lat === latitude &&
-            entry.lon === longitude &&
-            entry.date === prayerObj.date
-        );
-  
-        if (!isDuplicate) {
-          dispatch(setPrayerTimes(prayerObj));
-          dispatch(setError(null));
-          dispatch(addToHistory({ lat: latitude, lon: longitude, ...prayerObj }));
-        } else {
-          console.log('Duplicate entry found, not adding to history.');
-        }
+
+        dispatch(setPrayerTimes(prayerObj));
+        dispatch(setError(null));
+        dispatch(addToHistory({ lat: latitude, lon: longitude, ...prayerObj }));
       } else {
         dispatch(setError('No prayer times found for today.'));
         dispatch(setPrayerTimes(null));
@@ -118,19 +107,16 @@ const Prayer = () => {
       });
 
       const fetchedData = response.data.astronomy.astro;
-      const location = response.data.location;
-      const sunriseSunsetObj = {
+      const locationData = response.data.location;
+      setSunriseSunsetData({
         sunrise: fetchedData.sunrise,
         sunset: fetchedData.sunset,
-        city: location.name,
-        country: location.country,
-      };
-
-      // If you plan to use sunriseSunsetObj, consider storing it in the state
-      // dispatch(setWeather(sunriseSunsetObj));
+        city: locationData.name,
+        country: locationData.country,
+      });
     } catch (err) {
       console.error("Error fetching sunrise and sunset data:", err);
-      // Handle errors if needed
+      dispatch(setError('Failed to fetch sunrise and sunset data'));
     }
   };
 
@@ -185,65 +171,72 @@ const Prayer = () => {
           </div>
         </div>
 
-        {/* Combined Prayer and Sunrise/Sunset Information on the Right */}
+        {/* Right Pane: Sunrise, Sunset, and Location Information */}
         <div className="col-md-6">
           <div className="card p-4">
             <h2>Today's Information</h2>
-            <h5>{new Date().toLocaleDateString()}</h5>
-            {/* Remove weather section if not used */}
-            {/* <h3>Sunrise and Sunset</h3>
-            {weather ? (
+            <h6>{new Date().toLocaleDateString()}</h6>
+            {sunriseSunsetData ? (
               <>
-                <p><img src={location} alt="Location" style={{ width: '30px', height: '40px', marginRight: '10px' }} /> {weather.city}, {weather.country}</p>
+                <br></br>
+                <p><img src={location} alt="Location" style={{ width: '30px', height: '40px', marginRight: '10px' }} /> {sunriseSunsetData.city}, {sunriseSunsetData.country}</p>
+                <br></br>
                 <div className="d-flex align-items-center">
                   <img src={sunrise} alt="Sunrise" style={{ width: '45px', height: '40px', marginRight: '10px' }} />
-                  <p>{weather.sunrise}</p>
+                  <p><b>Sunrise : </b>{sunriseSunsetData.sunrise}</p>
                 </div>
                 <div className="d-flex align-items-center mt-2">
                   <img src={sunset} alt="Sunset" style={{ width: '45px', height: '40px', marginRight: '10px' }} />
-                  <p>{weather.sunset}</p>
+                  <p><b>Sunset : </b>{sunriseSunsetData.sunset}</p>
                 </div>
               </>
             ) : (
-              <p>{weatherError || 'No weather data available'}</p>
-            )} */}
-            <hr />
-            <h3>Prayer Times</h3>
-            {prayerTimes ? (
-              <ul>
-                <li>Fajr: {prayerTimes.fajr}</li>
-                <li>Dhuhr: {prayerTimes.dhuhr}</li>
-                <li>Asr: {prayerTimes.asr}</li>
-                <li>Maghrib: {prayerTimes.maghrib}</li>
-                <li>Isha: {prayerTimes.isha}</li>
-              </ul>
-            ) : (
-              <p>{prayerError || 'No prayer times available'}</p>
-            )}
-            <hr />
-            <h3>Prayer Times History</h3>
-            {history.length > 0 ? (
-              <ul>
-                {history.map((entry, index) => (
-                  <li key={index}>
-                    <strong>Date:</strong> {entry.date} <br />
-                    <strong>Latitude:</strong> {entry.lat} <br />
-                    <strong>Longitude:</strong> {entry.lon} <br />
-                    <strong>Fajr:</strong> {entry.fajr} <br />
-                    <strong>Dhuhr:</strong> {entry.dhuhr} <br />
-                    <strong>Asr:</strong> {entry.asr} <br />
-                    <strong>Maghrib:</strong> {entry.maghrib} <br />
-                    <strong>Isha:</strong> {entry.isha} <br />
-                    <hr />
-                  </li>
-                ))}
-              </ul>
-            ) : (
-              <p>No history available</p>
+              <p>No sunrise and sunset data available</p>
             )}
           </div>
         </div>
       </div>
+
+      {/* Prayer Times History at the Bottom */}
+      {history.length > 0 && (
+        <div className="row mt-4">
+          <div className="col-md-12">
+            <div className="card p-4">
+              <h2 className="text-center">Prayer Times History</h2>
+              <table className="table table-bordered table-striped">
+                <thead className="thead-dark">
+                  <tr>
+                    <th>Location</th>
+                    <th>Fajr</th>
+                    <th>Dhuhr</th>
+                    <th>Asr</th>
+                    <th>Maghrib</th>
+                    <th>Isha</th>
+                    <th>Latitude</th>
+                    <th>Longitude</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {history.map((entry, index) => (
+                    <tr key={index}>
+                      {sunriseSunsetData ? (
+                      <td>{sunriseSunsetData.city}, {sunriseSunsetData.country}</td>
+                      ):null}
+                      <td>{entry.fajr}</td>
+                      <td>{entry.dhuhr}</td>
+                      <td>{entry.asr}</td>
+                      <td>{entry.maghrib}</td>
+                      <td>{entry.isha}</td>
+                      <td>{entry.lat}</td>
+                      <td>{entry.lon}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
