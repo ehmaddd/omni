@@ -166,7 +166,6 @@ const Prayer = () => {
           <div className="card p-4">
             {sunriseSunsetData && (
               <div className="text-right">
-                <h3>Sunrise and Sunset</h3>
                 <div className="d-flex justify-content-end mb-4">
                   <div className="text-center mr-3">
                     <img src={sunrise} alt="Sunrise" className="img-fluid" />
