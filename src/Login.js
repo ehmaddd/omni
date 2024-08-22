@@ -16,7 +16,9 @@ function Login() {
         username,
         password,
       });
-      const token = res.data.token;
+      const {userId, token}= res.data;
+      console.log(userId);
+    
       if (token) {
         localStorage.setItem('token', token);
         navigate(`/dashboard/${res.data.userId}`);
