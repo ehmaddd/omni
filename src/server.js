@@ -2,6 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const bcrypt = require('bcryptjs');
+const request = require('request');
 const jwt = require('jsonwebtoken');
 const pool = require('./db');
 const PORT = 5000;
