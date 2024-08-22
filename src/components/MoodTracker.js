@@ -55,7 +55,7 @@ function MoodTracker() {
           <nav>
             <ul>
               <li><Link to="log">Log Mood</Link></li>
-              <li><Link to="list">View Logs</Link></li>
+              <li><Link to="viewlog">View Logs</Link></li>
               <li><Link to="summary">View Summary</Link></li>
             </ul>
           </nav>

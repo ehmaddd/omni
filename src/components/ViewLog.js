@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useParams, Link, useNavigate, Outlet } from 'react-router-dom';
 import DashNav from '../components/DashNav';
 
-function LogMood() {
+function ViewLog() {
   const { userId } = useParams();
   const token = localStorage.getItem('token');
   const navigate = useNavigate();
@@ -46,14 +46,15 @@ function LogMood() {
 
   return (
     <>
+      <DashNav />
       {token ? (
         <>
-          <h1>Log Mood</h1>
-          <p>Your User ID: {userId}</p>
+          <h1>View Log</h1>
+          <p>Your User ID in View Log: {userId}</p>
           <nav>
             <ul>
               <Link to={`/dashboard/${userId}/mood_tracker`}>Back</Link>
-              <li><Link to="log">Log Mood</Link></li>
+              <li><Link to={`/dashboard/${userId}/mood_tracker/log`}>Log Mood</Link></li>
               <li><Link to="summary">View Summary</Link></li>
             </ul>
           </nav>
@@ -66,4 +67,4 @@ function LogMood() {
   );
 }
 
-export default LogMood;
+export default ViewLog;

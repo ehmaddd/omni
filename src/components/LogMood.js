@@ -54,7 +54,7 @@ function LogMood() {
           <nav>
             <ul>
               <Link to={`/dashboard/${userId}/mood_tracker`}>Back</Link>
-              <li><Link to="list">View Logs</Link></li>
+              <li><Link to={`/dashboard/${userId}/mood_tracker/viewlog`}>View Logs</Link></li>
               <li><Link to="summary">View Summary</Link></li>
             </ul>
           </nav>
