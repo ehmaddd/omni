@@ -5,7 +5,7 @@ import DashNav from './components/DashNav';
 function Dashboard() {
   const { userId } = useParams();
   const token = localStorage.getItem('token');
-  const user = localStorage.getItem('user');
+  const storedUserId = localStorage.getItem('user');
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
 
@@ -16,7 +16,7 @@ function Dashboard() {
         return;
       }
 
-      if(userId !== user){
+      if (userId !== storedUserId) {
         localStorage.removeItem('token');
         localStorage.removeItem('user');
         sessionStorage.clear();
@@ -42,7 +42,6 @@ function Dashboard() {
           localStorage.removeItem('token');
           navigate('/login');
         } else {
-          // Set userId in session storage
           sessionStorage.setItem('userId', userId);
         }
       } catch (error) {
@@ -54,10 +53,10 @@ function Dashboard() {
     };
 
     verifyToken();
-  }, [token, navigate, userId]);
+  }, [token, navigate, userId, storedUserId]);
 
   if (loading) {
-    return <p>Loading...</p>; // Show a loading indicator while verifying
+    return <p>Loading...</p>;
   }
 
   return (

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './index.css';
@@ -8,7 +8,6 @@ function Login() {
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
 
-  
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -16,12 +15,13 @@ function Login() {
         username,
         password,
       });
-      const {userId, token}= res.data;
-    
-      if (token) {
+
+      const { userId, token } = res.data;
+
+      if (token && userId) {
         localStorage.setItem('token', token);
         localStorage.setItem('user', userId);
-        navigate(`/dashboard/${res.data.userId}`);
+        navigate(`/dashboard/${userId}`);
       } else {
         alert('Login failed!');
       }

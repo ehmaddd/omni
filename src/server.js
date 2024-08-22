@@ -1,5 +1,4 @@
 const express = require('express');
-const request = require('request');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const bcrypt = require('bcryptjs');
@@ -8,7 +7,12 @@ const pool = require('./db');
 const PORT = 5000;
 
 const app = express();
-app.use(cors());
+
+app.use(cors({
+  origin: 'http://localhost:3000', // Replace with your frontend URL
+  methods: ['GET', 'POST'],
+  credentials: true
+}));
 app.use(bodyParser.json());
 app.use(express.json());
 
@@ -43,7 +47,6 @@ app.post('/register', async (req, res) => {
   }
 });
 
-// Login route
 app.post('/login', async (req, res) => {
   const { username, password } = req.body;
   try {
@@ -59,8 +62,7 @@ app.post('/login', async (req, res) => {
       return res.status(401).json({ message: 'Invalid credentials' });
     }
     
-    const token = jwt.sign({ username }, 'secret', { expiresIn: '1h' });
-    // Include the userId in the response
+    const token = jwt.sign({ username, userId: user.id }, 'secret', { expiresIn: '1h' });
     res.json({ token, userId: user.id });
   } catch (err) {
     console.error(err);
@@ -68,7 +70,6 @@ app.post('/login', async (req, res) => {
   }
 });
 
-// Protected route example
 app.get('/protected', (req, res) => {
   const token = req.headers['authorization'];
   if (!token) {
@@ -88,5 +89,5 @@ app.get('/api/quotes', (req, res) => {
 });
 
 app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
+  console.log(`Server is running on port ${PORT}`);
 });

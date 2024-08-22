@@ -1,5 +1,4 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import { BrowserRouter as Router, Route, Routes, useLocation } from 'react-router-dom';
 import './App.css';
 import Header from './components/Header';
@@ -26,21 +25,20 @@ function App() {
   return (
     <>
       <Header />
-        {!isDashboardPath && <Navbar />}
-
-        <Routes>
-          <Route path="/" element={<Calculator />} />
-          <Route path="/quote" element={<Quote />} />
-          <Route path="/weather" element={<Weather />} />
-          <Route path="/prayer" element={<Prayer />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/dashboard/:userId" element={<Dashboard />} />
-          <Route path="/dashboard/:userId/mood_tracker" element={<MoodTracker />} />
-          <Route path="/signout" element={<Signout />} />
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-        {!isDashboardPath && <FloatingSocialMenu />}
+      {!isDashboardPath && <Navbar />}
+      <Routes>
+        <Route path="/" element={<Calculator />} />
+        <Route path="/quote" element={<Quote />} />
+        <Route path="/weather" element={<Weather />} />
+        <Route path="/prayer" element={<Prayer />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/dashboard/:userId" element={<Dashboard />} />
+        <Route path="/dashboard/:userId/mood_tracker" element={<MoodTracker />} />
+        <Route path="/signout" element={<Signout />} />
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+      {!isDashboardPath && <FloatingSocialMenu />}
     </>
   );
 }
