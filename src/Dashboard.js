@@ -5,12 +5,21 @@ import DashNav from './components/DashNav';
 function Dashboard() {
   const { userId } = useParams();
   const token = localStorage.getItem('token');
+  const user = localStorage.getItem('user');
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const verifyToken = async () => {
       if (!token) {
+        navigate('/login');
+        return;
+      }
+
+      if(userId !== user){
+        localStorage.removeItem('token');
+        localStorage.removeItem('user');
+        sessionStorage.clear();
         navigate('/login');
         return;
       }

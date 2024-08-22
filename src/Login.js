@@ -17,10 +17,10 @@ function Login() {
         password,
       });
       const {userId, token}= res.data;
-      console.log(userId);
     
       if (token) {
         localStorage.setItem('token', token);
+        localStorage.setItem('user', userId);
         navigate(`/dashboard/${res.data.userId}`);
       } else {
         alert('Login failed!');
