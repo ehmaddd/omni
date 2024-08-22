@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes, useLocation } from 'react-router-dom';
 import './App.css';
 import Header from './components/Header';
 import Navbar from './components/Navbar';
@@ -11,21 +11,22 @@ import Weather from './components/Weather';
 import Prayer from './components/Prayer';
 import Register from './Register';
 import Login from './Login';
-import { useLocation } from 'react-router-dom';
 import FloatingSocialMenu from './components/FloatingSocialMenu';
 import './components/styles.css';
 import Dashboard from './Dashboard';
 import Signout from './Signout';
+import MoodTracker from './components/MoodTracker';
+import NotFound from './components/NotFound';
 
 function App() {
   const location = useLocation();
   const isDashboardPath = location.pathname.startsWith('/dashboard');
+  const hideNavRoutes = ['/404'];
 
   return (
     <>
       <Header />
         {!isDashboardPath && <Navbar />}
-        {isDashboardPath && <DashNav />}
 
         <Routes>
           <Route path="/" element={<Calculator />} />
@@ -35,7 +36,9 @@ function App() {
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
           <Route path="/dashboard/:userId" element={<Dashboard />} />
+          <Route path="/dashboard/:userId/mood_tracker" element={<MoodTracker />} />
           <Route path="/signout" element={<Signout />} />
+          <Route path="*" element={<NotFound />} />
         </Routes>
         {!isDashboardPath && <FloatingSocialMenu />}
     </>

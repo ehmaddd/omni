@@ -1,18 +1,21 @@
 import React, { useEffect } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
-import DashNav from './components/DashNav';
+import DashNav from '../components/DashNav';
 
-function Dashboard() {
+function MoodTracker() {
   const { userId } = useParams();
   const token = localStorage.getItem('token');
   const navigate = useNavigate();
 
   useEffect(() => {
+    // Redirect if no token is present
     if (!token) {
+      console.log('No token found, redirecting to login');
       navigate('/login');
       return;
     }
 
+    // Optionally, verify token validity with your backend
     const verifyToken = async () => {
       try {
         const response = await fetch('http://localhost:5000/verify-token', {
@@ -22,44 +25,39 @@ function Dashboard() {
             'Authorization': `Bearer ${token}`,
           },
         });
-
         if (!response.ok) {
           throw new Error('Token validation failed');
         }
-
         const result = await response.json();
+        console.log('Token verification result:', result);
         if (!result.valid) {
           localStorage.removeItem('token');
           navigate('/login');
-        } else {
-          // Set userId in session storage
-          sessionStorage.setItem('userId', userId);
         }
       } catch (error) {
+        console.error('Token verification failed:', error);
         localStorage.removeItem('token');
         navigate('/login');
       }
     };
 
     verifyToken();
-  }, [token, navigate, userId]);
+  }, [token, navigate]);
 
   return (
-    <div>
+    <>
       {token ? (
         <>
           <DashNav />
-          <div>
-            <h1>Welcome to your Dashboard</h1>
-            <p>Your User ID: {userId}</p>
-            <Link to="/signout">Sign Out</Link>
-          </div>
+          <h1>Mood Tracker</h1>
+          <p>Your User ID: {userId}</p>
+          <Link to="/signout">Sign Out</Link>
         </>
       ) : (
         <p>Redirecting...</p>
       )}
-    </div>
+    </>
   );
 }
 
-export default Dashboard;
+export default MoodTracker;
