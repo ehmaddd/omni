@@ -50,7 +50,7 @@ function LogMood() {
         <>
           <DashNav />
           <h1>Log Mood</h1>
-          <p>Your User ID: {userId}</p>
+          <p>Your Log Mood User ID: {userId}</p>
           <nav>
             <ul>
               <Link to={`/dashboard/${userId}/mood_tracker`}>Back</Link>

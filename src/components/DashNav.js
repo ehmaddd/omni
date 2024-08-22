@@ -24,7 +24,7 @@ const DashNav = () => {
           <Link to={`/dashboard/${userId}/fitness`}>Fitness Section</Link>
         </li>
         <li>
-          <Link to={`/dashboard/${userId}/weather`}>ToDo List</Link>
+          <Link to={`/dashboard/${userId}/todo`}>ToDo List</Link>
         </li>
       </ul>
     </nav>

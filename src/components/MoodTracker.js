@@ -50,7 +50,7 @@ function MoodTracker() {
         <>
           <DashNav />
           <h1>Mood Tracker</h1>
-          <p>Your User ID: {userId}</p>
+          <p>Your Mood Track User ID: {userId}</p>
           <Link to="/signout">Sign Out</Link>
           <nav>
             <ul>

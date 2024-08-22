@@ -66,7 +66,7 @@ function Dashboard() {
           <DashNav />
           <div>
             <h1>Welcome to your Dashboard</h1>
-            <p>Your User ID: {userId}</p>
+            <p>Your Dashboard User ID: {userId}</p>
             <Link to="/signout">Sign Out</Link>
           </div>
         </>
