@@ -7,6 +7,7 @@ function Signout() {
   useEffect(() => {
     // Clear the token from localStorage
     localStorage.removeItem('token');
+    sessionStorage.clear();
 
     // Redirect to the login page
     navigate('/login');

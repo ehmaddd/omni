@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import DashNav from './components/DashNav';
 
@@ -6,14 +6,15 @@ function Dashboard() {
   const { userId } = useParams();
   const token = localStorage.getItem('token');
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    if (!token) {
-      navigate('/login');
-      return;
-    }
-
     const verifyToken = async () => {
+      if (!token) {
+        navigate('/login');
+        return;
+      }
+
       try {
         const response = await fetch('http://localhost:5000/verify-token', {
           method: 'POST',
@@ -38,11 +39,17 @@ function Dashboard() {
       } catch (error) {
         localStorage.removeItem('token');
         navigate('/login');
+      } finally {
+        setLoading(false);
       }
     };
 
     verifyToken();
   }, [token, navigate, userId]);
+
+  if (loading) {
+    return <p>Loading...</p>; // Show a loading indicator while verifying
+  }
 
   return (
     <div>

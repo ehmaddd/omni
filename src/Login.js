@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './index.css';
@@ -8,6 +8,7 @@ function Login() {
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
 
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -15,7 +16,7 @@ function Login() {
         username,
         password,
       });
-      const token = res.data.token; // Ensure the backend sends a token
+      const token = res.data.token;
       if (token) {
         localStorage.setItem('token', token);
         navigate(`/dashboard/${res.data.userId}`);
