@@ -71,13 +71,14 @@ const Weather = () => {
           icon: fetchedWeather.current.condition.icon,
           text: fetchedWeather.current.condition.text,
           humidity: fetchedWeather.current.humidity,
-          lat: latitude, // Latitude is stored
-          lon: longitude // Longitude is stored
+          temp: fetchedWeather.current.temp_c,
+          lat: latitude,
+          lon: longitude
         };
 
         dispatch(setWeather(weatherObj));
         dispatch(setError(null));
-        dispatch(addToHistory(weatherObj));  // Add new weather data to history
+        dispatch(addToHistory(weatherObj));
       } catch (err) {
         dispatch(setError('Failed to fetch weather data'));
         dispatch(setWeather({
@@ -141,11 +142,10 @@ const Weather = () => {
           {weather && (
             <div className="card p-4">
               <h2>Weather Information</h2>
-              <p>Country: {weather.country}</p>
-              <p>City: {weather.location}</p>
-              <p><img src={weather.icon} alt="Weather Icon" /></p>
-              <p>Condition: {weather.text}</p>
-              <p>Humidity: {weather.humidity}%</p>
+              <p>{weather.location}, {weather.country}</p>
+              <p>{weather.temp} &deg;C</p>
+              <p><img src={weather.icon} alt="Weather Icon" />{weather.text}</p>
+              <p>Humidity : {weather.humidity}%</p>
             </div>
           )}
         </div>
@@ -163,7 +163,7 @@ const Weather = () => {
                     <th>Location</th>
                     <th>Condition</th>
                     <th>Humidity</th>
-                    <th>Icon</th>
+                    <th>Temperature</th>
                     <th>Latitude</th> {/* New Header */}
                     <th>Longitude</th> {/* New Header */}
                   </tr>
@@ -172,11 +172,11 @@ const Weather = () => {
                   {history.map((entry, index) => (
                     <tr key={index}>
                       <td>{entry.location}, {entry.country}</td>
-                      <td>{entry.text}</td>
+                      <td>{entry.text}<img src={entry.icon} alt="Weather Icon" /></td>
                       <td>{entry.humidity}%</td>
-                      <td><img src={entry.icon} alt="Weather Icon" /></td>
-                      <td>{entry.lat}</td> {/* New Data */}
-                      <td>{entry.lon}</td> {/* New Data */}
+                      <td>{entry.temp} C</td>
+                      <td>{entry.lat}</td>
+                      <td>{entry.lon}</td>
                     </tr>
                   ))}
                 </tbody>
