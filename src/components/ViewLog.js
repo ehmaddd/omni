@@ -4,6 +4,7 @@ import DashNav from '../components/DashNav';
 
 function ViewLog() {
   const { userId } = useParams();
+  const storedUserId = localStorage.getItem('user');
   const token = localStorage.getItem('token');
   const navigate = useNavigate();
 
@@ -11,6 +12,14 @@ function ViewLog() {
     // Redirect if no token is present
     if (!token) {
       console.log('No token found, redirecting to login');
+      navigate('/login');
+      return;
+    }
+
+    if (userId !== storedUserId) {
+      localStorage.removeItem('token');
+      localStorage.removeItem('user');
+      sessionStorage.clear();
       navigate('/login');
       return;
     }
