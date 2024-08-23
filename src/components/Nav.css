@@ -1,41 +1,80 @@
+/* Nav.css */
+
+/* Style for navigation bar */
 .nav-bar {
-  background: #ffffff; /* White background */
-  padding: 10px 20px; /* Padding around the navbar */
-  border-radius: 8px; /* Slightly rounded corners */
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow */
-  display: flex; /* Use flexbox for layout */
-  justify-content: center; /* Center content horizontally */
-  border: 1px solid #e0e0e0; /* Light border for separation */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  background-color: #f8f9fa;
+  border-bottom: 1px solid #e0e0e0;
 }
 
+/* Style for the title */
+.nav-title {
+  font-size: 1.5rem;
+  margin: 0;
+}
+
+/* Container for navigation links */
+.nav-links {
+  display: flex;
+}
+
+/* Style for the list of navigation links */
 .nav-list {
-  display: flex; /* Align items in a row */
-  list-style: none; /* Remove default list styling */
+  list-style: none;
+  display: flex;
   margin: 0;
   padding: 0;
 }
 
+/* Style for individual navigation items */
 .nav-item {
-  margin: 0 12px; /* Space between items */
+  margin-left: 1rem;
 }
 
-.nav-link {
-  color: #333333; /* Dark gray text color */
+/* Style for sign out link */
+.signout-link {
+  display: block;
+  margin-top: 1rem;
+  color: #dc3545;
   text-decoration: none; /* Remove underline */
-  padding: 8px 12px; /* Padding for clickable area */
-  border-radius: 20px; /* Rounded buttons */
-  font-size: 14px; /* Adjust font size */
-  font-weight: 500; /* Medium weight text */
-  transition: background-color 0.3s ease, color 0.3s ease, transform 0.2s ease; /* Smooth effects */
 }
 
-.nav-link:hover {
-  background-color: #f0f0f0; /* Light gray background on hover */
-  color: #007bff; /* Blue color text on hover */
-  transform: scale(1.05); /* Slightly scale up on hover */
+.signout-link:hover {
+  text-decoration: none; /* Ensure no underline on hover */
 }
 
-.nav-link.active {
-  background-color: #007bff; /* Blue background for active link */
-  color: #ffffff; /* White text for active link */
+/* Style for paragraph text */
+p {
+  padding: 1rem;
+  font-size: 1rem;
+}
+
+/* Style for navigation links */
+.nav-link {
+  text-decoration: none; /* Ensure no underline by default */
+  color: #007bff; /* Primary color */
+  font-weight: 500; /* Slightly bold text */
+  font-size: 1rem; /* Adjust font size as needed */
+  margin: 0 0.5rem; /* Space between links */
+  padding: 0.5rem 0.75rem; /* Vertical padding for better click area and some horizontal padding */
+  border-radius: 4px; /* Rounded corners */
+  transition: color 0.3s ease, background-color 0.3s ease; /* Smooth transition for hover effects */
+}
+
+.nav-link:hover,
+.nav-link:focus {
+  color: orange !important; /* White text color on hover/focus */
+  text-decoration: none !important; /* Ensure no underline on hover/focus */
+}
+
+.nav-link:active {
+  color: #003d80; /* Even darker shade on click */
+  background-color: #0056b3; /* Darker shade of primary color on active */
+}
+
+.nav-link:visited {
+  color: #0056b3; /* Consistent color for visited links */
 }

@@ -40,103 +40,119 @@ function LogMood() {
   return (
     <>
       <DashNav />
-      <nav className="nav-bar">
-        <ul className="nav-list">
-          <li className="nav-item">
-            <Link className="nav-link" to={`/dashboard/${userId}/mood_tracker`}>Back</Link>
-          </li>
-          <li className="nav-item">
-            <Link className="nav-link" to={`/dashboard/${userId}/mood_tracker/viewlog`}>View Logs</Link>
-          </li>
-          <li className="nav-item">
-            <Link className="nav-link" to={`/dashboard/${userId}/mood_tracker/summary`}>View Summary</Link>
-          </li>
-        </ul>
+      <div className="nav-bar">
+        <h1 className="nav-title">Mood Logger</h1>
+        <nav className="nav-links">
+          <ul className="nav-list">
+            <li className="nav-item">
+              <Link className="nav-link" to={`/dashboard/${userId}/mood_tracker`}>Back</Link>
+            </li>
+            <li className="nav-item">
+              <Link className="nav-link" to={`/dashboard/${userId}/mood_tracker/viewlog`}>View Logs</Link>
+            </li>
+            <li className="nav-item">
+              <Link className="nav-link" to={`/dashboard/${userId}/mood_tracker/summary`}>View Summary</Link>
+            </li>
+          </ul>
+        </nav>
         <Outlet />
-      </nav>
+      </div>
 
       <div className="mood-logger-container">
-        <h1>Mood Logger</h1>
         <form onSubmit={handleSubmit} className="mood-logger-form">
-          <div className="form-group">
-            <label>Valence Level
-              <br/>
-              <span style={{ color: 'grey' }}>(Positivity/Negativity)</span>
-            </label>
-            <input
-              type="range"
-              min="-10"
-              max="10"
-              value={valence}
-              onChange={(e) => setValence(e.target.value)}
-              className="slider"
-            />
-            <span className="value-display">{valence}</span> {/* Display valence */}
-          </div>
-
-          <div className="form-group">
-            <label>Arousal Level
-              <br/>
-              <span style={{ color: 'grey' }}>(Intensity)</span>
-            </label>
-            <input
-              type="range"
-              min="0"
-              max="10"
-              value={arousal}
-              onChange={(e) => setArousal(e.target.value)}
-              className="slider"
-            />
-            <span className="value-display">{arousal}</span> {/* Display arousal */}
-          </div>
-
-          <div className="form-group">
-            <label>Estimated Duration (minutes):</label>
-            <input
-              type="number"
-              value={duration}
-              onChange={(e) => setDuration(e.target.value)}
-              placeholder="Duration in minutes"
-              min="0"
-              max="60"
-              step="1"
-            />
-          </div>
-
-          <div className="form-group">
-            <label>Date:</label>
-            <input
-              type="date"
-              value={date}
-              onChange={(e) => setDate(e.target.value)}
-            />
-          </div>
-
-          <div className="form-group">
-            <label>Time:</label>
-            <input
-              type="time"
-              value={time}
-              onChange={(e) => setTime(e.target.value)}
-            />
-          </div>
-
-          <div className="form-group">
-            <label>Contextual Triggers:</label>
-            <select
-              value={trigger}
-              onChange={(e) => setTrigger(e.target.value)}
-              className="trigger-dropdown"
-            >
-              {triggerOptions.map((trigger) => (
-                <option key={trigger} value={trigger}>
-                  {trigger}
-                </option>
-              ))}
-            </select>
-          </div>
-
-          <button type="submit" className="submit-btn">Log Mood</button>
+          <table className="mood-logger-table">
+            <tbody>
+              <tr>
+                <td className="form-group">
+                  <label>Valence Level
+                    <br />
+                    <span style={{ color: 'grey' }}>(Positivity/Negativity)</span>
+                  </label>
+                  <input
+                    type="range"
+                    min="-10"
+                    max="10"
+                    value={valence}
+                    onChange={(e) => setValence(e.target.value)}
+                    className="slider"
+                  />
+                  <span className="value-display">{valence}</span> {/* Display valence */}
+                </td>
+              </tr>
+              <tr>
+                <td className="form-group">
+                  <label>Arousal Level
+                    <br />
+                    <span style={{ color: 'grey' }}>(Intensity)</span>
+                  </label>
+                  <input
+                    type="range"
+                    min="0"
+                    max="10"
+                    value={arousal}
+                    onChange={(e) => setArousal(e.target.value)}
+                    className="slider"
+                  />
+                  <span className="value-display">{arousal}</span> {/* Display arousal */}
+                </td>
+              </tr>
+              <tr>
+                <td className="form-group">
+                  <label>Estimated Duration (minutes):</label>
+                  <input
+                    type="number"
+                    value={duration}
+                    onChange={(e) => setDuration(e.target.value)}
+                    placeholder="Duration in minutes"
+                    min="0"
+                    max="60"
+                    step="1"
+                  />
+                </td>
+              </tr>
+              <tr>
+                <td className="form-group">
+                  <label>Date:</label>
+                  <input
+                    type="date"
+                    value={date}
+                    onChange={(e) => setDate(e.target.value)}
+                  />
+                </td>
+              </tr>
+              <tr>
+                <td className="form-group">
+                  <label>Time:</label>
+                  <input
+                    type="time"
+                    value={time}
+                    onChange={(e) => setTime(e.target.value)}
+                  />
+                </td>
+              </tr>
+              <tr>
+                <td className="form-group">
+                  <label>Contextual Trigger:</label>
+                  <select
+                    value={trigger}
+                    onChange={(e) => setTrigger(e.target.value)}
+                    className="trigger-dropdown"
+                  >
+                    {triggerOptions.map((option) => (
+                      <option key={option} value={option}>
+                        {option}
+                      </option>
+                    ))}
+                  </select>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <button type="submit" className="submit-btn">Log Mood</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
         </form>
       </div>
     </>

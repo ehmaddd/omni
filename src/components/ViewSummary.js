@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { useParams, Link, useNavigate, Outlet } from 'react-router-dom';
 import DashNav from '../components/DashNav';
+import './ViewSummary.css'; // Import the new CSS file
 
 function ViewSummary() {
   const { userId } = useParams();
@@ -58,22 +59,24 @@ function ViewSummary() {
       <DashNav />
       {token ? (
         <>
-          <nav className="nav-bar">
-            <ul className="nav-list">
-              <li className="nav-item">
-                <Link className="nav-link" to={`/dashboard/${userId}/mood_tracker`}>Back</Link>
-              </li>
-              <li className="nav-item">
-                <Link className="nav-link" to={`/dashboard/${userId}/mood_tracker/log`}>Log Mood</Link>
-              </li>
-              <li className="nav-item">
-              <Link className="nav-link" to={`/dashboard/${userId}/mood_tracker/viewlog`}>View Logs</Link>
-              </li>
-            </ul>
-          </nav>
+          <div className="nav-bar">
+            <h1 className="nav-title">View Summary</h1>
+            <nav className="nav-links">
+              <ul className="nav-list">
+                <li className="nav-item">
+                  <Link className="nav-link" to={`/dashboard/${userId}/mood_tracker`}>Back</Link>
+                </li>
+                <li className="nav-item">
+                  <Link className="nav-link" to={`/dashboard/${userId}/mood_tracker/log`}>Log Mood</Link>
+                </li>
+                <li className="nav-item">
+                  <Link className="nav-link" to={`/dashboard/${userId}/mood_tracker/viewlog`}>View Logs</Link>
+                </li>
+              </ul>
+            </nav>
+          </div>
           <Outlet />
-          <h1>View Log</h1>
-          <p>Your User ID in View Log: {userId}</p>
+          <p>Your User ID in View Summary: {userId}</p>
         </>
       ) : (
         <p>Loading...</p>
