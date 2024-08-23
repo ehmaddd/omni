@@ -110,6 +110,74 @@ app.post('/log-mood', async (req, res) => {
   }
 });
 
+// Fetch a specific mood log by its ID
+app.get('/mood-logs', async (req, res) => {
+  const { userId } = req.query;
+  if (!userId) {
+    return res.status(400).json({ message: 'User ID is required' });
+  }
+
+  try {
+    const result = await pool.query(
+      'SELECT * FROM mood_logs WHERE user_id = $1 ORDER BY date DESC, time DESC',
+      [userId]
+    );
+    res.json(result.rows);
+  } catch (err) {
+    console.error('Error fetching mood logs:', err);
+    res.status(500).json({ message: 'Error fetching mood logs' });
+  }
+});
+
+// Update a mood log
+app.put('/mood-logs/:id', async (req, res) => {
+  const { id } = req.params;
+  const { valence, arousal, duration, date, time, trigger } = req.body;
+
+  if (valence === undefined || arousal === undefined || duration === undefined || !date || !time || !trigger) {
+    return res.status(400).json({ message: 'Missing required fields' });
+  }
+
+  try {
+    const result = await pool.query(
+      `UPDATE mood_logs
+       SET valence = $1, arousal = $2, duration = $3, date = $4, time = $5, triggers = $6
+       WHERE id = $7`,
+      [valence, arousal, duration, date, time, trigger, id]
+    );
+    
+    if (result.rowCount === 0) {
+      return res.status(404).json({ message: 'Mood log not found' });
+    }
+    
+    res.json({ message: 'Mood log updated successfully' });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'Error updating mood log' });
+  }
+});
+
+// Delete a mood log
+app.delete('/mood-logs/:id', async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const result = await pool.query(
+      'DELETE FROM mood_logs WHERE id = $1',
+      [id]
+    );
+    
+    if (result.rowCount === 0) {
+      return res.status(404).json({ message: 'Mood log not found' });
+    }
+    
+    res.json({ message: 'Mood log deleted successfully' });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'Error deleting mood log' });
+  }
+});
+
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
