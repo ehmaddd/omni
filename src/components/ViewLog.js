@@ -73,6 +73,8 @@ function ViewLog() {
         }
 
         const data = await response.json();
+        // Sort logs to show the most recent ones first
+        data.sort((a, b) => new Date(b.date + ' ' + b.time) - new Date(a.date + ' ' + a.time));
         setMoodLogs(data);
         setLoading(false);
       } catch (error) {
@@ -82,9 +84,36 @@ function ViewLog() {
       }
     };
 
-    verifyToken();
+    // Delete a mood log
+    const deleteMoodLog = async (logId) => {
+      try {
+        const response = await fetch(`http://localhost:5000/mood-logs/${logId}`, {
+          method: 'DELETE',
+          headers: {
+            'Authorization': `Bearer ${token}`,
+          },
+        });
 
-  }, [token, navigate, userId, storedUserId]);
+        if (!response.ok) {
+          throw new Error('Error deleting mood log');
+        }
+
+        // Remove deleted log from the state
+        setMoodLogs(moodLogs.filter(log => log.id !== logId));
+      } catch (error) {
+        console.error('Error deleting mood log:', error);
+        setError(error.message); // Set error message
+      }
+    };
+
+    verifyToken();
+  }, [token, navigate, userId, storedUserId, moodLogs]);
+
+  // Function to format the date into a short form
+  const formatDate = (dateStr) => {
+    const options = { year: 'numeric', month: 'short', day: 'numeric' };
+    return new Date(dateStr).toLocaleDateString(undefined, options);
+  };
 
   return (
     <>
@@ -102,19 +131,38 @@ function ViewLog() {
           <Outlet />
           <div className="mood-logs-container">
             {moodLogs.length > 0 ? (
-              <ul>
-                {moodLogs.map((log, index) => (
-                  <li key={index}>
-                    <strong>Date:</strong> {log.date}<br />
-                    <strong>Time:</strong> {log.time}<br />
-                    <strong>Valence:</strong> {log.valence}<br />
-                    <strong>Arousal:</strong> {log.arousal}<br />
-                    <strong>Duration:</strong> {log.duration} minutes<br />
-                    <strong>Trigger:</strong> {log.triggers}<br />
-                    <hr />
-                  </li>
-                ))}
-              </ul>
+              <table className="mood-logs-table">
+                <thead>
+                  <tr>
+                    <th>Time</th>
+                    <th>Date</th>
+                    <th>Valence</th>
+                    <th>Arousal</th>
+                    <th>Duration</th>
+                    <th>Trigger</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {moodLogs.map((log) => (
+                    <tr key={log.id}>
+                      <td>{log.time}</td>
+                      <td>{formatDate(log.date)}</td>
+                      <td>{log.valence}</td>
+                      <td>{log.arousal}</td>
+                      <td>{log.duration} minutes</td>
+                      <td>{log.triggers}</td>
+                      <td>
+                        <button 
+                          className="delete-button"
+                        >
+                          Delete
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
             ) : (
               <p>No mood logs found</p>
             )}
