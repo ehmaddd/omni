@@ -1,148 +1,72 @@
 .mood-logger-container {
-  max-width: 600px;
-  margin: auto;
+  max-width: 700px;
+  margin: 20px auto; /* Centers the container horizontally and adds vertical spacing */
   padding: 20px;
   background-color: #f9f9f9;
-  border-radius: 8px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  border-radius: 16px; /* Circular edges with radius */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Shadow for better visibility */
 }
 
 h1 {
   text-align: center;
-  margin-bottom: 20px;
-  color: #333;
+  padding: 1rem;
 }
 
 .mood-logger-form {
   display: flex;
   flex-direction: column;
+  align-items: center; /* Center the form horizontally */
 }
 
 .form-group {
+  display: flex;
+  align-items: center;
   margin-bottom: 20px;
-}
-
-label {
-  display: block;
-  margin-bottom: 8px;
-  font-weight: bold;
-  color: #555;
-}
-
-input[type="range"] {
   width: 100%;
 }
 
-input[type="number"],
-input[type="date"],
-input[type="time"],
-select {
-  width: 100%; /* Make all input fields and select dropdowns take full width */
-  padding: 8px;
-  border-radius: 4px;
-  border: 1px solid #ccc;
+.form-group label {
+  flex: 1;
+  margin-right: 1rem; /* Add space between the label and input */
+  white-space: nowrap; /* Prevent label from wrapping */
+}
+
+.input-group {
+  display: flex;
+  align-items: center;
+}
+
+.slider {
+  flex: 2;
+}
+
+.value-display {
+  display: inline-block;
+  font-size: 1rem;
+  font-weight: bold;
+  color: #007bff;
+  vertical-align: middle;
+  white-space: nowrap;
+  width: 4rem; /* Adjust width to accommodate two-digit values */
+  text-align: center; /* Center text within the display */
 }
 
 .trigger-dropdown {
-  width: 100%; /* Ensure the dropdown spans the full width of its container */
-  min-height: 120px; /* Adjust height for multiple selections */
+  width: 100%; /* Ensure dropdown spans full width of its container */
   box-sizing: border-box; /* Include padding and border in the element's total width and height */
 }
 
 .submit-btn {
-  padding: 10px 15px;
+  padding: 10px 20px;
   background-color: #007bff;
   color: white;
   border: none;
-  border-radius: 4px;
+  border-radius: 8px; /* Rounded corners for the button */
   cursor: pointer;
   font-size: 16px;
+  text-align: center; /* Center text within the button */
 }
 
 .submit-btn:hover {
   background-color: #0056b3;
-}
-
-.nav-bar {
-  background: #ffffff; /* White background */
-  padding: 10px 20px; /* Padding around the navbar */
-  border-radius: 8px; /* Slightly rounded corners */
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow */
-  display: flex; /* Use flexbox for layout */
-  justify-content: center; /* Center content horizontally */
-  border: 1px solid #e0e0e0; /* Light border for separation */
-}
-
-.nav-list {
-  display: flex; /* Align items in a row */
-  list-style: none; /* Remove default list styling */
-  margin: 0;
-  padding: 0;
-}
-
-.nav-item {
-  margin: 0 12px; /* Space between items */
-}
-
-.nav-link {
-  color: #333333; /* Dark gray text color */
-  text-decoration: none; /* Remove underline */
-  padding: 8px 12px; /* Padding for clickable area */
-  border-radius: 20px; /* Rounded buttons */
-  font-size: 14px; /* Adjust font size */
-  font-weight: 500; /* Medium weight text */
-  transition: background-color 0.3s ease, color 0.3s ease, transform 0.2s ease; /* Smooth effects */
-}
-
-.nav-link:hover {
-  background-color: #f0f0f0; /* Light gray background on hover */
-  color: #007bff; /* Blue color text on hover */
-  transform: scale(1.05); /* Slightly scale up on hover */
-}
-
-.nav-link.active {
-  background-color: #007bff; /* Blue background for active link */
-  color: #ffffff; /* White text for active link */
-}
-
-.nav-bar {
-  background: #ffffff; /* White background */
-  padding: 10px 20px; /* Padding around the navbar */
-  border-radius: 8px; /* Slightly rounded corners */
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow */
-  display: flex; /* Use flexbox for layout */
-  justify-content: center; /* Center content horizontally */
-  border: 1px solid #e0e0e0; /* Light border for separation */
-}
-
-.nav-list {
-  display: flex; /* Align items in a row */
-  list-style: none; /* Remove default list styling */
-  margin: 0;
-  padding: 0;
-}
-
-.nav-item {
-  margin: 0 12px; /* Space between items */
-}
-
-.nav-link {
-  color: #333333; /* Dark gray text color */
-  text-decoration: none; /* Remove underline */
-  padding: 8px 12px; /* Padding for clickable area */
-  border-radius: 20px; /* Rounded buttons */
-  font-size: 14px; /* Adjust font size */
-  font-weight: 500; /* Medium weight text */
-  transition: background-color 0.3s ease, color 0.3s ease, transform 0.2s ease; /* Smooth effects */
-}
-
-.nav-link:hover {
-  background-color: #f0f0f0; /* Light gray background on hover */
-  color: #007bff; /* Blue color text on hover */
-  transform: scale(1.05); /* Slightly scale up on hover */
-}
-
-.nav-link.active {
-  background-color: #007bff; /* Blue background for active link */
-  color: #ffffff; /* White text for active link */
 }

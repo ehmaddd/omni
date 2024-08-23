@@ -89,6 +89,28 @@ app.get('/api/quotes', (req, res) => {
   request(apiUrl).pipe(res);
 });
 
+// Store Mood Record
+app.post('/log-mood', async (req, res) => {
+  const { userId, valence, arousal, duration, date, time, triggers } = req.body;
+  
+  if (!userId || valence === undefined || arousal === undefined || duration === undefined || !date || !time || !triggers) {
+      return res.status(400).json({ message: 'Missing required fields' });
+  }
+  
+  try {
+      await pool.query(
+          `INSERT INTO mood_logs (user_id, valence, arousal, duration, date, time, triggers)
+           VALUES ($1, $2, $3, $4, $5, $6, $7)`,
+          [userId, valence, arousal, duration, date, time, triggers]
+      );
+      res.status(201).json({ message: 'Mood log added successfully' });
+  } catch (err) {
+      console.error(err);
+      res.status(500).json({ message: 'Error saving mood log' });
+  }
+});
+
+
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });

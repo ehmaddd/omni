@@ -4,10 +4,10 @@ import DashNav from './DashNav';
 import './LogMood.css';
 
 function LogMood() {
-  const [valence, setValence] = useState(5);
-  const [arousal, setArousal] = useState(5);
+  const [valence, setValence] = useState(0);
+  const [arousal, setArousal] = useState(0);
   const [duration, setDuration] = useState('');
-  const [triggers, setTriggers] = useState([]);
+  const [trigger, setTrigger] = useState('');
   const [date, setDate] = useState(new Date().toISOString().slice(0, 10));
   const [time, setTime] = useState(new Date().toLocaleTimeString());
 
@@ -23,11 +23,6 @@ function LogMood() {
     'Others',
   ];
 
-  const handleTriggerChange = (e) => {
-    const selectedOptions = Array.from(e.target.selectedOptions, (option) => option.value);
-    setTriggers(selectedOptions);
-  };
-
   const handleSubmit = (e) => {
     e.preventDefault();
     const moodLog = {
@@ -36,7 +31,7 @@ function LogMood() {
       duration,
       date,
       time,
-      triggers,
+      trigger,
     };
     console.log('Mood Log:', moodLog);
     // Handle form submission (e.g., send to backend)
@@ -44,8 +39,8 @@ function LogMood() {
 
   return (
     <>
-    <DashNav />
-    <nav className="nav-bar">
+      <DashNav />
+      <nav className="nav-bar">
         <ul className="nav-list">
           <li className="nav-item">
             <Link className="nav-link" to={`/dashboard/${userId}/mood_tracker`}>Back</Link>
@@ -60,81 +55,90 @@ function LogMood() {
         <Outlet />
       </nav>
 
-    <div className="mood-logger-container">
-      <h1>Mood Logger</h1>
-      <p>Your User ID in Log Mood is : {userId}</p>
-      <form onSubmit={handleSubmit} className="mood-logger-form">
-        <div className="form-group">
-          <label>Valence Level: {valence}</label>
-          <input
-            type="range"
-            min="1"
-            max="10"
-            value={valence}
-            onChange={(e) => setValence(e.target.value)}
-            className="slider"
-          />
-        </div>
+      <div className="mood-logger-container">
+        <h1>Mood Logger</h1>
+        <form onSubmit={handleSubmit} className="mood-logger-form">
+          <div className="form-group">
+            <label>Valence Level
+              <br/>
+              <span style={{ color: 'grey' }}>(Positivity/Negativity)</span>
+            </label>
+            <input
+              type="range"
+              min="-10"
+              max="10"
+              value={valence}
+              onChange={(e) => setValence(e.target.value)}
+              className="slider"
+            />
+            <span className="value-display">{valence}</span> {/* Display valence */}
+          </div>
 
-        <div className="form-group">
-          <label>Arousal Level: {arousal}</label>
-          <input
-            type="range"
-            min="1"
-            max="10"
-            value={arousal}
-            onChange={(e) => setArousal(e.target.value)}
-            className="slider"
-          />
-        </div>
+          <div className="form-group">
+            <label>Arousal Level
+              <br/>
+              <span style={{ color: 'grey' }}>(Intensity)</span>
+            </label>
+            <input
+              type="range"
+              min="0"
+              max="10"
+              value={arousal}
+              onChange={(e) => setArousal(e.target.value)}
+              className="slider"
+            />
+            <span className="value-display">{arousal}</span> {/* Display arousal */}
+          </div>
 
-        <div className="form-group">
-          <label>Estimated Duration (minutes)</label>
-          <input
-            type="number"
-            value={duration}
-            onChange={(e) => setDuration(e.target.value)}
-            placeholder="Duration in minutes"
-          />
-        </div>
+          <div className="form-group">
+            <label>Estimated Duration (minutes):</label>
+            <input
+              type="number"
+              value={duration}
+              onChange={(e) => setDuration(e.target.value)}
+              placeholder="Duration in minutes"
+              min="0"
+              max="60"
+              step="1"
+            />
+          </div>
 
-        <div className="form-group">
-          <label>Date</label>
-          <input
-            type="date"
-            value={date}
-            onChange={(e) => setDate(e.target.value)}
-          />
-        </div>
+          <div className="form-group">
+            <label>Date:</label>
+            <input
+              type="date"
+              value={date}
+              onChange={(e) => setDate(e.target.value)}
+            />
+          </div>
 
-        <div className="form-group">
-          <label>Time</label>
-          <input
-            type="time"
-            value={time}
-            onChange={(e) => setTime(e.target.value)}
-          />
-        </div>
+          <div className="form-group">
+            <label>Time:</label>
+            <input
+              type="time"
+              value={time}
+              onChange={(e) => setTime(e.target.value)}
+            />
+          </div>
 
-        <div className="form-group">
-          <label>Contextual Triggers</label>
-          <select
-            multiple
-            value={triggers}
-            onChange={handleTriggerChange}
-            className="trigger-dropdown"
-          >
-            {triggerOptions.map((trigger) => (
-              <option key={trigger} value={trigger}>
-                {trigger}
-              </option>
-            ))}
-          </select>
-        </div>
+          <div className="form-group">
+            <label>Contextual Triggers:</label>
+            <select
+              value={trigger}
+              onChange={(e) => setTrigger(e.target.value)}
+              className="trigger-dropdown"
+            >
+              {triggerOptions.map((trigger) => (
+                <option key={trigger} value={trigger}>
+                  {trigger}
+                </option>
+              ))}
+            </select>
+          </div>
 
-        <button type="submit" className="submit-btn">Log Mood</button>
-      </form>
-    </div>
+          <button type="submit" className="submit-btn">Log Mood</button>
+        </form>
+      </div>
     </>
   );
 }
