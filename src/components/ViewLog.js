@@ -23,7 +23,7 @@ function ViewLog() {
       navigate('/login');
       return;
     }
-
+  
     if (userId !== storedUserId) {
       localStorage.removeItem('token');
       localStorage.removeItem('user');
@@ -31,7 +31,7 @@ function ViewLog() {
       navigate('/login');
       return;
     }
-
+  
     const verifyToken = async () => {
       try {
         const response = await fetch('http://localhost:5000/verify-token', {
@@ -41,18 +41,18 @@ function ViewLog() {
             'Authorization': `Bearer ${token}`,
           },
         });
-
+  
         if (!response.ok) {
           throw new Error('Token validation failed');
         }
-
+  
         const result = await response.json();
         console.log('Token verification result:', result);
         if (!result.valid) {
           localStorage.removeItem('token');
           navigate('/login');
         } else {
-          fetchMoodLogs(); // Fetch mood logs if token is valid
+          fetchMoodLogs(); // Fetch all mood logs initially
         }
       } catch (error) {
         console.error('Token verification failed:', error);
@@ -60,9 +60,34 @@ function ViewLog() {
         navigate('/login');
       }
     };
-
+  
     verifyToken();
   }, [token, navigate, userId, storedUserId]);
+  
+  const formatDate = (date) => {
+    const options = { year: 'numeric', month: 'long', day: 'numeric' };
+    return new Date(date).toLocaleDateString(undefined, options);
+  };
+
+  const deleteMoodLog = async (logId) => {
+    try {
+      const response = await fetch(`http://localhost:5000/mood-logs/${logId}`, {
+        method: 'DELETE',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+        },
+      });
+  
+      if (!response.ok) {
+        throw new Error('Error deleting mood log');
+      }
+  
+      // Refresh the mood logs list or handle success
+      fetchMoodLogs(); // Call the function to refresh logs
+    } catch (error) {
+      console.error('Error deleting mood log:', error);
+    }
+  };
 
   // Function to fetch mood logs with optional date range filtering
   const fetchMoodLogs = async (startDate = '', endDate = '') => {
@@ -70,18 +95,21 @@ function ViewLog() {
       let url = `http://localhost:5000/mood-logs?userId=${userId}`;
       if (startDate) url += `&startDate=${startDate}`;
       if (endDate) url += `&endDate=${endDate}`;
-
+  
+      console.log('Fetching mood logs with URL:', url); // Log the URL being fetched
+  
       const response = await fetch(url, {
         headers: {
           'Authorization': `Bearer ${token}`,
         },
       });
-
+  
       if (!response.ok) {
         throw new Error('Error fetching mood logs');
       }
-
+  
       const data = await response.json();
+      console.log('Fetched data:', data); // Log the fetched data
       data.sort((a, b) => new Date(b.date + ' ' + b.time) - new Date(a.date + ' ' + a.time));
       setMoodLogs(data);
       setLoading(false);
@@ -91,35 +119,7 @@ function ViewLog() {
       setLoading(false);
     }
   };
-
-  // Function to delete a mood log
-  const deleteMoodLog = async (logId) => {
-    try {
-      const response = await fetch(`http://localhost:5000/mood-logs/${logId}`, {
-        method: 'DELETE',
-        headers: {
-          'Authorization': `Bearer ${token}`,
-        },
-      });
-
-      if (!response.ok) {
-        throw new Error('Error deleting mood log');
-      }
-
-      // Update the state to remove the deleted log from the list
-      setMoodLogs(moodLogs.filter(log => log.id !== logId));
-    } catch (error) {
-      console.error('Error deleting mood log:', error);
-      setError(error.message);
-    }
-  };
-
-  // Function to format the date into a short form
-  const formatDate = (dateStr) => {
-    const options = { year: 'numeric', month: 'short', day: 'numeric' };
-    return new Date(dateStr).toLocaleDateString(undefined, options);
-  };
-
+  
   // Function to handle the date range filter
   const handleFilter = () => {
     fetchMoodLogs(startDate, endDate);
