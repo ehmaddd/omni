@@ -1,0 +1,41 @@
+.nav-bar {
+  background: #ffffff; /* White background */
+  padding: 10px 20px; /* Padding around the navbar */
+  border-radius: 8px; /* Slightly rounded corners */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  display: flex; /* Use flexbox for layout */
+  justify-content: center; /* Center content horizontally */
+  border: 1px solid #e0e0e0; /* Light border for separation */
+}
+
+.nav-list {
+  display: flex; /* Align items in a row */
+  list-style: none; /* Remove default list styling */
+  margin: 0;
+  padding: 0;
+}
+
+.nav-item {
+  margin: 0 12px; /* Space between items */
+}
+
+.nav-link {
+  color: #333333; /* Dark gray text color */
+  text-decoration: none; /* Remove underline */
+  padding: 8px 12px; /* Padding for clickable area */
+  border-radius: 20px; /* Rounded buttons */
+  font-size: 14px; /* Adjust font size */
+  font-weight: 500; /* Medium weight text */
+  transition: background-color 0.3s ease, color 0.3s ease, transform 0.2s ease; /* Smooth effects */
+}
+
+.nav-link:hover {
+  background-color: #f0f0f0; /* Light gray background on hover */
+  color: #007bff; /* Blue color text on hover */
+  transform: scale(1.05); /* Slightly scale up on hover */
+}
+
+.nav-link.active {
+  background-color: #007bff; /* Blue background for active link */
+  color: #ffffff; /* White text for active link */
+}

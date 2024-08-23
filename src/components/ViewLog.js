@@ -51,26 +51,32 @@ function ViewLog() {
     };
 
     verifyToken();
-  }, [token, navigate]);
+  }, [token, navigate, userId, storedUserId]);
 
   return (
     <>
       <DashNav />
       {token ? (
         <>
-          <h1>View Log</h1>
-          <p>Your User ID in View Log: {userId}</p>
-          <nav>
-            <ul>
-              <Link to={`/dashboard/${userId}/mood_tracker`}>Back</Link>
-              <li><Link to={`/dashboard/${userId}/mood_tracker/log`}>Log Mood</Link></li>
-              <li><Link to="summary">View Summary</Link></li>
+          <nav className="nav-bar">
+            <ul className="nav-list">
+              <li className="nav-item">
+                <Link className="nav-link" to={`/dashboard/${userId}/mood_tracker`}>Back</Link>
+              </li>
+              <li className="nav-item">
+                <Link className="nav-link" to={`/dashboard/${userId}/mood_tracker/log`}>Log Mood</Link>
+              </li>
+              <li className="nav-item">
+                <Link to="summary" className="nav-link">View Summary</Link>
+              </li>
             </ul>
           </nav>
-        <Outlet />
+          <Outlet />
+          <h1>View Log</h1>
+          <p>Your User ID in View Log: {userId}</p>
         </>
       ) : (
-        <p>Redirecting...</p>
+        <p>Loading...</p>
       )}
     </>
   );

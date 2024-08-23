@@ -17,6 +17,7 @@ import Signout from './Signout';
 import MoodTracker from './components/MoodTracker';
 import LogMood from './components/LogMood';
 import ViewLog from './components/ViewLog';
+import ViewSummary from './components/ViewSummary';
 import NotFound from './components/NotFound';
 
 function App() {
@@ -39,6 +40,7 @@ function App() {
         <Route path="/dashboard/:userId/mood_tracker" element={<MoodTracker />} />
         <Route path="/dashboard/:userId/mood_tracker/log" element={<LogMood />} />
         <Route path="/dashboard/:userId/mood_tracker/viewlog" element={<ViewLog />} />
+        <Route path="/dashboard/:userId/mood_tracker/summary" element={<ViewSummary />} />
         <Route path="/signout" element={<Signout />} />
         <Route path="*" element={<NotFound />} />
       </Routes>

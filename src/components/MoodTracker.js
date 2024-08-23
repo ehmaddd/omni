@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { useParams, Link, useNavigate, Outlet } from 'react-router-dom';
 import DashNav from '../components/DashNav';
+import './Nav.css';
 
 function MoodTracker() {
   const { userId } = useParams();
@@ -58,17 +59,23 @@ function MoodTracker() {
       {token ? (
         <>
           <DashNav />
+          <nav className="nav-bar">
+            <ul className="nav-list">
+              <li className="nav-item">
+                <Link to="log" className="nav-link">Log Mood</Link>
+              </li>
+              <li className="nav-item">
+                <Link to="viewlog" className="nav-link">View Logs</Link>
+              </li>
+              <li className="nav-item">
+                <Link to="summary" className="nav-link">View Summary</Link>
+              </li>
+            </ul>
+          </nav>
+          <Outlet />
           <h1>Mood Tracker</h1>
           <p>Your Mood Track User ID: {userId}</p>
           <Link to="/signout">Sign Out</Link>
-          <nav>
-            <ul>
-              <li><Link to="log">Log Mood</Link></li>
-              <li><Link to="viewlog">View Logs</Link></li>
-              <li><Link to="summary">View Summary</Link></li>
-            </ul>
-          </nav>
-        <Outlet />
         </>
       ) : (
         <p>Redirecting...</p>
