@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { useParams, Link, useNavigate, Outlet } from 'react-router-dom';
 import DashNav from '../components/DashNav';
+import MoodNav from './MoodNav';
 import './ViewLog.css'; // Import the new CSS file
 
 function ViewLog() {
@@ -61,19 +62,7 @@ function ViewLog() {
         <>
           <div className="nav-bar">
             <h1 className="nav-title">View Log</h1>
-            <nav className="nav-links">
-              <ul className="nav-list">
-                <li className="nav-item">
-                  <Link className="nav-link" to={`/dashboard/${userId}/mood_tracker`}>Back</Link>
-                </li>
-                <li className="nav-item">
-                  <Link className="nav-link" to={`/dashboard/${userId}/mood_tracker/log`}>Log Mood</Link>
-                </li>
-                <li className="nav-item">
-                  <Link className="nav-link" to={`/dashboard/${userId}/mood_tracker/summary`}>View Summary</Link>
-                </li>
-              </ul>
-            </nav>
+            <MoodNav id={userId} />
           </div>
           <Outlet />
           <p>Your User ID in View Log: {userId}</p>

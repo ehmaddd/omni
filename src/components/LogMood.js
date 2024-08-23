@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useParams, Link, Outlet } from 'react-router-dom';
 import DashNav from './DashNav';
+import MoodNav from './MoodNav';
 import './LogMood.css';
 
 function LogMood() {
@@ -42,19 +43,7 @@ function LogMood() {
       <DashNav />
       <div className="nav-bar">
         <h1 className="nav-title">Mood Logger</h1>
-        <nav className="nav-links">
-          <ul className="nav-list">
-            <li className="nav-item">
-              <Link className="nav-link" to={`/dashboard/${userId}/mood_tracker`}>Back</Link>
-            </li>
-            <li className="nav-item">
-              <Link className="nav-link" to={`/dashboard/${userId}/mood_tracker/viewlog`}>View Logs</Link>
-            </li>
-            <li className="nav-item">
-              <Link className="nav-link" to={`/dashboard/${userId}/mood_tracker/summary`}>View Summary</Link>
-            </li>
-          </ul>
-        </nav>
+        <MoodNav id={userId} />
         <Outlet />
       </div>
 

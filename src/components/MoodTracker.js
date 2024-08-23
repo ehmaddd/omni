@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { useParams, Link, useNavigate, Outlet } from 'react-router-dom';
 import DashNav from '../components/DashNav';
+import MoodNav from '../components/MoodNav';
 import './Nav.css'; // Ensure to import the CSS file
 
 function MoodTracker() {
@@ -61,23 +62,10 @@ function MoodTracker() {
           <DashNav />
           <div className="nav-bar">
             <h1 className="nav-title">Mood Tracker</h1>
-            <nav className="nav-links">
-              <ul className="nav-list">
-                <li className="nav-item">
-                  <Link className="nav-link" to="log">Log Mood</Link>
-                </li>
-                <li className="nav-item">
-                  <Link className="nav-link" to="viewlog">View Logs</Link>
-                </li>
-                <li className="nav-item">
-                  <Link className="nav-link" to="summary">View Summary</Link>
-                </li>
-              </ul>
-            </nav>
+            <MoodNav id={userId} />
           </div>
           <Outlet />
           <p>Your Mood Track User ID: {userId}</p>
-          <Link to="/signout" className="signout-link">Sign Out</Link>
         </>
       ) : (
         <p>Redirecting...</p>

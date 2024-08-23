@@ -68,6 +68,8 @@ p {
 .nav-link:focus {
   color: orange !important; /* White text color on hover/focus */
   text-decoration: none !important; /* Ensure no underline on hover/focus */
+  border: 1px solid orange;
+  border-radius: 8px;
 }
 
 .nav-link:active {
@@ -77,4 +79,12 @@ p {
 
 .nav-link:visited {
   color: #0056b3; /* Consistent color for visited links */
+}
+
+.trigger-dropdown {
+  width: 100%; /* Ensure full width */
+  padding: 0.5rem; /* Add padding for better appearance */
+  border: 1px solid #ccc; /* Match border style with other form elements */
+  border-radius: 0.25rem; /* Match border radius with other form elements */
+  background-color: #f9f9f9; /* Match background color with other form elements */
 }
