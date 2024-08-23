@@ -67,7 +67,6 @@ function Dashboard() {
           <div>
             <h1>Welcome to your Dashboard</h1>
             <p>Your Dashboard User ID: {userId}</p>
-            <Link to="/signout">Sign Out</Link>
           </div>
         </>
       ) : (

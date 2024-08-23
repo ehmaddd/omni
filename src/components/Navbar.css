@@ -1,3 +1,12 @@
+.signout-button {
+  background-color: red !important;
+  font-weight: bold;
+}
+
+.signout-button:hover {
+  color: white !important;
+}
+
 /* Navbar Container */
 .navbar {
   background-color: #333;

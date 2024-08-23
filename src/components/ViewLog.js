@@ -67,7 +67,7 @@ function ViewLog() {
                 <Link className="nav-link" to={`/dashboard/${userId}/mood_tracker/log`}>Log Mood</Link>
               </li>
               <li className="nav-item">
-                <Link to="summary" className="nav-link">View Summary</Link>
+              <Link className="nav-link" to={`/dashboard/${userId}/mood_tracker/summary`}>View Summary</Link>
               </li>
             </ul>
           </nav>

@@ -54,7 +54,7 @@ function LogMood() {
             <Link className="nav-link" to={`/dashboard/${userId}/mood_tracker/viewlog`}>View Logs</Link>
           </li>
           <li className="nav-item">
-            <Link className="nav-link" to="summary">View Summary</Link>
+            <Link className="nav-link" to={`/dashboard/${userId}/mood_tracker/summary`}>View Summary</Link>
           </li>
         </ul>
         <Outlet />

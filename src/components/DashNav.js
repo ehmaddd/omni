@@ -26,6 +26,9 @@ const DashNav = () => {
         <li>
           <Link to={`/dashboard/${userId}/todo`}>ToDo List</Link>
         </li>
+        <li>
+          <Link to="/signout" class="signout-button">Sign Out</Link>
+        </li>
       </ul>
     </nav>
   );
