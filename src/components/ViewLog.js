@@ -11,10 +11,13 @@ function ViewLog() {
   const navigate = useNavigate();
   const [moodLogs, setMoodLogs] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null); // Added error state
+  const [error, setError] = useState(null);
+
+  // State for date range filter
+  const [startDate, setStartDate] = useState('');
+  const [endDate, setEndDate] = useState('');
 
   useEffect(() => {
-    // Redirect if no token is present
     if (!token) {
       console.log('No token found, redirecting to login');
       navigate('/login');
@@ -29,7 +32,6 @@ function ViewLog() {
       return;
     }
 
-    // Optionally, verify token validity with your backend
     const verifyToken = async () => {
       try {
         const response = await fetch('http://localhost:5000/verify-token', {
@@ -59,60 +61,68 @@ function ViewLog() {
       }
     };
 
-    // Fetch mood logs from backend
-    const fetchMoodLogs = async () => {
-      try {
-        const response = await fetch(`http://localhost:5000/mood-logs?userId=${userId}`, {
-          headers: {
-            'Authorization': `Bearer ${token}`,
-          },
-        });
-
-        if (!response.ok) {
-          throw new Error('Error fetching mood logs');
-        }
-
-        const data = await response.json();
-        // Sort logs to show the most recent ones first
-        data.sort((a, b) => new Date(b.date + ' ' + b.time) - new Date(a.date + ' ' + a.time));
-        setMoodLogs(data);
-        setLoading(false);
-      } catch (error) {
-        console.error('Error fetching mood logs:', error);
-        setError(error.message); // Set error message
-        setLoading(false);
-      }
-    };
-
-    // Delete a mood log
-    const deleteMoodLog = async (logId) => {
-      try {
-        const response = await fetch(`http://localhost:5000/mood-logs/${logId}`, {
-          method: 'DELETE',
-          headers: {
-            'Authorization': `Bearer ${token}`,
-          },
-        });
-
-        if (!response.ok) {
-          throw new Error('Error deleting mood log');
-        }
-
-        // Remove deleted log from the state
-        setMoodLogs(moodLogs.filter(log => log.id !== logId));
-      } catch (error) {
-        console.error('Error deleting mood log:', error);
-        setError(error.message); // Set error message
-      }
-    };
-
     verifyToken();
-  }, [token, navigate, userId, storedUserId, moodLogs]);
+  }, [token, navigate, userId, storedUserId]);
+
+  // Function to fetch mood logs with optional date range filtering
+  const fetchMoodLogs = async (startDate = '', endDate = '') => {
+    try {
+      let url = `http://localhost:5000/mood-logs?userId=${userId}`;
+      if (startDate) url += `&startDate=${startDate}`;
+      if (endDate) url += `&endDate=${endDate}`;
+
+      const response = await fetch(url, {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error('Error fetching mood logs');
+      }
+
+      const data = await response.json();
+      data.sort((a, b) => new Date(b.date + ' ' + b.time) - new Date(a.date + ' ' + a.time));
+      setMoodLogs(data);
+      setLoading(false);
+    } catch (error) {
+      console.error('Error fetching mood logs:', error);
+      setError(error.message);
+      setLoading(false);
+    }
+  };
+
+  // Function to delete a mood log
+  const deleteMoodLog = async (logId) => {
+    try {
+      const response = await fetch(`http://localhost:5000/mood-logs/${logId}`, {
+        method: 'DELETE',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error('Error deleting mood log');
+      }
+
+      // Update the state to remove the deleted log from the list
+      setMoodLogs(moodLogs.filter(log => log.id !== logId));
+    } catch (error) {
+      console.error('Error deleting mood log:', error);
+      setError(error.message);
+    }
+  };
 
   // Function to format the date into a short form
   const formatDate = (dateStr) => {
     const options = { year: 'numeric', month: 'short', day: 'numeric' };
     return new Date(dateStr).toLocaleDateString(undefined, options);
+  };
+
+  // Function to handle the date range filter
+  const handleFilter = () => {
+    fetchMoodLogs(startDate, endDate);
   };
 
   return (
@@ -121,7 +131,7 @@ function ViewLog() {
       {loading ? (
         <p>Loading...</p>
       ) : error ? (
-        <p>Error: {error}</p> // Display error message
+        <p>Error: {error}</p>
       ) : (
         <>
           <div className="nav-bar">
@@ -129,6 +139,23 @@ function ViewLog() {
             <MoodNav id={userId} />
           </div>
           <Outlet />
+          <div className="filter-container">
+            <label htmlFor="startDate">From:</label>
+            <input
+              id="startDate"
+              type="date"
+              value={startDate}
+              onChange={(e) => setStartDate(e.target.value)}
+            />
+            <label htmlFor="endDate">To:</label>
+            <input
+              id="endDate"
+              type="date"
+              value={endDate}
+              onChange={(e) => setEndDate(e.target.value)}
+            />
+            <button onClick={handleFilter}>Filter</button>
+          </div>
           <div className="mood-logs-container">
             {moodLogs.length > 0 ? (
               <table className="mood-logs-table">
@@ -155,6 +182,7 @@ function ViewLog() {
                       <td>
                         <button 
                           className="delete-button"
+                          onClick={() => deleteMoodLog(log.id)}
                         >
                           Delete
                         </button>
