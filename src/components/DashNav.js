@@ -21,7 +21,7 @@ const DashNav = () => {
           <Link to={`/dashboard/${userId}/mood_tracker`}>Mood Tracker</Link>
         </li>
         <li>
-          <Link to={`/dashboard/${userId}/fitness`}>Fitness Section</Link>
+          <Link to={`/dashboard/${userId}/fitness_tracker`}>Fitness Section</Link>
         </li>
         <li>
           <Link to={`/dashboard/${userId}/todo`}>ToDo List</Link>

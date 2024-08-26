@@ -1,4 +1,8 @@
 /* NavLink.css */
+.nav-links {
+  margin-top: 0px !important;
+  margin-bottom: 0px !important;
+}
 
 /* Style for navigation links */
 .nav-link {
@@ -23,9 +27,5 @@
   .nav-link:active {
     color: #003d80; /* Even darker shade on click */
     background-color: #0056b3; /* Darker shade of primary color on active */
-  }
-  
-  .nav-link:visited {
-    color: #0056b3; /* Consistent color for visited links */
   }
   

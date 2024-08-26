@@ -1,0 +1,44 @@
+/* FitNav.css */
+
+/* Container for navigation links */
+.nav-links {
+  display: flex;
+  justify-content: flex-end; /* Align items to the right */
+  background-color: #f8f9fa; /* Light background color */
+  padding: 10px;
+}
+
+.nav-list {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+}
+
+.nav-item {
+  margin-left: 15px; /* Space between each item */
+}
+
+.nav-link {
+  text-decoration: none; /* Ensure no underline by default */
+  color: #007bff; /* Primary color */
+  font-weight: 500; /* Slightly bold text */
+  font-size: 1rem; /* Adjust font size as needed */
+  margin: 0 0.5rem; /* Space between links */
+  padding: 0.5rem 0.75rem; /* Vertical padding for better click area and some horizontal padding */
+  border-radius: 4px; /* Rounded corners */
+  transition: color 0.3s ease, background-color 0.3s ease; /* Smooth transition for hover effects */
+}
+
+.nav-link:hover,
+.nav-link:focus {
+  color: orange !important; /* Orange color on hover/focus */
+  text-decoration: none !important; /* Ensure no underline on hover/focus */
+  border: 1px solid orange;
+  border-radius: 8px;
+}
+
+.nav-link:active {
+  color: #003d80; /* Even darker shade on click */
+  background-color: #0056b3; /* Darker shade of primary color on active */
+}

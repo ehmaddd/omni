@@ -5,7 +5,6 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1rem;
   background-color: #f8f9fa;
   border-bottom: 1px solid #e0e0e0;
 }
@@ -75,10 +74,6 @@ p {
 .nav-link:active {
   color: #003d80; /* Even darker shade on click */
   background-color: #0056b3; /* Darker shade of primary color on active */
-}
-
-.nav-link:visited {
-  color: #0056b3; /* Consistent color for visited links */
 }
 
 .trigger-dropdown {
