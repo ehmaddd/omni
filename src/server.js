@@ -199,7 +199,6 @@ app.post('/create_profile', async (req, res) => {
   return result;
 }
 
-  res.status(200).json({message: "All well"});
   // Validate required fields
   if (!user_id || !age || !height || !weight || !blood_group || !eye_sight_left || !eye_sight_right) {
     return res.status(400).json({ message: 'Missing required fields' });

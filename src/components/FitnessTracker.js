@@ -21,7 +21,7 @@ function FitnessTracker() {
     disability: false,
     heart_problem: false,
     diabetes: false,
-    kidney_issue: false, // Add this line
+    kidney_issue: false,
   });
 
   useEffect(() => {
@@ -65,6 +65,10 @@ function FitnessTracker() {
     fetchProfile();
   }, [userId, token, navigate]);
 
+  const showProfile = () => {
+    console.log(profile);
+  }
+
   const handleInputChange = (e) => {
     const { name, value, type, checked } = e.target;
     setFormData({
@@ -99,8 +103,6 @@ function FitnessTracker() {
       kidney_issue: formData.kidney_issue,
     };
   
-    console.log('Request Payload:', requestBody); // Log the payload for debugging
-  
     try {
       const response = await fetch('http://localhost:5000/create_profile', {
         method: 'POST',
@@ -114,6 +116,7 @@ function FitnessTracker() {
       if (response.ok) {
         const createdProfile = await response.json();
         setProfile(createdProfile);
+        showProfile();
       } else {
         const errorResponse = await response.json();
         console.error('Failed to create or update profile:', errorResponse);

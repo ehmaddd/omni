@@ -7,9 +7,6 @@ const Nav = () => {
     <nav className="navbar">
       <ul className="nav-ul">
         <li>
-          <Link to="/">Calculator</Link>
-        </li>
-        <li>
           <Link to="/quote">Quote</Link>
         </li>
         <li>
