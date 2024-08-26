@@ -170,6 +170,65 @@ app.delete('/mood-logs/:id', async (req, res) => {
 
 // MOOD END ---------------------------------------
 
+// Define a new route for storing health data
+app.post('/create_profile', async (req, res) => {
+  const {
+    user_id,
+    age,
+    height,
+    weight,
+    blood_group,
+    eye_sight_left,
+    eye_sight_right,
+    disability,
+    heart_problem,
+    diabetes,
+    kidney_issue
+  } = req.body;
+
+  async function createOrUpdateProfile(profileData) {
+    // Assuming you save profile data to the database
+    const { user_id, age, height, weight, blood_group, eye_sight_left, eye_sight_right, disability, heart_problem, diabetes, kidney_issue } = profileData;
+    
+    // Example logic: update the profile if it exists or create a new one
+    const result = await pool.query(
+      `INSERT INTO health_profile (user_id, age, height, weight, blood_group, eye_sight_left, eye_sight_right, disability, heart_problem, diabetes, kidney_issue)
+       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)`,
+      [user_id, age, height, weight, blood_group, eye_sight_left, eye_sight_right, disability, heart_problem, diabetes, kidney_issue]
+  );
+  return result;
+}
+
+  res.status(200).json({message: "All well"});
+  // Validate required fields
+  if (!user_id || !age || !height || !weight || !blood_group || !eye_sight_left || !eye_sight_right) {
+    return res.status(400).json({ message: 'Missing required fields' });
+  }
+
+  try {
+    // Process the profile creation or update here
+    // Example: Save to database or perform business logic
+    // Assuming you have a function `createOrUpdateProfile`
+    await createOrUpdateProfile({
+      user_id,
+      age,
+      height,
+      weight,
+      blood_group,
+      eye_sight_left,
+      eye_sight_right,
+      disability,
+      heart_problem,
+      diabetes,
+      kidney_issue
+    });
+
+    res.status(200).json({ message: 'Profile created or updated successfully' });
+  } catch (error) {
+    console.error('Error saving health data:', error);
+    res.status(500).json({ message: 'Error saving health data' });
+  }
+});
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);

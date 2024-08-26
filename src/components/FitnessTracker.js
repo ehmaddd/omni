@@ -29,7 +29,7 @@ function FitnessTracker() {
       navigate('/login');
       return;
     }
-
+  
     const fetchProfile = async () => {
       try {
         const response = await fetch(`http://localhost:5000/health_profile/${userId}`, {
@@ -42,9 +42,16 @@ function FitnessTracker() {
           if (data) {
             setProfile(data);
             setFormData({
-              ...data,
-              eye_sight_left: parseInt(data.eye_sight_left, 10),
-              eye_sight_right: parseInt(data.eye_sight_right, 10),
+              age: data.age || '',
+              height: data.height || '',
+              weight: data.weight || '',
+              blood_group: data.blood_group || '',
+              eye_sight_left: data.eye_sight_left || '',
+              eye_sight_right: data.eye_sight_right || '',
+              disability: data.disability || false,
+              heart_problem: data.heart_problem || false,
+              diabetes: data.diabetes || false,
+              kidney_issue: data.kidney_issue || false,
             });
           }
         }
@@ -54,7 +61,7 @@ function FitnessTracker() {
         setIsLoading(false);
       }
     };
-
+  
     fetchProfile();
   }, [userId, token, navigate]);
 
@@ -76,23 +83,43 @@ function FitnessTracker() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+  
+    // Prepare request body with type conversions
+    const requestBody = {
+      user_id: userId,
+      age: formData.age ? parseInt(formData.age, 10) : null,
+      height: formData.height ? parseFloat(formData.height).toFixed(2) : null,
+      weight: formData.weight ? parseFloat(formData.weight).toFixed(2) : null,
+      blood_group: formData.blood_group,
+      eye_sight_left: formData.eye_sight_left, // Keep as string
+      eye_sight_right: formData.eye_sight_right, // Keep as string
+      disability: formData.disability,
+      heart_problem: formData.heart_problem,
+      diabetes: formData.diabetes,
+      kidney_issue: formData.kidney_issue,
+    };
+  
+    console.log('Request Payload:', requestBody); // Log the payload for debugging
+  
     try {
-      const response = await fetch(`http://localhost:5000/health_profile`, {
+      const response = await fetch('http://localhost:5000/create_profile', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${token}`,
         },
-        body: JSON.stringify({ user_id: userId, ...formData }),
+        body: JSON.stringify(requestBody),
       });
+  
       if (response.ok) {
         const createdProfile = await response.json();
         setProfile(createdProfile);
       } else {
-        console.error('Failed to create profile');
+        const errorResponse = await response.json();
+        console.error('Failed to create or update profile:', errorResponse);
       }
     } catch (error) {
-      console.error('Error creating profile:', error);
+      console.error('Error creating or updating profile:', error);
     }
   };
 
@@ -204,7 +231,7 @@ function FitnessTracker() {
                 </div>
               </div>
             </div>
-            <button type="submit" className="submit-btn">Create Profile</button>
+            <button type="submit" className="submit-btn">Save Profile</button>
           </form>
         )}
       </div>
