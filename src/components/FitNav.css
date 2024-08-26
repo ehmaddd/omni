@@ -3,9 +3,15 @@
 /* Container for navigation links */
 .nav-links {
   display: flex;
-  justify-content: flex-end; /* Align items to the right */
+  justify-content: space-between; /* Space between title and links */
+  align-items: center; /* Vertically center the content */
   background-color: #f8f9fa; /* Light background color */
   padding: 10px;
+}
+
+.page-title {
+  font-size: 1.5rem; /* Adjust font size for the page title */
+  color: black; /* Primary color for the title */
 }
 
 .nav-list {
