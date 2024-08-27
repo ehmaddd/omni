@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import DashNav from './DashNav';
 import Chart from 'react-apexcharts';
+import { format } from 'date-fns';
 import './TrackSugar.css'; // Add a CSS file for the TrackSugar styles
 
 function TrackSugar() {
@@ -149,7 +150,7 @@ function TrackSugar() {
                   id: 'random-sugar-chart',
                 },
                 xaxis: {
-                  categories: chartData.random.map(entry => entry.date),
+                  categories: chartData.random.map(entry => format(new Date(entry.date), 'dd/MM')),
                   title: {
                     text: 'Date',
                   },
@@ -182,7 +183,7 @@ function TrackSugar() {
                   id: 'fasting-sugar-chart',
                 },
                 xaxis: {
-                  categories: chartData.fasting.map(entry => entry.date),
+                  categories: chartData.fasting.map(entry => format(new Date(entry.date), 'dd/MM')),
                   title: {
                     text: 'Date',
                   },
