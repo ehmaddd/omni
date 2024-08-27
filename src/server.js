@@ -253,6 +253,26 @@ app.get('/health_profile/:id', async (req, res) => {
   }
 });
 
+app.post('/record_sugar', async (req, res) => {
+  const { user_id, date, time, type, sugar_level } = req.body;
+
+  if (!user_id || !date || !time || !type || sugar_level === undefined) {
+    return res.status(400).json({ message: 'Missing required fields' });
+  }
+
+  try {
+    await pool.query(
+      `INSERT INTO sugar_levels (user_id, date, time, type, sugar_level)
+       VALUES ($1, $2, $3, $4, $5)`,
+      [user_id, date, time, type, sugar_level]
+    );
+    res.status(201).json({ message: 'Sugar level recorded successfully' });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'Error recording sugar level' });
+  }
+});
+
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
