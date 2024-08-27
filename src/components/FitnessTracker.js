@@ -144,18 +144,22 @@ function FitnessTracker() {
 
       <div className="fitness-tracker-container">
       {profile ? (
+        <div className="profile-summary-container">
         <div className="profile-display">
-          <p><strong>Age:</strong> {profile.data[0].age} yrs</p>
-          <p><strong>Height:</strong> {profile.data[0].height} cm</p>
-          <p><strong>Weight:</strong> {profile.data[0].weight} kg</p>
-          <p><strong>Blood Group:</strong> {profile.data[0].blood_group}</p>
-          <p><strong>Eye Sight (Left):</strong> {profile.data[0].eye_sight_left}</p>
-          <p><strong>Eye Sight (Right):</strong> {profile.data[0].eye_sight_right}</p>
-          <p><strong>Disability:</strong> {profile.data[0].disability ? 'Yes' : 'No'}</p>
-          <p><strong>Heart Problem:</strong> {profile.data[0].heart_problem ? 'Yes' : 'No'}</p>
-          <p><strong>Diabetes:</strong> {profile.data[0].diabetes ? 'Yes' : 'No'}</p>
-          <p><strong>Kidney Issue:</strong> {profile.data[0].kidney_issue ? 'Yes' : 'No'}</p>
-        </div>
+          <h5>Summary</h5>
+          <div className="profile-grid">
+            <div><strong>Age:</strong> {profile.data[0].age} yrs</div>
+            <div><strong>Height:</strong> {profile.data[0].height} cm</div>
+            <div><strong>Weight:</strong> {profile.data[0].weight} kg</div>
+            <div><strong>Blood Group:</strong> {profile.data[0].blood_group}</div>
+            <div><strong>Eye Sight (Left):</strong> {profile.data[0].eye_sight_left}</div>
+            <div><strong>Eye Sight (Right):</strong> {profile.data[0].eye_sight_right}</div>
+            <div><strong>Disability:</strong> {profile.data[0].disability ? 'Yes' : 'No'}</div>
+            <div><strong>Heart Problem:</strong> {profile.data[0].heart_problem ? 'Yes' : 'No'}</div>
+            <div><strong>Diabetes:</strong> {profile.data[0].diabetes ? 'Yes' : 'No'}</div>
+            <div><strong>Kidney Issue:</strong> {profile.data[0].kidney_issue ? 'Yes' : 'No'}</div>
+          </div>
+        </div></div>
       ) : (
           <form onSubmit={handleSubmit} className="fitness-form">
             <div className="form-group">

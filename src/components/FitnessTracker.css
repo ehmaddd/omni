@@ -95,3 +95,35 @@
   padding: 10px;
   box-sizing: border-box; /* Ensures padding and border are included in the element's total width */
 }
+
+.profile-summary-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 20px;
+  background-color: #f9f9f9;
+  width: 50%;
+}
+
+.profile-display {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.profile-display h2 {
+  margin-bottom: 15px;
+}
+
+.profile-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+
+.profile-grid div {
+  padding: 10px;
+  background-color: #f0f0f0;
+  border-radius: 4px;
+}
