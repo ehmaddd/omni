@@ -24,51 +24,49 @@ function FitnessTracker() {
     kidney_issue: false,
   });
 
+  // Function to fetch profile data
+  const fetchProfile = async () => {
+    try {
+      const response = await fetch(`http://localhost:5000/health_profile/${userId}`, {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+        },
+      });
+      if (response.ok) {
+        const data = await response.json();
+        setProfile(data);
+        setFormData({
+          age: data.age || '',
+          height: data.height || '',
+          weight: data.weight || '',
+          blood_group: data.blood_group || '',
+          eye_sight_left: data.eye_sight_left || '',
+          eye_sight_right: data.eye_sight_right || '',
+          disability: data.disability || false,
+          heart_problem: data.heart_problem || false,
+          diabetes: data.diabetes || false,
+          kidney_issue: data.kidney_issue || false,
+        });
+      } else {
+        console.error('Failed to fetch profile:', await response.text());
+      }
+    } catch (error) {
+      console.error('Failed to fetch profile:', error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  // Fetch profile data when component mounts
   useEffect(() => {
     if (!token) {
       navigate('/login');
       return;
     }
-  
-    const fetchProfile = async () => {
-      try {
-        const response = await fetch(`http://localhost:5000/health_profile/${userId}`, {
-          headers: {
-            'Authorization': `Bearer ${token}`,
-          },
-        });
-        if (response.ok) {
-          const data = await response.json();
-          if (data) {
-            setProfile(data);
-            setFormData({
-              age: data.age || '',
-              height: data.height || '',
-              weight: data.weight || '',
-              blood_group: data.blood_group || '',
-              eye_sight_left: data.eye_sight_left || '',
-              eye_sight_right: data.eye_sight_right || '',
-              disability: data.disability || false,
-              heart_problem: data.heart_problem || false,
-              diabetes: data.diabetes || false,
-              kidney_issue: data.kidney_issue || false,
-            });
-          }
-        }
-      } catch (error) {
-        console.error('Failed to fetch profile:', error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-  
-    fetchProfile();
+    fetchProfile(); // Call the fetchProfile function to load the profile data
   }, [userId, token, navigate]);
 
-  const showProfile = () => {
-    console.log(profile);
-  }
-
+  // Handle form data changes
   const handleInputChange = (e) => {
     const { name, value, type, checked } = e.target;
     setFormData({
@@ -77,6 +75,7 @@ function FitnessTracker() {
     });
   };
 
+  // Handle slider changes
   const handleSliderChange = (e) => {
     const { name, value } = e.target;
     setFormData({
@@ -85,6 +84,7 @@ function FitnessTracker() {
     });
   };
 
+  // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
   
@@ -115,8 +115,10 @@ function FitnessTracker() {
   
       if (response.ok) {
         const createdProfile = await response.json();
-        setProfile(createdProfile);
-        showProfile();
+        setProfile(createdProfile); // Update state with new profile data
+  
+        // Redirect to profile display or reset the form after successful submission
+        fetchProfile(); // Refresh profile data to ensure UI updates
       } else {
         const errorResponse = await response.json();
         console.error('Failed to create or update profile:', errorResponse);
@@ -141,20 +143,20 @@ function FitnessTracker() {
       </div>
 
       <div className="fitness-tracker-container">
-        {profile ? (
-          <div className="profile-display">
-            <p><strong>Age:</strong> {profile.age}</p>
-            <p><strong>Height:</strong> {profile.height} cm</p>
-            <p><strong>Weight:</strong> {profile.weight} kg</p>
-            <p><strong>Blood Group:</strong> {profile.blood_group}</p>
-            <p><strong>Eye Sight (Left):</strong> {profile.eye_sight_left}</p>
-            <p><strong>Eye Sight (Right):</strong> {profile.eye_sight_right}</p>
-            <p><strong>Disability:</strong> {profile.disability ? 'Yes' : 'No'}</p>
-            <p><strong>Heart Problem:</strong> {profile.heart_problem ? 'Yes' : 'No'}</p>
-            <p><strong>Diabetes:</strong> {profile.diabetes ? 'Yes' : 'No'}</p>
-            <p><strong>Kidney Issue:</strong> {profile.kidney_issue ? 'Yes' : 'No'}</p>
-          </div>
-        ) : (
+      {profile ? (
+        <div className="profile-display">
+          <p><strong>Age:</strong> {profile.data[0].age} yrs</p>
+          <p><strong>Height:</strong> {profile.data[0].height} cm</p>
+          <p><strong>Weight:</strong> {profile.data[0].weight} kg</p>
+          <p><strong>Blood Group:</strong> {profile.data[0].blood_group}</p>
+          <p><strong>Eye Sight (Left):</strong> {profile.data[0].eye_sight_left}</p>
+          <p><strong>Eye Sight (Right):</strong> {profile.data[0].eye_sight_right}</p>
+          <p><strong>Disability:</strong> {profile.data[0].disability ? 'Yes' : 'No'}</p>
+          <p><strong>Heart Problem:</strong> {profile.data[0].heart_problem ? 'Yes' : 'No'}</p>
+          <p><strong>Diabetes:</strong> {profile.data[0].diabetes ? 'Yes' : 'No'}</p>
+          <p><strong>Kidney Issue:</strong> {profile.data[0].kidney_issue ? 'Yes' : 'No'}</p>
+        </div>
+      ) : (
           <form onSubmit={handleSubmit} className="fitness-form">
             <div className="form-group">
               <label>Age:</label>
@@ -214,31 +216,30 @@ function FitnessTracker() {
                 <span className="slider-value">{formData.eye_sight_right}</span>
               </div>
             </div>
-            <div className="form-group">
-              <div className="checkbox-group">
-                <div className="checkbox-item">
-                  <input type="checkbox" name="heart_problem" checked={formData.heart_problem} onChange={handleInputChange} />
-                  <label>Heart Problem</label>
-                </div>
-                <div className="checkbox-item">
-                  <input type="checkbox" name="diabetes" checked={formData.diabetes} onChange={handleInputChange} />
-                  <label>Diabetes</label>
-                </div>
-                <div className="checkbox-item">
-                  <input type="checkbox" name="disability" checked={formData.disability} onChange={handleInputChange} />
-                  <label>Physical Disability</label>
-                </div>
-                <div className="checkbox-item">
-                  <input type="checkbox" name="kidney_issue" checked={formData.kidney_issue} onChange={handleInputChange} />
-                  <label>Kidney Issue</label>
-                </div>
+            <div className="checkbox-group">
+              <div className="checkbox-item">
+                <input type="checkbox" name="heart_problem" checked={formData.heart_problem} onChange={handleInputChange} />
+                <label>Heart Problem</label>
+              </div>
+              <div className="checkbox-item">
+                <input type="checkbox" name="diabetes" checked={formData.diabetes} onChange={handleInputChange} />
+                <label>Diabetes</label>
+              </div>
+              <div className="checkbox-item">
+                <input type="checkbox" name="kidney_issue" checked={formData.kidney_issue} onChange={handleInputChange} />
+                <label>Kidney Issue</label>
+              </div>
+              <div className="checkbox-item">
+                <input type="checkbox" name="disability" checked={formData.disability} onChange={handleInputChange} />
+                <label>Disability</label>
               </div>
             </div>
-            <button type="submit" className="submit-btn">Save Profile</button>
+            <button type="submit" className="submit-button">Submit</button>
           </form>
         )}
       </div>
     </div>
+    
   );
 }
 

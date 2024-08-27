@@ -229,6 +229,30 @@ app.post('/create_profile', async (req, res) => {
   }
 });
 
+app.get('/health_profile/:id', async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const result = await pool.query(
+      'SELECT * FROM health_profile WHERE user_id = $1',
+      [id]
+    );
+    
+    if (result.rowCount === 0) {
+      return res.status(404).json({ message: 'Health log not found' });
+    }
+    
+    // Sending the fetched data back to the frontend
+    res.json({
+      message: 'Health log fetched successfully',
+      data: result.rows, // Including the fetched data in the response
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'Error fetching health log' }); // Correcting the error message
+  }
+});
+
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });

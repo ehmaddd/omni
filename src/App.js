@@ -4,7 +4,6 @@ import './App.css';
 import Header from './components/Header';
 import Navbar from './components/Navbar';
 import DashNav from './components/DashNav';
-import Calculator from './components/Calculator';
 import Quote from './components/Quote';
 import Weather from './components/Weather';
 import Prayer from './components/Prayer';
@@ -20,6 +19,7 @@ import LogMood from './components/LogMood';
 import ViewLog from './components/ViewLog';
 import ViewSummary from './components/ViewSummary';
 import NotFound from './components/NotFound';
+import { CgLogIn } from 'react-icons/cg';
 
 function App() {
   const location = useLocation();
@@ -31,7 +31,7 @@ function App() {
       <Header />
       {!isDashboardPath && <Navbar />}
       <Routes>
-        <Route path="/" element={<Calculator />} />
+        <Route path="/" element={<CgLogIn />} />
         <Route path="/quote" element={<Quote />} />
         <Route path="/weather" element={<Weather />} />
         <Route path="/prayer" element={<Prayer />} />
