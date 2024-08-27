@@ -6,9 +6,10 @@ import './FitnessTracker.css'; // Add a CSS file for the fitness tracker styles
 
 function FitnessTracker() {
   const { userId } = useParams();
+  const storedUserId = localStorage.getItem('user');
   const token = localStorage.getItem('token');
   const navigate = useNavigate();
-  
+
   const [profile, setProfile] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [formData, setFormData] = useState({
@@ -57,14 +58,54 @@ function FitnessTracker() {
     }
   };
 
-  // Fetch profile data when component mounts
   useEffect(() => {
+    // Redirect if no token is present
     if (!token) {
+      console.log('No token found, redirecting to login');
       navigate('/login');
       return;
     }
-    fetchProfile(); // Call the fetchProfile function to load the profile data
-  }, [userId, token, navigate]);
+
+    // Check if the userId matches the storedUserId
+    if (userId !== storedUserId) {
+      localStorage.removeItem('token');
+      localStorage.removeItem('user');
+      sessionStorage.clear();
+      navigate('/login');
+      return;
+    }
+
+    // Optionally, verify token validity with your backend
+    const verifyToken = async () => {
+      try {
+        const response = await fetch('http://localhost:5000/verify-token', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`,
+          },
+        });
+        if (!response.ok) {
+          throw new Error('Token validation failed');
+        }
+        const result = await response.json();
+        console.log('Token verification result:', result);
+        if (!result.valid) {
+          localStorage.removeItem('token');
+          navigate('/login');
+        } else {
+          // Fetch profile data if token is valid
+          fetchProfile();
+        }
+      } catch (error) {
+        console.error('Token verification failed:', error);
+        localStorage.removeItem('token');
+        navigate('/login');
+      }
+    };
+
+    verifyToken();
+  }, [token, navigate, userId, storedUserId]);
 
   // Handle form data changes
   const handleInputChange = (e) => {
@@ -193,61 +234,36 @@ function FitnessTracker() {
             </div>
             <div className="form-group">
               <label>Eye Sight (Left):</label>
-              <div className="slider-container">
-                <input 
-                  type="range" 
-                  name="eye_sight_left" 
-                  min="0" 
-                  max="20" 
-                  step="0.1" 
-                  value={formData.eye_sight_left} 
-                  onChange={handleSliderChange} 
-                  className="slider"
-                />
-                <span className="slider-value">{formData.eye_sight_left}</span>
-              </div>
+              <input type="range" name="eye_sight_left" value={formData.eye_sight_left} min="-4" max="4" step="0.25" onChange={handleSliderChange} required />
+              <span>{formData.eye_sight_left}</span>
             </div>
             <div className="form-group">
               <label>Eye Sight (Right):</label>
-              <div className="slider-container">
-                <input 
-                  type="range" 
-                  name="eye_sight_right" 
-                  min="0" 
-                  max="20" 
-                  step="0.1" 
-                  value={formData.eye_sight_right} 
-                  onChange={handleSliderChange} 
-                  className="slider"
-                />
-                <span className="slider-value">{formData.eye_sight_right}</span>
-              </div>
+              <input type="range" name="eye_sight_right" value={formData.eye_sight_right} min="-4" max="4" step="0.25" onChange={handleSliderChange} required />
+              <span>{formData.eye_sight_right}</span>
             </div>
-            <div className="checkbox-group">
-              <div className="checkbox-item">
-                <input type="checkbox" name="heart_problem" checked={formData.heart_problem} onChange={handleInputChange} />
-                <label>Heart Problem</label>
-              </div>
-              <div className="checkbox-item">
-                <input type="checkbox" name="diabetes" checked={formData.diabetes} onChange={handleInputChange} />
-                <label>Diabetes</label>
-              </div>
-              <div className="checkbox-item">
-                <input type="checkbox" name="kidney_issue" checked={formData.kidney_issue} onChange={handleInputChange} />
-                <label>Kidney Issue</label>
-              </div>
-              <div className="checkbox-item">
-                <input type="checkbox" name="disability" checked={formData.disability} onChange={handleInputChange} />
-                <label>Disability</label>
-              </div>
+            <div className="form-group">
+              <label>Disability:</label>
+              <input type="checkbox" name="disability" checked={formData.disability} onChange={handleInputChange} />
             </div>
-            <button type="submit" className="submit-button">Submit</button>
+            <div className="form-group">
+              <label>Heart Problem:</label>
+              <input type="checkbox" name="heart_problem" checked={formData.heart_problem} onChange={handleInputChange} />
+            </div>
+            <div className="form-group">
+              <label>Diabetes:</label>
+              <input type="checkbox" name="diabetes" checked={formData.diabetes} onChange={handleInputChange} />
+            </div>
+            <div className="form-group">
+              <label>Kidney Issue:</label>
+              <input type="checkbox" name="kidney_issue" checked={formData.kidney_issue} onChange={handleInputChange} />
+            </div>
+            <button type="submit" className="btn-submit">Submit</button>
           </form>
         )}
       </div>
     </div>
   );
-  
 }
 
 export default FitnessTracker;

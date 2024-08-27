@@ -9,17 +9,17 @@ const FitNav = (props) => {
     <nav className="nav-links">
       <ul className="nav-list">
         <li className="nav-item">
-          <Link className="nav-link" to="/dashboard/track_sugar">Track Sugar</Link>
+          <Link className="nav-link" to={`/dashboard/${id}/fitness_tracker/track_sugar`}>Track Sugar</Link>
         </li>
         <li className="nav-item">
-          <Link className="nav-link" to="/dashboard/track_bp">Track BP</Link>
+          <Link className="nav-link" to={`/dashboard/${id}/fitness_tracker/track_bp`}>Track BP</Link>
         </li>
         <li className="nav-item">
-          <Link className="nav-link" to="/dashboard/track_weight">Track Weight</Link>
+          <Link className="nav-link" to={`/dashboard/${id}/fitness_tracker/track_weight`}>Track Weight</Link>
         </li>
         {isKidneyPatient && (
           <li className="nav-item">
-            <Link className="nav-link" to="/dashboard/track_creatinine">Track Creatinine</Link>
+            <Link className="nav-link" to={`/dashboard/${id}/fitness_tracker/track_creatinine`}>Track Creatinine</Link>
           </li>
         )}
       </ul>
