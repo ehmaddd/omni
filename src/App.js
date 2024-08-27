@@ -19,6 +19,7 @@ import LogMood from './components/LogMood';
 import ViewLog from './components/ViewLog';
 import ViewSummary from './components/ViewSummary';
 import NotFound from './components/NotFound';
+import TrackSugar from './components/TrackSugar';
 import { CgLogIn } from 'react-icons/cg';
 
 function App() {
