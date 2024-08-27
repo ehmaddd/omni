@@ -43,6 +43,7 @@ function App() {
         <Route path="/dashboard/:userId/mood_tracker/viewlog" element={<ViewLog />} />
         <Route path="/dashboard/:userId/mood_tracker/summary" element={<ViewSummary />} />
         <Route path="/dashboard/:userId/fitness_tracker" element={<FitnessTracker />} />
+        <Route path="/dashboard/:userId/fitness_tracker/track_sugar" element={<TrackSugar />} />
         <Route path="/signout" element={<Signout />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
