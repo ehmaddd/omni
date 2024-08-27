@@ -5,20 +5,15 @@ import { Chart as ChartJS, Title, Tooltip, Legend, BarElement, CategoryScale, Li
 
 ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale, ArcElement);
 
-const MoodSummaryPage = () => {
-  // Mock data for demonstration
-  const mockData = [
-    { triggers: ['Work', 'Stress'], valence: -1 },
-    { triggers: ['Exercise'], valence: 1 },
-    { triggers: ['Sleep', 'Food'], valence: 1 },
-    { triggers: [], valence: -1 },
-    { triggers: ['Work'], valence: -2 },
-  ];
+const MoodSummaryPage = ({ data }) => {
+  if (!Array.isArray(data) || data.length === 0) {
+    return <p>No data available</p>;
+  }
 
   // Aggregate trigger impact counts
-  const impactCounts = mockData.reduce((acc, log) => {
-    const impactColor = log.valence > 0 ? '#4caf50' : '#f44336';
-    const triggers = Array.isArray(log.triggers) ? log.triggers : [];
+  const impactCounts = data.reduce((acc, log) => {
+    const triggers = typeof log.triggers === 'string' ? log.triggers.split(', ') : [];
+    const impactColor = log.valence > 0 ? '#4caf50' : log.valence < 0 ? '#f44336' : '#ffeb3b'; // Neutral color for valence = 0
     triggers.forEach(trigger => {
       const key = `${trigger}_${impactColor}`;
       acc[key] = (acc[key] || 0) + 1;
@@ -26,6 +21,7 @@ const MoodSummaryPage = () => {
     return acc;
   }, {});
 
+  // Prepare data for the bar chart
   const labels = Object.keys(impactCounts).map(key => key.split('_')[0]);
   const dataCounts = Object.keys(impactCounts).map(key => impactCounts[key]);
   const backgroundColors = Object.keys(impactCounts).map(key => key.split('_')[1]);
@@ -39,14 +35,15 @@ const MoodSummaryPage = () => {
     }]
   };
 
+  // Prepare data for the pie chart
   const moodDistributionData = {
     labels: ['Positive', 'Neutral', 'Negative'],
     datasets: [{
       label: 'Mood Distribution',
       data: [
-        mockData.filter(log => log.valence > 0).length,
-        mockData.filter(log => log.valence === 0).length,
-        mockData.filter(log => log.valence < 0).length
+        data.filter(log => log.valence > 0).length,
+        data.filter(log => log.valence === 0).length,
+        data.filter(log => log.valence < 0).length
       ],
       backgroundColor: ['#4caf50', '#ffeb3b', '#f44336']
     }]
@@ -61,7 +58,11 @@ const MoodSummaryPage = () => {
           options={{
             indexAxis: 'x',
             scales: {
-              x: { beginAtZero: true }
+              x: { beginAtZero: true, title: { display: true, text: 'Triggers' } },
+              y: { title: { display: true, text: 'Count' } }
+            },
+            plugins: {
+              legend: { display: false }
             }
           }}
         />

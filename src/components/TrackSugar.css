@@ -40,3 +40,30 @@
   height: 400px;
   margin-bottom: 20px;
 }
+
+.sugar-form {
+  display: flex;
+  flex-wrap: wrap; /* Allows items to wrap to the next line if necessary */
+  gap: 10px; /* Adds spacing between form groups */
+}
+
+.form-group {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  flex: 1 1 200px; /* Ensures that form groups are flexible but don't grow too wide */
+}
+
+.form-group label {
+  margin-right: 10px; /* Adds space between label and input */
+  flex-basis: 120px; /* Fixed width for labels */
+}
+
+.form-group input,
+.form-group select {
+  flex: 1; /* Allows inputs and selects to take up the remaining space */
+}
+
+.btn-submit {
+  margin-top: 10px; /* Adds space above the submit button */
+}

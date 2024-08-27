@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import DashNav from './DashNav';
+import FitNav from './FitNav'; // Import FitNav
 import Chart from 'react-apexcharts';
 import { format } from 'date-fns';
 import './TrackSugar.css'; // Add a CSS file for the TrackSugar styles
@@ -114,31 +115,35 @@ function TrackSugar() {
   return (
     <div>
       <DashNav />
+      <div className="nav-bar">
+            <h1 className="nav-title">Track Sugar Level</h1>
+            <FitNav id={userId} />
+          </div>
       <div className="track-sugar-container">
-        <h1>Track Your Sugar Levels</h1>
 
-        <form onSubmit={handleSubmit} className="sugar-form">
-          <div className="form-group">
-            <label>Date:</label>
-            <input type="date" name="date" value={formData.date} onChange={handleInputChange} required />
-          </div>
-          <div className="form-group">
-            <label>Time:</label>
-            <input type="time" name="time" value={formData.time} onChange={handleInputChange} required />
-          </div>
-          <div className="form-group">
-            <label>Type:</label>
-            <select name="type" value={formData.type} onChange={handleInputChange} required>
-              <option value="Random">Random</option>
-              <option value="Fasting">Fasting</option>
-            </select>
-          </div>
-          <div className="form-group">
-            <label>Sugar Level:</label>
-            <input type="number" name="sugar_level" value={formData.sugar_level} step="0.1" onChange={handleInputChange} required />
-          </div>
-          <button type="submit" className="btn-submit">Submit</button>
-        </form>
+      <form onSubmit={handleSubmit} className="sugar-form">
+        <div className="form-group">
+          <label>Date:</label>
+          <input type="date" name="date" value={formData.date} onChange={handleInputChange} required />
+        </div>
+        <div className="form-group">
+          <label>Time:</label>
+          <input type="time" name="time" value={formData.time} onChange={handleInputChange} required />
+        </div>
+        <div className="form-group">
+          <label>Type:</label>
+          <select name="type" value={formData.type} onChange={handleInputChange} required>
+            <option value="Random">Random</option>
+            <option value="Fasting">Fasting</option>
+          </select>
+        </div>
+        <div className="form-group">
+          <label>Sugar Level:</label>
+          <input type="number" name="sugar_level" value={formData.sugar_level} step="0.1" onChange={handleInputChange} required />
+        </div>
+        <button type="submit" className="btn-submit">Submit</button>
+      </form>
+
 
         <div className="charts-container">
           <div className="chart">
