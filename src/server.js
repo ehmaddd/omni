@@ -229,6 +229,7 @@ app.post('/create_profile', async (req, res) => {
   }
 });
 
+// Record Sugar Levels
 app.get('/health_profile/:id', async (req, res) => {
   const { id } = req.params;
 
@@ -270,6 +271,39 @@ app.post('/record_sugar', async (req, res) => {
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: 'Error recording sugar level' });
+  }
+});
+
+// Fetch Sugar Levels
+app.get('/sugar_levels', async (req, res) => {
+  const { userId, startDate, endDate } = req.query;
+
+  if (!userId) {
+    return res.status(400).json({ message: 'User ID is required' });
+  }
+
+  try {
+    let query = 'SELECT * FROM sugar_levels WHERE user_id = $1';
+    const queryParams = [userId];
+
+    if (startDate && endDate) {
+      query += ' AND date BETWEEN $2 AND $3';
+      queryParams.push(startDate, endDate);
+    } else if (startDate) {
+      query += ' AND date >= $2';
+      queryParams.push(startDate);
+    } else if (endDate) {
+      query += ' AND date <= $2';
+      queryParams.push(endDate);
+    }
+
+    query += ' ORDER BY date DESC, time DESC';
+
+    const result = await pool.query(query, queryParams);
+    res.json(result.rows);
+  } catch (err) {
+    console.error('Error fetching sugar levels:', err);
+    res.status(500).json({ message: 'Error fetching sugar levels' });
   }
 });
 
