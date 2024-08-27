@@ -144,7 +144,7 @@ function TrackSugar() {
           <div className="chart">
             <h2>Random Sugar Levels</h2>
             <Chart
-              type="bar"
+              type="line"
               options={{
                 chart: {
                   id: 'random-sugar-chart',
@@ -153,6 +153,9 @@ function TrackSugar() {
                   categories: chartData.random.map(entry => format(new Date(entry.date), 'dd/MM')),
                   title: {
                     text: 'Date',
+                  },
+                  labels: {
+                    rotate: -45, // Rotate labels if needed
                   },
                 },
                 yaxis: {
@@ -164,6 +167,13 @@ function TrackSugar() {
                   text: 'Random Sugar Levels',
                   align: 'center',
                 },
+                stroke: {
+                  curve: 'smooth',
+                  width: 2,
+                },
+                markers: {
+                  size: 4,
+                },
               }}
               series={[
                 {
@@ -171,13 +181,15 @@ function TrackSugar() {
                   data: chartData.random.map(entry => entry.level),
                 },
               ]}
+              width="100%"
+              height="400px"
             />
           </div>
 
           <div className="chart">
             <h2>Fasting Sugar Levels</h2>
             <Chart
-              type="bar"
+              type="line"
               options={{
                 chart: {
                   id: 'fasting-sugar-chart',
@@ -186,6 +198,9 @@ function TrackSugar() {
                   categories: chartData.fasting.map(entry => format(new Date(entry.date), 'dd/MM')),
                   title: {
                     text: 'Date',
+                  },
+                  labels: {
+                    rotate: -45, // Rotate labels if needed
                   },
                 },
                 yaxis: {
@@ -197,6 +212,13 @@ function TrackSugar() {
                   text: 'Fasting Sugar Levels',
                   align: 'center',
                 },
+                stroke: {
+                  curve: 'smooth',
+                  width: 2,
+                },
+                markers: {
+                  size: 4,
+                },
               }}
               series={[
                 {
@@ -204,6 +226,8 @@ function TrackSugar() {
                   data: chartData.fasting.map(entry => entry.level),
                 },
               ]}
+              width="100%"
+              height="400px"
             />
           </div>
         </div>
