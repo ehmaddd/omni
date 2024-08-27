@@ -275,8 +275,8 @@ app.post('/record_sugar', async (req, res) => {
 });
 
 // Fetch Sugar Levels
-app.get('/sugar_levels', async (req, res) => {
-  const { userId, startDate, endDate } = req.query;
+app.get('/sugar_levels/:userId', async (req, res) => {
+  const { userId } = req.params;
 
   if (!userId) {
     return res.status(400).json({ message: 'User ID is required' });
@@ -285,18 +285,6 @@ app.get('/sugar_levels', async (req, res) => {
   try {
     let query = 'SELECT * FROM sugar_levels WHERE user_id = $1';
     const queryParams = [userId];
-
-    if (startDate && endDate) {
-      query += ' AND date BETWEEN $2 AND $3';
-      queryParams.push(startDate, endDate);
-    } else if (startDate) {
-      query += ' AND date >= $2';
-      queryParams.push(startDate);
-    } else if (endDate) {
-      query += ' AND date <= $2';
-      queryParams.push(endDate);
-    }
-
     query += ' ORDER BY date DESC, time DESC';
 
     const result = await pool.query(query, queryParams);

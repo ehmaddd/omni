@@ -25,7 +25,7 @@ function TrackSugar() {
 
   const fetchSugarData = async () => {
     try {
-      const response = await fetch(`http://localhost:5000/sugar_data/${userId}`, {
+      const response = await fetch(`http://localhost:5000/sugar_levels/${userId}`, {
         headers: {
           'Authorization': `Bearer ${token}`,
         },
