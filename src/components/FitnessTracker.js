@@ -143,25 +143,26 @@ function FitnessTracker() {
       </div>
 
       <div className="fitness-tracker-container">
-      {profile ? (
-        <div className="profile-summary-container">
-        <div className="profile-display">
-          <h5>Summary</h5>
-          <div className="profile-grid">
-            <div><strong>Age:</strong> {profile.data[0].age} yrs</div>
-            <div><strong>Height:</strong> {profile.data[0].height} cm</div>
-            <div><strong>Weight:</strong> {profile.data[0].weight} kg</div>
-            <div><strong>Blood Group:</strong> {profile.data[0].blood_group}</div>
-            <div><strong>Eye Sight (Left):</strong> {profile.data[0].eye_sight_left}</div>
-            <div><strong>Eye Sight (Right):</strong> {profile.data[0].eye_sight_right}</div>
-            <div><strong>Disability:</strong> {profile.data[0].disability ? 'Yes' : 'No'}</div>
-            <div><strong>Heart Problem:</strong> {profile.data[0].heart_problem ? 'Yes' : 'No'}</div>
-            <div><strong>Diabetes:</strong> {profile.data[0].diabetes ? 'Yes' : 'No'}</div>
-            <div><strong>Kidney Issue:</strong> {profile.data[0].kidney_issue ? 'Yes' : 'No'}</div>
-          </div>
-        </div></div>
-      ) : (
-          <form onSubmit={handleSubmit} className="fitness-form">
+      {profile && profile.data && profile.data.length > 0 ? (
+  <div className="profile-summary-container">
+    <div className="profile-display">
+      <h5>Summary</h5>
+      <div className="profile-grid">
+        <div><strong>Age:</strong> {profile.data[0].age} yrs</div>
+        <div><strong>Height:</strong> {profile.data[0].height} cm</div>
+        <div><strong>Weight:</strong> {profile.data[0].weight} kg</div>
+        <div><strong>Blood Group:</strong> {profile.data[0].blood_group}</div>
+        <div><strong>Eye Sight (Left):</strong> {profile.data[0].eye_sight_left}</div>
+        <div><strong>Eye Sight (Right):</strong> {profile.data[0].eye_sight_right}</div>
+        <div><strong>Disability:</strong> {profile.data[0].disability ? 'Yes' : 'No'}</div>
+        <div><strong>Heart Problem:</strong> {profile.data[0].heart_problem ? 'Yes' : 'No'}</div>
+        <div><strong>Diabetes:</strong> {profile.data[0].diabetes ? 'Yes' : 'No'}</div>
+        <div><strong>Kidney Issue:</strong> {profile.data[0].kidney_issue ? 'Yes' : 'No'}</div>
+      </div>
+    </div>
+  </div>
+) : (
+  <form onSubmit={handleSubmit} className="fitness-form">
             <div className="form-group">
               <label>Age:</label>
               <input type="number" name="age" value={formData.age} min="15" onChange={handleInputChange} required />
@@ -240,7 +241,8 @@ function FitnessTracker() {
             </div>
             <button type="submit" className="submit-button">Submit</button>
           </form>
-        )}
+)}
+          
       </div>
     </div>
     
