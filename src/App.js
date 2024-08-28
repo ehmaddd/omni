@@ -34,7 +34,7 @@ function App() {
       <Header />
       {!isDashboardPath && <Navbar />}
       <Routes>
-        <Route path="/" element={<CgLogIn />} />
+        <Route path="/" element={<Login />} />
         <Route path="/quote" element={<Quote />} />
         <Route path="/weather" element={<Weather />} />
         <Route path="/prayer" element={<Prayer />} />

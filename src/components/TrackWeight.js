@@ -11,6 +11,7 @@ function TrackWeight() {
   const storedUserId = localStorage.getItem('user');
   const token = localStorage.getItem('token');
   const navigate = useNavigate();
+  const isKidneyPatient = localStorage.getItem('isKidneyPatient');
 
   const [weightData, setWeightData] = useState([]);
   const [formData, setFormData] = useState({
@@ -109,11 +110,11 @@ function TrackWeight() {
       <DashNav />
       <div className="nav-bar">
         <h1 className="nav-title">Track Weight</h1>
-        <FitNav id={userId} />
+        <FitNav id={userId} isKidneyPatient />
       </div>
       <div className="track-weight-container">
         <form onSubmit={handleSubmit} className="weight-form">
-          <div className="form-group">
+          <div className="weight-form-group">
             <label>Date:</label>
             <input type="date" name="date" value={formData.date} onChange={handleInputChange} required />
           </div>
