@@ -20,6 +20,7 @@ import ViewLog from './components/ViewLog';
 import ViewSummary from './components/ViewSummary';
 import NotFound from './components/NotFound';
 import TrackSugar from './components/TrackSugar';
+import TrackBp from './components/TrackBp';
 import { CgLogIn } from 'react-icons/cg';
 
 function App() {
@@ -45,6 +46,7 @@ function App() {
         <Route path="/dashboard/:userId/mood_tracker/summary" element={<ViewSummary />} />
         <Route path="/dashboard/:userId/fitness_tracker" element={<FitnessTracker />} />
         <Route path="/dashboard/:userId/fitness_tracker/track_sugar" element={<TrackSugar />} />
+        <Route path="/dashboard/:userId/fitness_tracker/track_bp" element={<TrackBp />} />
         <Route path="/signout" element={<Signout />} />
         <Route path="*" element={<NotFound />} />
       </Routes>

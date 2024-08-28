@@ -27,7 +27,7 @@ function TrackBp() {
 
   const fetchBpData = async () => {
     try {
-      const response = await fetch(`http://localhost:5000/blood_pressure/${userId}`, {
+      const response = await fetch(`http://localhost:5000/bp_levels/${userId}`, {
         headers: {
           'Authorization': `Bearer ${token}`,
         },
