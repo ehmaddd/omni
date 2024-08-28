@@ -3,7 +3,8 @@ import { Link } from 'react-router-dom';
 import './FitNav.css'; // Import the CSS file for styling
 
 const FitNav = (props) => {
-  const { id, isKidneyPatient } = props;
+  const { id } = props;
+  const isKidneyPatient = JSON.parse(localStorage.getItem('isKidneyPatient'));
 
   return (
     <nav className="nav-links">

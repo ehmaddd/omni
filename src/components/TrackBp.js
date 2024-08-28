@@ -11,7 +11,6 @@ function TrackBp() {
   const storedUserId = localStorage.getItem('user');
   const token = localStorage.getItem('token');
   const navigate = useNavigate();
-  const isKidneyPatient = localStorage.getItem('isKidneyPatient');
 
   const [bpData, setBpData] = useState([]);
   const [formData, setFormData] = useState({
@@ -115,7 +114,7 @@ function TrackBp() {
       <DashNav />
       <div className="nav-bar">
             <h1 className="nav-title">Track Blood Pressure</h1>
-            <FitNav id={userId} isKidneyPatient />
+            <FitNav id={userId} />
           </div>
       <div className="track-bp-container">
 

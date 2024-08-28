@@ -50,7 +50,7 @@ function FitnessTracker() {
         });
   
         // Store `isKidneyPatient` in local storage
-        localStorage.setItem('isKidneyPatient', data.kidney_issue);
+        localStorage.setItem('isKidneyPatient', data.data[0].kidney_issue);
       } else {
         console.error('Failed to fetch profile:', await response.text());
       }
@@ -184,7 +184,7 @@ function FitnessTracker() {
       <div className="nav-bar">
         <h1 className="nav-title">{currentPage}</h1>
         {profile && profile.data && (
-          <FitNav id={userId} isKidneyPatient={profile.data[0].kidney_issue} />
+          <FitNav id={userId} />
         )}
       </div>
   

@@ -11,7 +11,6 @@ function TrackSugar() {
   const storedUserId = localStorage.getItem('user');
   const token = localStorage.getItem('token');
   const navigate = useNavigate();
-  const isKidneyPatient = localStorage.getItem('isKidneyPatient');
 
   const [sugarData, setSugarData] = useState([]);
   const [formData, setFormData] = useState({
@@ -118,7 +117,7 @@ function TrackSugar() {
       <DashNav />
       <div className="nav-bar">
             <h1 className="nav-title">Track Sugar Level</h1>
-            <FitNav id={userId} isKidneyPatient />
+            <FitNav id={userId} />
           </div>
       <div className="track-sugar-container">
 

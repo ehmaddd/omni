@@ -7,6 +7,7 @@ function Signout() {
   useEffect(() => {
     // Clear the token from localStorage
     localStorage.removeItem('token');
+    localStorage.removeItem('isKidneyPatient');
     sessionStorage.clear();
 
     // Redirect to the login page
