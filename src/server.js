@@ -327,6 +327,39 @@ app.post('/record_bp', async (req, res) => {
   }
 });
 
+
+app.get('/weight/:userId', async (req, res) => {
+  const { userId } = req.params;
+
+  try {
+    const result = await pool.query(
+      'SELECT date, time, weight FROM weights WHERE user_id = $1 ORDER BY date, time',
+      [userId]
+    );
+
+    res.json(result.rows);
+  } catch (err) {
+    console.error('Error fetching weight data:', err);
+    res.status(500).send('Server error');
+  }
+});
+
+app.post('/record_weight', async (req, res) => {
+  const { user_id, date, time, weight } = req.body;
+
+  try {
+    await pool.query(
+      'INSERT INTO weights (user_id, date, time, weight) VALUES ($1, $2, $3, $4)',
+      [user_id, date, time, weight]
+    );
+
+    res.status(200).send('Weight recorded successfully');
+  } catch (err) {
+    console.error('Error recording weight:', err);
+    res.status(500).send('Server error');
+  }
+});
+
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });

@@ -1,0 +1,69 @@
+/* TrackWeight.css */
+
+/* Container for the entire tracking section */
+.track-weight-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+/* Form container styling */
+.weight-form {
+  width: 100%;
+  max-width: 1000px;
+  margin-bottom: 20px;
+}
+
+/* Form group styling */
+.form-group {
+  margin-bottom: 10px;
+}
+
+/* Button styling */
+.btn-submit {
+  margin-top: 10px;
+}
+
+/* Container for charts */
+.charts-container {
+  width: 100%;
+  max-width: 1000px;
+  margin-bottom: 40px;
+  box-sizing: border-box;
+}
+
+/* Individual chart styling */
+.chart {
+  width: 100%; /* Ensure the chart spans full width */
+  height: 400px; /* Fixed height for charts */
+  margin-bottom: 20px;
+}
+
+/* Flexbox for form layout */
+.weight-form {
+  display: flex;
+  flex-wrap: wrap; /* Allows items to wrap to the next line if necessary */
+  gap: 10px; /* Adds spacing between form groups */
+}
+
+.form-group {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  flex: 1 1 200px; /* Ensures that form groups are flexible but don't grow too wide */
+}
+
+.form-group label {
+  margin-right: 10px; /* Adds space between label and input */
+  flex-basis: 120px; /* Fixed width for labels */
+}
+
+.form-group input {
+  flex: 1; /* Allows inputs to take up the remaining space */
+}
+
+.btn-submit {
+  margin-top: 10px; /* Adds space above the submit button */
+}
