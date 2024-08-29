@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import DashNav from './DashNav';
-import FitNav from './FitNav'; // Import FitNav
+import FitNav from './FitNav';
 import Chart from 'react-apexcharts';
 import { format } from 'date-fns';
-import './TrackCreatinine.css'; // Ensure you have corresponding CSS for styles
+import './TrackCreatinine.css';
 
 function TrackCreatinine() {
   const { userId } = useParams();
@@ -18,7 +18,6 @@ function TrackCreatinine() {
     time: '',
     creatinine_level: ''
   });
-
   const [chartData, setChartData] = useState([]);
 
   const fetchCreatinineData = async () => {
@@ -28,23 +27,30 @@ function TrackCreatinine() {
           'Authorization': `Bearer ${token}`,
         },
       });
-      if (response.ok) {
-        const data = await response.json();
-        setCreatinineData(data);
-        processChartData(data);
-      } else {
-        console.error('Failed to fetch creatinine data:', await response.text());
-      }
+      const responseData = await response.json();
+      console.log('Fetched data:', responseData);
+
+      const dataArray = Array.isArray(responseData.data) ? responseData.data : [responseData.data];
+      setCreatinineData(dataArray);
+      processChartData(dataArray);
     } catch (error) {
       console.error('Failed to fetch creatinine data:', error);
     }
   };
 
   const processChartData = (data) => {
-    setChartData(data.map(entry => ({
-      date: entry.date,
-      creatinine_level: entry.creatinine_level
-    })));
+    console.log('Processing data:', data);
+
+    if (Array.isArray(data)) {
+      const formattedData = data.map(entry => ({
+        date: entry.date,
+        creatinine_level: parseFloat(entry.creatinine_level),
+      }));
+      console.log('Formatted chart data:', formattedData);
+      setChartData(formattedData);
+    } else {
+      console.error('Data is not an array:', data);
+    }
   };
 
   useEffect(() => {
@@ -130,7 +136,9 @@ function TrackCreatinine() {
 
         <div className="charts-container">
           <div className="chart">
+            <h2>Creatinine Levels</h2>
             <Chart
+              key={JSON.stringify(chartData)}
               type="line"
               options={{
                 chart: {
@@ -142,16 +150,16 @@ function TrackCreatinine() {
                     text: 'Date',
                   },
                   labels: {
-                    rotate: -45, // Rotate labels if needed
+                    rotate: -45,
                   },
                 },
                 yaxis: {
                   title: {
-                    text: 'Creatinine Level',
+                    text: 'Creatinine Level (mg/dL)',
                   },
                 },
                 title: {
-                  text: 'Creatinine Levels',
+                  text: 'Creatinine Levels Over Time',
                   align: 'center',
                 },
                 stroke: {

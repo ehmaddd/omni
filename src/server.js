@@ -394,7 +394,7 @@ app.get('/fetch_creatinine/:id', async (req, res) => {
   try {
     // Query to fetch the creatinine record by ID
     const result = await pool.query(
-      'SELECT * FROM creatinine_records WHERE id = $1',
+      'SELECT * FROM creatinine_records WHERE user_id = $1',
       [id]
     );
     
@@ -404,7 +404,7 @@ app.get('/fetch_creatinine/:id', async (req, res) => {
     
     res.json({
       message: 'Creatinine record fetched successfully',
-      data: result.rows[0],
+      data: result.rows,
     });
   } catch (err) {
     console.error('Error fetching creatinine record:', err);
