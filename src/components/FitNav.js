@@ -18,6 +18,9 @@ const FitNav = (props) => {
         <li className="nav-item">
           <Link className="nav-link" to={`/dashboard/${id}/fitness_tracker/track_weight`}>Track Weight</Link>
         </li>
+        <li className="nav-item">
+          <Link className="nav-link" to={`/dashboard/${id}/fitness_tracker/track_fever`}>Track Fever</Link>
+        </li>
         {isKidneyPatient && (
           <li className="nav-item">
             <Link className="nav-link" to={`/dashboard/${id}/fitness_tracker/track_creatinine`}>Track Creatinine</Link>

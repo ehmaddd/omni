@@ -360,6 +360,34 @@ app.post('/record_weight', async (req, res) => {
   }
 });
 
+app.get('/fetch_fevers/:userId', async (req, res) => {
+  const { userId } = req.params;
+  try {
+      const result = await pool.query('SELECT * FROM fever_records WHERE user_id = $1', [userId]);
+      res.json(result.rows);
+  } catch (err) {
+      console.error(err.message);
+      res.status(500).send('Server Error');
+  }
+});
+
+app.post('/record_fever', async (req, res) => {
+  try {
+      const { user_id, date, time, temperature } = req.body;
+
+      // SQL query to insert data into the fever_records table
+      const result = await pool.query(
+          'INSERT INTO fever_records (user_id, date, time, temperature) VALUES ($1, $2, $3, $4) RETURNING *',
+          [user_id, date, time, temperature]
+      );
+
+      res.json(result.rows[0]);
+  } catch (err) {
+      console.error(err.message);
+      res.status(500).send('Server Error');
+  }
+});
+
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });

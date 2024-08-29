@@ -22,6 +22,7 @@ import NotFound from './components/NotFound';
 import TrackSugar from './components/TrackSugar';
 import TrackBp from './components/TrackBp';
 import TrackWeight from './components/TrackWeight';
+import TrackFever from './components/TrackFever';
 import { CgLogIn } from 'react-icons/cg';
 
 function App() {
@@ -49,6 +50,7 @@ function App() {
         <Route path="/dashboard/:userId/fitness_tracker/track_sugar" element={<TrackSugar />} />
         <Route path="/dashboard/:userId/fitness_tracker/track_bp" element={<TrackBp />} />
         <Route path="/dashboard/:userId/fitness_tracker/track_weight" element={<TrackWeight />} />
+        <Route path="/dashboard/:userId/fitness_tracker/track_fever" element={<TrackFever />} />
         <Route path="/signout" element={<Signout />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
