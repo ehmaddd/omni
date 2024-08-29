@@ -23,7 +23,7 @@ function TrackFever() {
 
   const fetchFeverData = async () => {
     try {
-      const response = await fetch(`http://localhost:5000/fever/${userId}`, {
+      const response = await fetch(`http://localhost:5000/fetch_fevers/${userId}`, {
         headers: {
           'Authorization': `Bearer ${token}`,
         },
@@ -150,7 +150,7 @@ function TrackFever() {
                 },
                 yaxis: {
                   title: {
-                    text: 'Temperature (°C)',
+                    text: 'Temperature (°F)',
                   },
                 },
                 title: {
