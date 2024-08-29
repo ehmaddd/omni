@@ -388,6 +388,53 @@ app.post('/record_fever', async (req, res) => {
   }
 });
 
+app.get('/fetch_creatinine/:id', async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    // Query to fetch the creatinine record by ID
+    const result = await pool.query(
+      'SELECT * FROM creatinine_records WHERE id = $1',
+      [id]
+    );
+    
+    if (result.rowCount === 0) {
+      return res.status(404).json({ message: 'Creatinine record not found' });
+    }
+    
+    res.json({
+      message: 'Creatinine record fetched successfully',
+      data: result.rows[0],
+    });
+  } catch (err) {
+    console.error('Error fetching creatinine record:', err);
+    res.status(500).json({ message: 'Error fetching creatinine record' });
+  }
+});
+
+app.post('/record_creatinine', async (req, res) => {
+  const { user_id, date, time, creatinine_level } = req.body;
+
+  // Validate required fields
+  if (!user_id || !date || !time || creatinine_level === undefined) {
+    return res.status(400).json({ message: 'Missing required fields' });
+  }
+
+  try {
+    // Query to insert a new creatinine record
+    await pool.query(
+      `INSERT INTO creatinine_records (user_id, date, time, creatinine_level)
+       VALUES ($1, $2, $3, $4)`,
+      [user_id, date, time, creatinine_level]
+    );
+    
+    res.status(201).json({ message: 'Creatinine level recorded successfully' });
+  } catch (err) {
+    console.error('Error recording creatinine level:', err);
+    res.status(500).json({ message: 'Error recording creatinine level' });
+  }
+});
+
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
