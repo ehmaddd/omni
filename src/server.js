@@ -435,6 +435,39 @@ app.post('/record_creatinine', async (req, res) => {
   }
 });
 
+// WORKOUT START ----------------------------
+
+// Store Workout Record
+app.post('/store_workout', async (req, res) => {
+  const { user_id, date, time, duration, activity, cburned } = req.body;
+  try {
+    await pool.query(
+      'INSERT INTO workouts (user_id, date, time, duration, type, calories) VALUES ($1, $2, $3, $4, $5, $6)',
+      [user_id, date, time, duration, activity, cburned]
+    );
+    res.status(201).json({ message: 'Workout recorded successfully' });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'Error recording workout' });
+  }
+});
+
+// Fetch Workout Logs
+app.get('/fetch_workout/:userId', async (req, res) => {
+  const { userId } = req.params;
+  try {
+    const result = await pool.query(
+      'SELECT * FROM workouts WHERE user_id = $1 ORDER BY date DESC',
+      [userId]
+    );
+    res.json(result.rows);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'Error fetching workout logs' });
+  }
+});
+
+
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
