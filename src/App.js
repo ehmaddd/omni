@@ -15,6 +15,7 @@ import Dashboard from './Dashboard';
 import Signout from './Signout';
 import MoodTracker from './components/MoodTracker';
 import FitnessTracker from './components/FitnessTracker';
+import TrackWorkout from './components/TrackWorkout';
 import LogMood from './components/LogMood';
 import ViewLog from './components/ViewLog';
 import ViewSummary from './components/ViewSummary';
@@ -48,6 +49,7 @@ function App() {
         <Route path="/dashboard/:userId/mood_tracker/viewlog" element={<ViewLog />} />
         <Route path="/dashboard/:userId/mood_tracker/summary" element={<ViewSummary />} />
         <Route path="/dashboard/:userId/fitness_tracker" element={<FitnessTracker />} />
+        <Route path="/dashboard/:userId/fitness_tracker/track_workout" element={<TrackWorkout />} />
         <Route path="/dashboard/:userId/fitness_tracker/track_sugar" element={<TrackSugar />} />
         <Route path="/dashboard/:userId/fitness_tracker/track_bp" element={<TrackBp />} />
         <Route path="/dashboard/:userId/fitness_tracker/track_weight" element={<TrackWeight />} />

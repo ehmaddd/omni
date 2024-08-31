@@ -9,6 +9,9 @@ const FitNav = (props) => {
   return (
     <nav className="nav-links">
       <ul className="nav-list">
+      <li className="nav-item">
+          <Link className="nav-link" to={`/dashboard/${id}/fitness_tracker/track_workout`}>Track Workout</Link>
+        </li>
         <li className="nav-item">
           <Link className="nav-link" to={`/dashboard/${id}/fitness_tracker/track_sugar`}>Track Sugar</Link>
         </li>
