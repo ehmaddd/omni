@@ -435,6 +435,28 @@ app.post('/record_creatinine', async (req, res) => {
   }
 });
 
+app.post('/record_workouts', async (req, res) => {
+  try {
+    const { type, date, time, duration, calories  } = req.body;
+    if (!type || !duration || !calories || !date || !time) {
+      return res.status(400).send('Type, duration, calories, date, and time are required');
+    }
+
+    const query = `
+      INSERT INTO workouts (type, date, time, duration, calories )
+      VALUES ($1, $2, $3, $4, $5)
+      RETURNING *;
+    `;
+    const values = [type , date, time, duration, calories];
+
+    const result = await pool.query(query, values);
+    res.status(201).send(result.rows[0]);
+  } catch (error) {
+    console.error('Error recording workout:', error);
+    res.status(500).send('Error recording workout');
+  }
+});
+
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
