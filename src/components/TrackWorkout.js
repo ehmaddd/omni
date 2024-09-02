@@ -129,8 +129,6 @@ function TrackWorkout() {
     const categories = Object.keys(categoryCounts);
     const categoryFrequencies = Object.values(categoryCounts);
   
-    console.log('Dates:', dates);
-  
     return { dates, durations, caloriesBurned, categories, categoryFrequencies };
   };
 
