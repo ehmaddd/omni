@@ -31,6 +31,11 @@ function TrackWorkout() {
       });
       if (response.ok) {
         const data = await response.json();
+        
+        // Check for undefined categories
+        const categories = data.map(item => item.type || 'No Category');
+        console.log(categories);
+  
         setWorkoutData(data);
       } else {
         console.error('Failed to fetch workout data:', await response.text());
@@ -112,7 +117,7 @@ function TrackWorkout() {
   const processChartData = () => {
     const dates = workoutData.map(entry => new Date(entry.date).toLocaleDateString());
     const durations = workoutData.map(entry => entry.duration || 0);
-    const caloriesBurned = workoutData.map(entry => entry.cburned || 0);
+    const caloriesBurned = workoutData.map(entry => entry.calories || 0);
   
     console.log('Dates:', dates);
     console.log('Durations:', durations);
