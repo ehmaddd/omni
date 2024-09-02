@@ -130,7 +130,6 @@ function TrackWorkout() {
     const categoryFrequencies = Object.values(categoryCounts);
   
     console.log('Dates:', dates);
-    console.log('Durations:', durations);
   
     return { dates, durations, caloriesBurned, categories, categoryFrequencies };
   };
