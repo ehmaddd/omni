@@ -132,7 +132,6 @@ function TrackWorkout() {
     console.log('Dates:', dates);
     console.log('Durations:', durations);
     console.log('Calories Burned:', caloriesBurned);
-    console.log('Categories:', categories);
   
     return { dates, durations, caloriesBurned, categories, categoryFrequencies };
   };
