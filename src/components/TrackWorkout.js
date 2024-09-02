@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import DashNav from './DashNav';
 import FitNav from './FitNav';
+import Chart from 'react-apexcharts';
 import './TrackWorkout.css';
 
 function TrackWorkout() {
@@ -16,9 +17,10 @@ function TrackWorkout() {
     time: '',
     duration: '',
     activity: '',
-    category: '', // Add category field
+    category: '',
     cburned: ''
   });
+  const [errorMessage, setErrorMessage] = useState('');
 
   const fetchWorkoutData = async () => {
     try {
@@ -64,21 +66,29 @@ function TrackWorkout() {
     });
   };
 
+  const checkDuplicate = () => {
+    return workoutData.some(workout => 
+      workout.date === formData.date && 
+      workout.time === formData.time && 
+      workout.activity === formData.activity
+    );
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    
+    console.log('Form Data:', formData); // Debugging statement
+  
     const requestBody = {
       user_id: userId,
       date: formData.date,
-      time: formData.time,
-      duration: formData.duration,
-      activity: formData.activity,
-      category: formData.category,   
-      cburned: formData.cburned
+      type: formData.type,
+      duration: parseFloat(formData.duration),
+      calories: parseFloat(formData.calories) // Verify this is a number
     };
-
+  
     try {
-      const response = await fetch('http://localhost:5000/store_workout', {
+      const response = await fetch('http://localhost:5000/record_workout', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -86,9 +96,9 @@ function TrackWorkout() {
         },
         body: JSON.stringify(requestBody),
       });
-
+  
       if (response.ok) {
-        fetchWorkoutData();
+        fetchWorkoutData(); // Refresh data after successful submission
       } else {
         const errorResponse = await response.json();
         console.error('Failed to record workout:', errorResponse);
@@ -97,6 +107,33 @@ function TrackWorkout() {
       console.error('Error recording workout:', error);
     }
   };
+
+  // Process data for charts
+  const processChartData = () => {
+    const dates = workoutData.map(entry => new Date(entry.date).toLocaleDateString());
+    const durations = workoutData.map(entry => entry.duration || 0);
+    const caloriesBurned = workoutData.map(entry => entry.cburned || 0);
+  
+    console.log('Dates:', dates);
+    console.log('Durations:', durations);
+    console.log('Calories Burned:', caloriesBurned);
+  
+    const categoryCounts = workoutData.reduce((acc, entry) => {
+      acc[entry.category] = (acc[entry.category] || 0) + 1;
+      return acc;
+    }, {});
+  
+    const categories = Object.keys(categoryCounts);
+    const categoryFrequencies = Object.values(categoryCounts);
+  
+    console.log('Categories:', categories);
+    console.log('Category Frequencies:', categoryFrequencies);
+  
+    console.log(dates, durations, caloriesBurned, categories, categoryFrequencies)
+    return { dates, durations, caloriesBurned, categories, categoryFrequencies };
+  };
+
+  const chartData = processChartData();
 
   return (
     <>
@@ -108,42 +145,166 @@ function TrackWorkout() {
       <div className="track-workout-container">
         <div className="track-bp-container">
           <form onSubmit={handleSubmit} className="workout-form">
-          <div className="form-sub-group">
-            <div className="form-group">
-              <label>Activity:</label>
-              <select name="category" value={formData.category} onChange={handleInputChange} required>
-                <option value="">Select Category</option>
-                <option value="Walking">Walking</option>
-                <option value="Jogging">Jogging</option>
-                <option value="Cycling">Cycling</option>
-                <option value="Swimming">Swimming</option>
-                <option value="Boating">Boating</option>
-                <option value="Sports">Sports</option>
-                <option value="Athletics">Athletics</option>
-                <option value="Yoga">Yoga</option>
-              </select>
+            {errorMessage && <p className="error-message">{errorMessage}</p>}
+            <div className="form-sub-group">
+              <div className="form-group">
+                <label>Activity:</label>
+                <select name="category" value={formData.category} onChange={handleInputChange} required>
+                  <option value="">Select Category</option>
+                  <option value="Walking">Walking</option>
+                  <option value="Jogging">Jogging</option>
+                  <option value="Cycling">Cycling</option>
+                  <option value="Swimming">Swimming</option>
+                  <option value="Boating">Boating</option>
+                  <option value="Sports">Sports</option>
+                  <option value="Athletics">Athletics</option>
+                  <option value="Yoga">Yoga</option>
+                </select>
+              </div>
+              <div className="form-group">
+                <label>Duration (mins):</label>
+                <input type="number" name="duration" value={formData.duration} step="1" onChange={handleInputChange} required />
+              </div>
+              <div className="form-group">
+                <label>Burned Calories:</label>
+                <input type="number" name="cburned" value={formData.cburned} step="1" onChange={handleInputChange} required />
+              </div>
             </div>
-            <div className="form-group">
-              <label>Duration (mins):</label>
-              <input type="number" name="duration" value={formData.duration} step="1" onChange={handleInputChange} required />
+            <div className="form-sub-group">
+              <div className="form-group">
+                <label>Date:</label>
+                <input type="date" name="date" value={formData.date} onChange={handleInputChange} required />
+              </div>
+              <div className="form-group">
+                <label>Time:</label>
+                <input type="time" name="time" value={formData.time} onChange={handleInputChange} required />
+              </div>
             </div>
-            <div className="form-group">
-              <label>Burned Calories:</label>
-              <input type="number" name="cburned" value={formData.cburned} step="1" onChange={handleInputChange} required />
-            </div>
+            <button type="submit" className="btn-submit">Submit</button>
+          </form>
+        </div>
+        <div className="charts-container">
+          <div className="chart">
+            <h2>Workout Duration Over Time</h2>
+            <Chart
+              type="line"
+              options={{
+                chart: {
+                  id: 'duration-chart',
+                },
+                xaxis: {
+                  categories: chartData.dates || [],
+                  title: {
+                    text: 'Date',
+                  },
+                },
+                yaxis: {
+                  title: {
+                    text: 'Duration (mins)',
+                  },
+                },
+                title: {
+                  text: 'Workout Duration',
+                  align: 'center',
+                },
+                stroke: {
+                  curve: 'smooth',
+                },
+                markers: {
+                  size: 4,
+                },
+              }}
+              series={[
+                {
+                  name: 'Duration',
+                  data: chartData.durations || [],
+                },
+              ]}
+              width="100%"
+              height="400px"
+            />
           </div>
-          <div className="form-sub-group">
-      <div className="form-group">
-        <label>Date:</label>
-        <input type="date" name="date" value={formData.date} onChange={handleInputChange} required />
-      </div>
-      <div className="form-group">
-        <label>Time:</label>
-        <input type="time" name="time" value={formData.time} onChange={handleInputChange} required />
-      </div>
-    </div>
-    <button type="submit" className="btn-submit">Submit</button>
-  </form>
+          <div className="chart">
+            <h2>Calories Burned Over Time</h2>
+            <Chart
+              type="line"
+              options={{
+                chart: {
+                  id: 'calories-chart',
+                },
+                xaxis: {
+                  categories: chartData.dates || [],
+                  title: {
+                    text: 'Date',
+                  },
+                },
+                yaxis: {
+                  title: {
+                    text: 'Calories Burned',
+                  },
+                },
+                title: {
+                  text: 'Calories Burned',
+                  align: 'center',
+                },
+                stroke: {
+                  curve: 'smooth',
+                },
+                markers: {
+                  size: 4,
+                },
+              }}
+              series={[
+                {
+                  name: 'Calories Burned',
+                  data: chartData.caloriesBurned || [],
+                },
+              ]}
+              width="100%"
+              height="400px"
+            />
+          </div>
+          <div className="chart">
+            <h2>Activity Frequency</h2>
+            <Chart
+              type="bar"
+              options={{
+                chart: {
+                  id: 'activity-chart',
+                },
+                xaxis: {
+                  categories: chartData.categories || [],
+                  title: {
+                    text: 'Activity',
+                  },
+                },
+                yaxis: {
+                  title: {
+                    text: 'Frequency',
+                  },
+                },
+                title: {
+                  text: 'Activity Frequency',
+                  align: 'center',
+                },
+                plotOptions: {
+                  bar: {
+                    horizontal: false,
+                    columnWidth: '55%',
+                    endingShape: 'rounded',
+                  },
+                },
+              }}
+              series={[
+                {
+                  name: 'Frequency',
+                  data: chartData.categoryFrequencies || [],
+                },
+              ]}
+              width="100%"
+              height="400px"
+            />
+          </div>
         </div>
       </div>
     </>

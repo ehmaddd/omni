@@ -439,11 +439,29 @@ app.post('/record_creatinine', async (req, res) => {
 
 // Store Workout Record
 app.post('/store_workout', async (req, res) => {
-  const { user_id, date, time, duration, activity, cburned } = req.body;
+  const { user_id, date, time, duration, category, cburned } = req.body;
+
+  // Validate required fields
+  if (!user_id || !date || !time || !duration || !category || cburned === undefined) {
+    return res.status(400).json({ message: 'Missing required fields' });
+  }
+
   try {
+    // Check if a workout record with the same user_id, date, and time already exists
+    const existingRecord = await pool.query(
+      'SELECT * FROM workouts WHERE user_id = $1 AND date = $2 AND time = $3',
+      [user_id, date, time]
+    );
+
+    if (existingRecord.rowCount > 0) {
+      // If a record already exists, respond with a message
+      return res.status(409).json({ message: 'Workout record already exists for this date and time' });
+    }
+
+    // Insert the new workout record into the database
     await pool.query(
       'INSERT INTO workouts (user_id, date, time, duration, type, calories) VALUES ($1, $2, $3, $4, $5, $6)',
-      [user_id, date, time, duration, activity, cburned]
+      [user_id, date, time, duration, category, cburned]
     );
     res.status(201).json({ message: 'Workout recorded successfully' });
   } catch (err) {
@@ -466,7 +484,6 @@ app.get('/fetch_workout/:userId', async (req, res) => {
     res.status(500).json({ message: 'Error fetching workout logs' });
   }
 });
-
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
