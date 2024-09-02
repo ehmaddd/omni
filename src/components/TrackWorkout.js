@@ -31,11 +31,6 @@ function TrackWorkout() {
       });
       if (response.ok) {
         const data = await response.json();
-        
-        // Check for undefined categories
-        const categories = data.map(item => item.type || 'No Category');
-        console.log(categories);
-  
         setWorkoutData(data);
       } else {
         console.error('Failed to fetch workout data:', await response.text());
@@ -84,26 +79,30 @@ function TrackWorkout() {
     
     console.log('Form Data:', formData); // Debugging statement
   
+    // Create the request body
     const requestBody = {
       user_id: userId,
       date: formData.date,
-      type: formData.type,
+      time: formData.time,
+      category: formData.category,
       duration: parseFloat(formData.duration),
-      calories: parseFloat(formData.calories) // Verify this is a number
+      cburned: parseFloat(formData.cburned),
     };
   
     try {
-      const response = await fetch('http://localhost:5000/record_workout', {
+      // Send the POST request
+      const response = await fetch('http://localhost:5000/store_workout', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`,
+          'Authorization': `Bearer ${token}`, // Correctly interpolate the token
         },
         body: JSON.stringify(requestBody),
       });
   
       if (response.ok) {
-        fetchWorkoutData(); // Refresh data after successful submission
+        // Fetch the updated workout data
+        fetchWorkoutData();
       } else {
         const errorResponse = await response.json();
         console.error('Failed to record workout:', errorResponse);
@@ -115,26 +114,27 @@ function TrackWorkout() {
 
   // Process data for charts
   const processChartData = () => {
+    // Extract dates, durations, and calories burned
     const dates = workoutData.map(entry => new Date(entry.date).toLocaleDateString());
     const durations = workoutData.map(entry => entry.duration || 0);
     const caloriesBurned = workoutData.map(entry => entry.calories || 0);
   
-    console.log('Dates:', dates);
-    console.log('Durations:', durations);
-    console.log('Calories Burned:', caloriesBurned);
-  
+    // Process categories
     const categoryCounts = workoutData.reduce((acc, entry) => {
-      acc[entry.category] = (acc[entry.category] || 0) + 1;
+      const category = entry.type ? entry.type : 'No Category';
+      acc[category] = (acc[category] || 0) + 1;
       return acc;
     }, {});
   
     const categories = Object.keys(categoryCounts);
     const categoryFrequencies = Object.values(categoryCounts);
   
+    console.log('Dates:', dates);
+    console.log('Durations:', durations);
+    console.log('Calories Burned:', caloriesBurned);
     console.log('Categories:', categories);
     console.log('Category Frequencies:', categoryFrequencies);
   
-    console.log(dates, durations, caloriesBurned, categories, categoryFrequencies)
     return { dates, durations, caloriesBurned, categories, categoryFrequencies };
   };
 
