@@ -25,6 +25,7 @@ import TrackBp from './components/TrackBp';
 import TrackWeight from './components/TrackWeight';
 import TrackFever from './components/TrackFever';
 import TrackCreatinine from './components/TrackCreatinine';
+import ToDoList from './components/ToDoList';
 import { CgLogIn } from 'react-icons/cg';
 
 function App() {
@@ -55,6 +56,7 @@ function App() {
         <Route path="/dashboard/:userId/fitness_tracker/track_weight" element={<TrackWeight />} />
         <Route path="/dashboard/:userId/fitness_tracker/track_fever" element={<TrackFever />} />
         <Route path="/dashboard/:userId/fitness_tracker/track_creatinine" element={<TrackCreatinine />} />
+        <Route path="/dashboard/:userId/todo" element={<ToDoList />} />
         <Route path="/signout" element={<Signout />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
