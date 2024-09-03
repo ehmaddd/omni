@@ -264,42 +264,23 @@ function TrackWorkout() {
             />
           </div>
           <div className="chart">
-            <h2>Activity Frequency</h2>
+            <h2>Workout Categories</h2>
             <Chart
-              type="bar"
+              type="pie"
               options={{
                 chart: {
-                  id: 'activity-chart',
+                  id: 'category-chart',
                 },
-                xaxis: {
-                  categories: chartData.categories || [],
-                  title: {
-                    text: 'Activity',
-                  },
-                },
-                yaxis: {
-                  title: {
-                    text: 'Frequency',
-                  },
-                },
+                labels: chartData.categories || [],
                 title: {
-                  text: 'Activity Frequency',
+                  text: 'Workout Categories',
                   align: 'center',
                 },
-                plotOptions: {
-                  bar: {
-                    horizontal: false,
-                    columnWidth: '55%',
-                    endingShape: 'rounded',
-                  },
+                legend: {
+                  position: 'bottom',
                 },
               }}
-              series={[
-                {
-                  name: 'Frequency',
-                  data: chartData.categoryFrequencies || [],
-                },
-              ]}
+              series={chartData.categoryFrequencies || []}
               width="100%"
               height="400px"
             />
