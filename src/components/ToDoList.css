@@ -1,46 +1,32 @@
-/* General styles for the ToDoList component */
-.nav-bar {
+/* Form styling */
+.todo-form {
     background-color: #f4f4f4;
-    padding: 10px;
-    border-bottom: 2px solid #ddd;
-    text-align: center;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    max-width: 500px;
+    margin: 20px auto;
 }
 
-.nav-title {
-    font-size: 2em;
-    color: #333;
-}
-
-.output-div {
-    margin: 20px;
-}
-
-/* Styling for input elements */
-.todo-label {
-    display: block;
-    margin-top: 10px;
+/* Form layout adjustments */
+.todo-form label {
+    display: inline-block;
+    width: 25%; /* Adjust width as needed */
     font-weight: bold;
+    vertical-align: middle;
 }
 
-input[type="text"],
-input[type="date"] {
+.todo-form input[type="text"],
+.todo-form input[type="date"],
+.todo-form select {
+    display: inline-block;
+    width: 70%; /* Adjust width as needed */
     padding: 10px;
     border: 1px solid #ddd;
     border-radius: 8px;
-    width: 100%;
-    max-width: 300px;
+    font-size: 16px;
     margin-bottom: 10px;
-    font-size: 16px;
-}
-
-select {
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    margin-top: 5px;
-    width: 100%;
-    max-width: 300px;
-    font-size: 16px;
+    vertical-align: middle;
 }
 
 .submit-button {
@@ -52,89 +38,117 @@ select {
     font-size: 16px;
     cursor: pointer;
     margin-top: 10px;
+    width: 100%; /* Full width for better alignment */
+    text-align: center; /* Center the button text */
 }
 
 .submit-button:hover {
     background-color: #0056b3;
 }
 
+/* Complete button and delete button adjustments */
+.complete-button,
+.delete-button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    color: #fff;
+    font-size: 16px;
+    cursor: pointer;
+    width: 100px; /* Fixed width for both buttons */
+    text-align: center; /* Center text within the button */
+    display: inline-block; /* Align buttons horizontally */
+    margin-left: 10px; /* Space between buttons */
+    margin-bottom: 10px; /* Space below buttons */
+}
+
+/* Specific button colors */
+.complete-button {
+    background-color: #28a745; /* Green background for complete button */
+}
+
+.complete-button:hover {
+    background-color: #218838; /* Darker green on hover */
+}
+
+.delete-button {
+    background-color: #dc3545; /* Red background for delete button */
+}
+
+.delete-button:hover {
+    background-color: #c82333; /* Darker red on hover */
+}
+
 /* Table styling */
 table {
-    width: 80%; /* Adjusted width for a more compact look */
-    margin: 20px auto; /* Centered tables */
+    width: 100%;
+    margin: 20px auto;
     border-collapse: collapse;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
 }
 
 thead th {
-    color: #fff; /* White text color */
-    background-color: #000; /* Black background color for table headers */
+    color: #fff;
+    background-color: #000;
+    text-align: center;
 }
 
-th, td {
+table th, table td {
     padding: 12px;
-    text-align: left;
     border-bottom: 1px solid #ddd;
 }
 
-tr:hover {
-    background-color: #f0f0f0;
+table td {
+    text-align: center;
 }
 
-h2 {
-    border-bottom: 2px solid #007bff;
-    padding-bottom: 5px;
-    color: #007bff;
-    margin-bottom: 10px;
-    font-size: 1.5em;
-    text-align: center; /* Centered headings for better look */
+table th:nth-child(1), table td:nth-child(1) {
+    width: 50%;
+}
+
+table th:nth-child(2), table td:nth-child(2) {
+    width: 20%;
+}
+
+table th:nth-child(3), table td:nth-child(3) {
+    width: 30%;
 }
 
 /* High Priority Table */
 table.high-priority thead th {
-    background-color: #e74c3c; /* Brighter red for high priority */
+    background-color: #e74c3c;
 }
 
 table.high-priority tr:nth-child(even) {
-    background-color: #f9b7b7; /* Light red for even rows */
+    background-color: #f9b7b7;
 }
 
 table.high-priority tr:nth-child(odd) {
-    background-color: #f5a9a9; /* Slightly darker red for odd rows */
+    background-color: #f5a9a9;
 }
 
 /* Medium Priority Table */
 table.medium-priority thead th {
-    background-color: #f39c12; /* Bright yellow for medium priority */
+    background-color: #f39c12;
 }
 
 table.medium-priority tr:nth-child(even) {
-    background-color: #fef6e4; /* Light yellow for even rows */
+    background-color: #fef6e4;
 }
 
 table.medium-priority tr:nth-child(odd) {
-    background-color: #fce5c7; /* Slightly darker yellow for odd rows */
+    background-color: #fce5c7;
 }
 
 /* Low Priority Table */
 table.low-priority thead th {
-    background-color: #2ecc71; /* Bright green for low priority */
+    background-color: #2ecc71;
 }
 
 table.low-priority tr:nth-child(even) {
-    background-color: #e8f6e8; /* Light green for even rows */
+    background-color: #e8f6e8;
 }
 
 table.low-priority tr:nth-child(odd) {
-    background-color: #d0f0c0; /* Slightly darker green for odd rows */
-}
-
-/* Form styling */
-.todo-form {
-    background-color: #f4f4f4;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-    max-width: 500px;
-    margin: 20px auto;
+    background-color: #d0f0c0;
 }

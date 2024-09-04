@@ -128,6 +128,7 @@ const ToDoList = () => {
                                 <tr>
                                     <th>Task</th>
                                     <th>Status</th>
+                                    <th>Actions</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -135,6 +136,7 @@ const ToDoList = () => {
                                     <tr key={item.id}>
                                         <td>{item.task}</td>
                                         <td>{item.status}</td>
+                                        <td><button className="complete-button">Completed</button><button className="delete-button">Delete</button></td>
                                     </tr>
                                 ))}
                             </tbody>
@@ -146,6 +148,7 @@ const ToDoList = () => {
                                 <tr>
                                     <th>Task</th>
                                     <th>Status</th>
+                                    <th>Actions</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -153,6 +156,7 @@ const ToDoList = () => {
                                     <tr key={item.id}>
                                         <td>{item.task}</td>
                                         <td>{item.status}</td>
+                                        <td><button className="complete-button">Completed</button><button className="delete-button">Delete</button></td>
                                     </tr>
                                 ))}
                             </tbody>
@@ -164,6 +168,7 @@ const ToDoList = () => {
                                 <tr>
                                     <th>Task</th>
                                     <th>Status</th>
+                                    <th>Actions</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -171,6 +176,7 @@ const ToDoList = () => {
                                     <tr key={item.id}>
                                         <td>{item.task}</td>
                                         <td>{item.status}</td>
+                                        <td><button className="complete-button">Completed</button><button className="delete-button">Delete</button></td>
                                     </tr>
                                 ))}
                             </tbody>
