@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams, Link, useNavigate, Outlet } from 'react-router-dom';
 import DashNav from '../components/DashNav';
 
@@ -7,7 +7,29 @@ const ToDoList = () => {
     const storedUserId = localStorage.getItem('user');
     const token = localStorage.getItem('token');
     const navigate = useNavigate();
-  
+    const [ list, setList] = useState({});
+    const [ dbList, setDbList ] = usetState([]);
+
+    const fetchDB = async () => {
+      try {
+        const response = await fetch('http://localhost:5000/fetch_todos', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        });
+        if (!response.ok) {
+          throw new Error('No Task Found');
+        }
+        const result = await response.json();
+        if (!result.valid) {
+          console.log(result);
+        }
+      } catch (error) {
+        throw new Error('Cannot reach database');
+      }
+    }
+
     useEffect(() => {
       // Redirect if no token is present
       if (!token) {
@@ -53,6 +75,10 @@ const ToDoList = () => {
       verifyToken();
     }, [token, navigate, userId, storedUserId]);
   
+    useEffect(() => {
+      
+    });
+
     return (
       <>
         {token ? (
@@ -63,6 +89,21 @@ const ToDoList = () => {
             </div>
             <Outlet />
             <p>Your To Do List ID: {userId}</p>
+            <label>Enter Task</label>
+            <input
+              type="text"
+              value={list.task}
+              onChange={(e) => setList({ ...list, task: e.target.value })}
+            />
+            <label>Priority</label>
+            <select
+              value={list.priority}
+              onChange={(e) => setList({ ...list, priority: e.target.value })}
+            >
+              <option value="Low">Low</option>
+              <option value="Medium">Medium</option>
+              <option value="High">High</option>
+            </select>
           </>
         ) : (
           <p>Redirecting...</p>
