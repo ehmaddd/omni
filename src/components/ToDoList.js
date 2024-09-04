@@ -8,25 +8,20 @@ const ToDoList = () => {
     const token = localStorage.getItem('token');
     const navigate = useNavigate();
     const [ list, setList] = useState({});
-    const [ dbList, setDbList ] = usetState([]);
+    const [ dbList, setDbList ] = useState([]);
 
     const fetchDB = async () => {
       try {
-        const response = await fetch('http://localhost:5000/fetch_todos', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
+        const response = await fetch(`http://localhost:5000/fetch_todos/${userId}`, {
+          method: 'GET',
         });
         if (!response.ok) {
           throw new Error('No Task Found');
         }
         const result = await response.json();
-        if (!result.valid) {
-          console.log(result);
-        }
+        setDbList(result);
       } catch (error) {
-        throw new Error('Cannot reach database');
+        console.error('Cannot reach database:', error);
       }
     }
 
@@ -76,8 +71,8 @@ const ToDoList = () => {
     }, [token, navigate, userId, storedUserId]);
   
     useEffect(() => {
-      
-    });
+      fetchDB();
+    }, []);
 
     return (
       <>
@@ -104,6 +99,15 @@ const ToDoList = () => {
               <option value="Medium">Medium</option>
               <option value="High">High</option>
             </select>
+            <div className="output-div">
+           {dbList.map((item) => (
+             <ul key={item.id}> {/* Ensure each <ul> has a unique key */}
+               <li>
+                 {item.task}{item.priority}{item.date}
+               </li>
+             </ul>
+           ))}
+         </div>
           </>
         ) : (
           <p>Redirecting...</p>
