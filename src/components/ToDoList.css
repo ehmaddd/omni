@@ -22,9 +22,10 @@ label {
     font-weight: bold;
 }
 
-input[type="text"] {
+input[type="text"],
+input[type="date"] {
     padding: 10px;
-    border: 1px solid #ccc;
+    border: 1px solid #ddd;
     border-radius: 8px;
     width: 100%;
     max-width: 300px;
@@ -34,12 +35,27 @@ input[type="text"] {
 
 select {
     padding: 10px;
-    border: 1px solid #ccc;
+    border: 1px solid #ddd;
     border-radius: 8px;
     margin-top: 5px;
     width: 100%;
     max-width: 300px;
     font-size: 16px;
+}
+
+.submit-button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    background-color: #007bff;
+    color: #fff;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.submit-button:hover {
+    background-color: #0056b3;
 }
 
 /* Table styling */
@@ -75,7 +91,7 @@ h2 {
 
 /* High Priority Table */
 table.high-priority thead {
-    background-color: #c0392b; /* Brighter red for high priority */
+    background-color: #e74c3c; /* Brighter red for high priority */
 }
 
 table.high-priority tr:nth-child(even) {
@@ -101,7 +117,7 @@ table.medium-priority tr:nth-child(odd) {
 
 /* Low Priority Table */
 table.low-priority thead {
-    background-color: #27ae60; /* Bright green for low priority */
+    background-color: #2ecc71; /* Bright green for low priority */
 }
 
 table.low-priority tr:nth-child(even) {
@@ -110,4 +126,14 @@ table.low-priority tr:nth-child(even) {
 
 table.low-priority tr:nth-child(odd) {
     background-color: #d0f0c0; /* Slightly darker green for odd rows */
+}
+
+/* Form styling */
+.todo-form {
+    background-color: #f4f4f4;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    max-width: 500px;
+    margin: 20px auto;
 }

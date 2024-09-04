@@ -92,21 +92,34 @@ const ToDoList = () => {
                     </div>
                     <Outlet />
                     <p>Your To Do List ID: {userId}</p>
-                    <label>Enter Task</label>
-                    <input
-                        type="text"
-                        value={list.task}
-                        onChange={(e) => setList({ ...list, task: e.target.value })}
-                    />
-                    <label>Priority</label>
-                    <select
-                        value={list.priority}
-                        onChange={(e) => setList({ ...list, priority: e.target.value })}
-                    >
-                        <option value="Low">Low</option>
-                        <option value="Medium">Medium</option>
-                        <option value="High">High</option>
-                    </select>
+                    <form className="todo-form">
+                        <label htmlFor="task">Enter Task</label>
+                        <input
+                            id="task"
+                            type="text"
+                            value={list.task}
+                            onChange={(e) => setList({ ...list, task: e.target.value })}
+                            placeholder="Task description"
+                        />
+                        <label htmlFor="priority">Priority</label>
+                        <select
+                            id="priority"
+                            value={list.priority}
+                            onChange={(e) => setList({ ...list, priority: e.target.value })}
+                        >
+                            <option value="Low">Low</option>
+                            <option value="Medium">Medium</option>
+                            <option value="High">High</option>
+                        </select>
+                        <label htmlFor="date">Date</label>
+                        <input
+                            id="date"
+                            type="date"
+                            value={list.date}
+                            onChange={(e) => setList({ ...list, date: e.target.value })}
+                        />
+                        <button type="submit" className="submit-button">Add Task</button>
+                    </form>
                     <div className="output-div">
                         <h2>High Priority</h2>
                         <table className="high-priority">
