@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate, Outlet } from 'react-router-dom';
 import DashNav from '../components/DashNav';
-import './ToDoList.css';
+import './ToDoList.css'; // Import the CSS file
 
 const ToDoList = () => {
     const { userId } = useParams();
@@ -109,7 +109,7 @@ const ToDoList = () => {
                     </select>
                     <div className="output-div">
                         <h2>High Priority</h2>
-                        <table>
+                        <table className="high-priority">
                             <thead>
                                 <tr>
                                     <th>Task</th>
@@ -127,7 +127,7 @@ const ToDoList = () => {
                         </table>
 
                         <h2>Medium Priority</h2>
-                        <table>
+                        <table className="medium-priority">
                             <thead>
                                 <tr>
                                     <th>Task</th>
@@ -145,7 +145,7 @@ const ToDoList = () => {
                         </table>
 
                         <h2>Low Priority</h2>
-                        <table>
+                        <table className="low-priority">
                             <thead>
                                 <tr>
                                     <th>Task</th>
