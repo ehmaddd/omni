@@ -93,7 +93,7 @@ const ToDoList = () => {
                     <Outlet />
                     <p>Your To Do List ID: {userId}</p>
                     <form className="todo-form">
-                        <label htmlFor="task">Enter Task</label>
+                        <label className="todo-label" htmlFor="task">Enter Task</label>
                         <input
                             id="task"
                             type="text"
@@ -101,7 +101,7 @@ const ToDoList = () => {
                             onChange={(e) => setList({ ...list, task: e.target.value })}
                             placeholder="Task description"
                         />
-                        <label htmlFor="priority">Priority</label>
+                        <label className="todo-label" htmlFor="priority">Priority</label>
                         <select
                             id="priority"
                             value={list.priority}
@@ -111,7 +111,7 @@ const ToDoList = () => {
                             <option value="Medium">Medium</option>
                             <option value="High">High</option>
                         </select>
-                        <label htmlFor="date">Date</label>
+                        <label className="todo-label" htmlFor="date">Date</label>
                         <input
                             id="date"
                             type="date"

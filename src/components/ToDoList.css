@@ -16,7 +16,7 @@
 }
 
 /* Styling for input elements */
-label {
+.todo-label {
     display: block;
     margin-top: 10px;
     font-weight: bold;
@@ -66,8 +66,9 @@ table {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
 }
 
-thead {
-    color: #fff;
+thead th {
+    color: #fff; /* White text color */
+    background-color: #000; /* Black background color for table headers */
 }
 
 th, td {
@@ -90,7 +91,7 @@ h2 {
 }
 
 /* High Priority Table */
-table.high-priority thead {
+table.high-priority thead th {
     background-color: #e74c3c; /* Brighter red for high priority */
 }
 
@@ -103,7 +104,7 @@ table.high-priority tr:nth-child(odd) {
 }
 
 /* Medium Priority Table */
-table.medium-priority thead {
+table.medium-priority thead th {
     background-color: #f39c12; /* Bright yellow for medium priority */
 }
 
@@ -116,7 +117,7 @@ table.medium-priority tr:nth-child(odd) {
 }
 
 /* Low Priority Table */
-table.low-priority thead {
+table.low-priority thead th {
     background-color: #2ecc71; /* Bright green for low priority */
 }
 
