@@ -487,10 +487,12 @@ app.get('/fetch_workout/:userId', async (req, res) => {
 
 app.get('/fetch_todos/:userId', async (req, res) => {
   const { userId } = req.params;
+  const { date } = req.query;
+
   try {
     const result = await pool.query(
-      'SELECT * FROM todos WHERE user_id = $1 ORDER BY date DESC',
-      [userId]
+      'SELECT * FROM todos WHERE user_id = $1 AND date = $2 ORDER BY date DESC',
+      [userId, date]
     );
     res.json(result.rows);
   } catch (err) {
@@ -498,8 +500,6 @@ app.get('/fetch_todos/:userId', async (req, res) => {
     res.status(500).json({ message: 'Error fetching workout logs' });
   }
 });
-
-
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);

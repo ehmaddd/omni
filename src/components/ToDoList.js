@@ -12,12 +12,16 @@ const ToDoList = () => {
 
     const fetchDB = async () => {
       try {
-        const response = await fetch(`http://localhost:5000/fetch_todos/${userId}`, {
+        const currentDate = new Date().toISOString().split('T')[0]; // Get current date in 'YYYY-MM-DD' format
+    
+        const response = await fetch(`http://localhost:5000/fetch_todos/${userId}?date=${currentDate}`, {
           method: 'GET',
         });
+    
         if (!response.ok) {
           throw new Error('No Task Found');
         }
+    
         const result = await response.json();
         setDbList(result);
       } catch (error) {
