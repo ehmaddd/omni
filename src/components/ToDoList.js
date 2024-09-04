@@ -11,10 +11,10 @@ const ToDoList = () => {
     const [list, setList] = useState({});
     const [dbList, setDbList] = useState([]);
 
+    const currentDate = new Date().toISOString().split('T')[0]; // Get current date in 'YYYY-MM-DD' format
+
     const fetchDB = async () => {
         try {
-            const currentDate = new Date().toISOString().split('T')[0]; // Get current date in 'YYYY-MM-DD' format
-        
             const response = await fetch(`http://localhost:5000/fetch_todos/${userId}?date=${currentDate}`, {
                 method: 'GET',
             });
@@ -120,20 +120,21 @@ const ToDoList = () => {
                         />
                         <button type="submit" className="submit-button">Add Task</button>
                     </form>
+                    <h5>Date : {currentDate}</h5>
                     <div className="output-div">
                         <h2>High Priority</h2>
                         <table className="high-priority">
                             <thead>
                                 <tr>
                                     <th>Task</th>
-                                    <th>Date</th>
+                                    <th>Status</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 {filterByPriority('High').map(item => (
                                     <tr key={item.id}>
                                         <td>{item.task}</td>
-                                        <td>{item.date}</td>
+                                        <td>{item.status}</td>
                                     </tr>
                                 ))}
                             </tbody>
@@ -144,14 +145,14 @@ const ToDoList = () => {
                             <thead>
                                 <tr>
                                     <th>Task</th>
-                                    <th>Date</th>
+                                    <th>Status</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 {filterByPriority('Medium').map(item => (
                                     <tr key={item.id}>
                                         <td>{item.task}</td>
-                                        <td>{item.date}</td>
+                                        <td>{item.status}</td>
                                     </tr>
                                 ))}
                             </tbody>
@@ -162,14 +163,14 @@ const ToDoList = () => {
                             <thead>
                                 <tr>
                                     <th>Task</th>
-                                    <th>Date</th>
+                                    <th>Status</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 {filterByPriority('Low').map(item => (
                                     <tr key={item.id}>
                                         <td>{item.task}</td>
-                                        <td>{item.date}</td>
+                                        <td>{item.status}</td>
                                     </tr>
                                 ))}
                             </tbody>
