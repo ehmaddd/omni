@@ -120,7 +120,7 @@ const ToDoList = () => {
                         />
                         <button type="submit" className="submit-button">Add Task</button>
                     </form>
-                    <h5>Date : {currentDate}</h5>
+                    <h5 class="today">Date : {currentDate}</h5>
                     <div className="output-div">
                         <h2>High Priority</h2>
                         <table className="high-priority">

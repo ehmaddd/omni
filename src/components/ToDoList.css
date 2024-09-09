@@ -153,3 +153,7 @@ table.low-priority tr:nth-child(even) {
 table.low-priority tr:nth-child(odd) {
     background-color: #d0f0c0;
 }
+
+.today {
+  text-align: center;
+}
