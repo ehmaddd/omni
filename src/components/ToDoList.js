@@ -13,38 +13,6 @@ const ToDoList = () => {
 
     const currentDate = new Date().toISOString().split('T')[0]; // Get current date in 'YYYY-MM-DD' format
 
-    const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    const requestBody = {
-        user_id: userId,
-        task: list.task,
-        priority: list.priority,
-        date: list.date,
-        status: list.status,
-    };
-
-    try {
-        const response = await fetch('http://localhost:5000/store_todos', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${token}`,
-            },
-            body: JSON.stringify(requestBody),
-        });
-
-        if (response.ok) {
-            fetchSugarData(); // Refresh data after successful submission
-        } else {
-            const errorResponse = await response.json();
-            console.error('Failed to record sugar level:', errorResponse);
-        }
-    } catch (error) {
-        console.error('Error recording sugar level:', error);
-    }
-};
-
     const fetchDB = async () => {
         try {
             const response = await fetch(`http://localhost:5000/fetch_todos/${userId}?date=${currentDate}`, {
@@ -124,34 +92,34 @@ const ToDoList = () => {
                     </div>
                     <Outlet />
                     <p>Your To Do List ID: {userId}</p>
-                    <form className="todo-form" onSubmit={handleSubmit}>
-                      <label className="todo-label" htmlFor="task">Enter Task</label>
-                      <input
-                          id="task"
-                          type="text"
-                          value={list.task}
-                          onChange={(e) => setList({ ...list, task: e.target.value })}
-                          placeholder="Task description"
-                      />
-                      <label className="todo-label" htmlFor="priority">Priority</label>
-                      <select
-                          id="priority"
-                          value={list.priority}
-                          onChange={(e) => setList({ ...list, priority: e.target.value })}
-                      >
-                          <option value="Low">Low</option>
-                          <option value="Medium">Medium</option>
-                          <option value="High">High</option>
-                      </select>
-                      <label className="todo-label" htmlFor="date">Date</label>
-                      <input
-                          id="date"
-                          type="date"
-                          value={list.date}
-                          onChange={(e) => setList({ ...list, date: e.target.value })}
-                      />
-                      <button type="submit" className="submit-button">Add Task</button>
-                  </form>
+                    <form className="todo-form">
+                        <label className="todo-label" htmlFor="task">Enter Task</label>
+                        <input
+                            id="task"
+                            type="text"
+                            value={list.task}
+                            onChange={(e) => setList({ ...list, task: e.target.value })}
+                            placeholder="Task description"
+                        />
+                        <label className="todo-label" htmlFor="priority">Priority</label>
+                        <select
+                            id="priority"
+                            value={list.priority}
+                            onChange={(e) => setList({ ...list, priority: e.target.value })}
+                        >
+                            <option value="Low">Low</option>
+                            <option value="Medium">Medium</option>
+                            <option value="High">High</option>
+                        </select>
+                        <label className="todo-label" htmlFor="date">Date</label>
+                        <input
+                            id="date"
+                            type="date"
+                            value={list.date}
+                            onChange={(e) => setList({ ...list, date: e.target.value })}
+                        />
+                        <button type="submit" className="submit-button">Add Task</button>
+                    </form>
                     <h5>Date : {currentDate}</h5>
                     <div className="output-div">
                         <h2>High Priority</h2>
