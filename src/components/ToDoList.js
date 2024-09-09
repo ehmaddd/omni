@@ -132,13 +132,25 @@ const ToDoList = () => {
                                 </tr>
                             </thead>
                             <tbody>
-                                {filterByPriority('High').map(item => (
-                                    <tr key={item.id}>
-                                        <td>{item.task}</td>
-                                        <td>{item.status}</td>
-                                        <td><button className="complete-button">Mark as Complete</button><button className="delete-button">Delete</button></td>
-                                    </tr>
-                                ))}
+                              {filterByPriority('High').map(item => (
+                                <tr key={item.id}>
+                                  <td>{item.task}</td>
+                                  <td>{item.status}</td>
+                                  <td>
+                                      {item.status === "pending" ? (
+                                          <>
+                                              <button className="complete-button">Mark as Complete</button>
+                                              <button className="delete-button">Delete</button>
+                                          </>
+                                      ) : (
+                                          <>
+                                              <button className="complete-button" disabled>Completed</button>
+                                              <button className="delete-button">Delete</button>
+                                          </>
+                                      )}
+                                  </td>
+                                </tr>
+                              ))}
                             </tbody>
                         </table>
 
@@ -152,35 +164,60 @@ const ToDoList = () => {
                                 </tr>
                             </thead>
                             <tbody>
-                                {filterByPriority('Medium').map(item => (
-                                    <tr key={item.id}>
-                                        <td>{item.task}</td>
-                                        <td>{item.status}</td>
-                                        <td><button className="complete-button">Completed</button><button className="delete-button">Delete</button></td>
-                                    </tr>
-                                ))}
+                            {filterByPriority('Medium').map(item => (
+    <tr key={item.id}>
+        <td>{item.task}</td>
+        <td>{item.status}</td>
+        <td>
+            {item.status === "pending" ? (
+                <>
+                    <button className="complete-button">Mark as Complete</button>
+                    <button className="delete-button">Delete</button>
+                </>
+            ) : (
+                <>
+                    <button className="complete-button" disabled>Completed</button>
+                    <button className="delete-button">Delete</button>
+                </>
+            )}
+        </td>
+    </tr>
+))}
                             </tbody>
                         </table>
 
                         <h2>Low Priority</h2>
-                        <table className="low-priority">
-                            <thead>
-                                <tr>
-                                    <th>Task</th>
-                                    <th>Status</th>
-                                    <th>Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {filterByPriority('Low').map(item => (
-                                    <tr key={item.id}>
-                                        <td>{item.task}</td>
-                                        <td>{item.status}</td>
-                                        <td><button className="complete-button">Completed</button><button className="delete-button">Delete</button></td>
-                                    </tr>
-                                ))}
-                            </tbody>
-                        </table>
+                        <h2>Low Priority</h2>
+<table className="low-priority">
+    <thead>
+        <tr>
+            <th>Task</th>
+            <th>Status</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {filterByPriority('Low').map(item => (
+            <tr key={item.id}>
+                <td>{item.task}</td>
+                <td>{item.status}</td>
+                <td>
+                    {item.status === "pending" ? (
+                        <>
+                            <button className="complete-button">Mark as Complete</button>
+                            <button className="delete-button">Delete</button>
+                        </>
+                    ) : (
+                        <>
+                            <button className="complete-button" disabled>Completed</button>
+                            <button className="delete-button">Delete</button>
+                        </>
+                    )}
+                </td>
+            </tr>
+        ))}
+    </tbody>
+</table>
                     </div>
                 </>
             ) : (
