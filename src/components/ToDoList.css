@@ -59,11 +59,13 @@
     display: inline-block; /* Align buttons horizontally */
     margin-left: 10px; /* Space between buttons */
     margin-bottom: 10px; /* Space below buttons */
+    height: 50px;
 }
 
 /* Specific button colors */
 .complete-button {
     background-color: #28a745; /* Green background for complete button */
+    width: 180px;
 }
 
 .complete-button:hover {

@@ -136,7 +136,7 @@ const ToDoList = () => {
                                     <tr key={item.id}>
                                         <td>{item.task}</td>
                                         <td>{item.status}</td>
-                                        <td><button className="complete-button">Completed</button><button className="delete-button">Delete</button></td>
+                                        <td><button className="complete-button">Mark as Complete</button><button className="delete-button">Delete</button></td>
                                     </tr>
                                 ))}
                             </tbody>
