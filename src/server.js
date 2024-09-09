@@ -501,6 +501,22 @@ app.get('/fetch_todos/:userId', async (req, res) => {
   }
 });
 
+app.post('/store_todos/', async (req, res) => {
+  const { user_id, task, priority, date } = req.body;
+  console.log(req.body);
+
+  // try {
+  //   const result = await pool.query(
+  //     'SELECT * FROM todos WHERE user_id = $1 AND date = $2 ORDER BY date DESC',
+  //     [userId, date]
+  //   );
+  //   res.json(result.rows);
+  // } catch (err) {
+  //   console.error(err);
+  //   res.status(500).json({ message: 'Error fetching workout logs' });
+  // }
+});
+
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
