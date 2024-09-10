@@ -8,10 +8,13 @@ const ToDoList = () => {
     const storedUserId = localStorage.getItem('user');
     const token = localStorage.getItem('token');
     const navigate = useNavigate();
-    const [list, setList] = useState({});
+    const currentDate = new Date().toISOString().split('T')[0];
+    const [list, setList] = useState({
+      date: currentDate,
+      priority: 'Low',
+      task: ''
+    });
     const [dbList, setDbList] = useState([]);
-
-    const currentDate = new Date().toISOString().split('T')[0]; // Get current date in 'YYYY-MM-DD' format
 
     const fetchDB = async () => {
         try {
@@ -110,6 +113,13 @@ const ToDoList = () => {
 
     const handleSubmit = async (e) => {
       e.preventDefault();
+
+      // Validation check
+      if (!list.priority || !list.date || !list.task) {
+        alert('Please fill in all required fields.');
+        return;
+      }
+
       const requestBody = {
         user_id: userId,
         date: list.date,
@@ -124,7 +134,17 @@ const ToDoList = () => {
         },
         body: JSON.stringify(requestBody),
       });
-      
+
+      if (response.ok) {
+        setList({
+          date: currentDate,
+          priority: 'Low',
+          task: ''
+        });
+        fetchDB(); // Refresh the task list
+      } else {
+        console.error('Failed to store task:', await response.text());
+      }
     }
   
     // Function to filter tasks by priority
@@ -140,7 +160,7 @@ const ToDoList = () => {
                     </div>
                     <Outlet />
                     <p>Your To Do List ID: {userId}</p>
-                    <form className="todo-form">
+                    <form className="todo-form" onSubmit={handleSubmit}>
                       <label className="todo-label" htmlFor="task">Enter Task</label>
                       <input
                           id="task"
@@ -148,13 +168,16 @@ const ToDoList = () => {
                           value={list.task}
                           onChange={(e) => setList({ ...list, task: e.target.value })}
                           placeholder="Task description"
+                          required
                       />
                       <label className="todo-label" htmlFor="priority">Priority</label>
                       <select
                           id="priority"
                           value={list.priority}
                           onChange={(e) => setList({ ...list, priority: e.target.value })}
+                          required
                       >
+                          <option value="">-- Select Priority --</option>
                           <option value="Low">Low</option>
                           <option value="Medium">Medium</option>
                           <option value="High">High</option>
@@ -165,18 +188,16 @@ const ToDoList = () => {
                           type="date"
                           value={list.date}
                           onChange={(e) => setList({ ...list, date: e.target.value })}
+                          required
                       />
                       <button
                         type="submit"
                         className="submit-button"
-                        onClick={(e)=> {
-                          handleSubmit(e);
-                        }}
                       >
                         Add Task
                       </button>
                     </form>
-                    <h5 class="today">Date : {currentDate}</h5>
+                    <h5 className="today">Date : {currentDate}</h5>
                     <div className="output-div">
                       <h2>High Priority</h2>
                       <table className="high-priority">
@@ -197,17 +218,13 @@ const ToDoList = () => {
                                       <>
                                           <button
                                             className="complete-button"
-                                            onClick={()=> {
-                                              handleComplete(item.id);
-                                          }}
+                                            onClick={() => handleComplete(item.id)}
                                           >
                                             Mark as Complete
                                           </button>
                                           <button
                                             className="delete-button"
-                                            onClick={()=> {
-                                              handleDelete(item.id);
-                                            }}
+                                            onClick={() => handleDelete(item.id)}
                                           >
                                             Delete
                                           </button>
@@ -217,9 +234,7 @@ const ToDoList = () => {
                                           <button className="completed-button" disabled>Completed</button>
                                           <button
                                             className="delete-button"
-                                            onClick={()=> {
-                                              handleDelete(item.id);
-                                            }}
+                                            onClick={() => handleDelete(item.id)}
                                           >
                                             Delete
                                           </button>
@@ -241,108 +256,96 @@ const ToDoList = () => {
                           </tr>
                         </thead>
                         <tbody>
-                        {filterByPriority('Medium').map(item => (
-                          <tr key={item.id}>
-                            <td>{item.task}</td>
-                            <td>{item.status}</td>
-                            <td>
-                              {item.status === "pending" ? (
-                                <>
-                                  <button
-                                            className="complete-button"
-                                            onClick={()=> {
-                                              handleComplete(item.id);
-                                          }}
-                                          >
-                                            Mark as Complete
-                                          </button>
-                                          <button
-                                            className="delete-button"
-                                            onClick={()=> {
-                                              handleDelete(item.id);
-                                            }}
-                                          >
-                                            Delete
-                                          </button>
+                          {filterByPriority('Medium').map(item => (
+                            <tr key={item.id}>
+                              <td>{item.task}</td>
+                              <td>{item.status}</td>
+                              <td>
+                                {item.status === "pending" ? (
+                                  <>
+                                    <button
+                                      className="complete-button"
+                                      onClick={() => handleComplete(item.id)}
+                                    >
+                                      Mark as Complete
+                                    </button>
+                                    <button
+                                      className="delete-button"
+                                      onClick={() => handleDelete(item.id)}
+                                    >
+                                      Delete
+                                    </button>
                                   </>
-                              ) : (
-                                <>
-                                  <button className="completed-button" disabled>Completed</button>
-                                  <button
-                                            className="delete-button"
-                                            onClick={()=> {
-                                              handleDelete(item.id);
-                                            }}
-                                          >
-                                            Delete
-                                          </button>
+                                ) : (
+                                  <>
+                                    <button className="completed-button" disabled>Completed</button>
+                                    <button
+                                      className="delete-button"
+                                      onClick={() => handleDelete(item.id)}
+                                    >
+                                      Delete
+                                    </button>
                                   </>
-                              )}
-                            </td>
-                          </tr>
+                                )}
+                              </td>
+                            </tr>
                            ))}
-                          </tbody>
-                        </table>
+                        </tbody>
+                      </table>
 
-                        <h2>Low Priority</h2>
-                          <table className="low-priority">
-                            <thead>
-                              <tr>
-                                  <th>Task</th>
-                                  <th>Status</th>
-                                  <th>Actions</th>
-                              </tr>
-                            </thead>
-                            <tbody>
-                              {filterByPriority('Low').map(item => (
-                                <tr key={item.id}>
-                                  <td>{item.task}</td>
-                                  <td>{item.status}</td>
-                                  <td>
-                                    {item.status === "pending" ? (
-                                      <>
-                                        <button
-                                            className="complete-button"
-                                            onClick={()=> {
-                                              handleComplete(item.id);
-                                          }}
-                                          >
-                                            Mark as Complete
-                                          </button>
-                                          <button
-                                            className="delete-button"
-                                            onClick={()=> {
-                                              handleDelete(item.id);
-                                            }}
-                                          >
-                                            Delete
-                                          </button>
-                                        </>
-                                    ) : (
-                                      <>
-                                        <button className="completed-button" disabled>Completed</button>
-                                        <button
-                                            className="delete-button"
-                                            onClick={()=> {
-                                              handleDelete(item.id);
-                                            }}
-                                          >
-                                            Delete
-                                          </button>
-                                        </>
-                                    )}
-                                  </td>
-                                </tr>
-                              ))}
-                            </tbody>
-                          </table>
+                      <h2>Low Priority</h2>
+                      <table className="low-priority">
+                        <thead>
+                          <tr>
+                            <th>Task</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {filterByPriority('Low').map(item => (
+                            <tr key={item.id}>
+                              <td>{item.task}</td>
+                              <td>{item.status}</td>
+                              <td>
+                                {item.status === "pending" ? (
+                                  <>
+                                    <button
+                                      className="complete-button"
+                                      onClick={() => handleComplete(item.id)}
+                                    >
+                                      Mark as Complete
+                                    </button>
+                                    <button
+                                      className="delete-button"
+                                      onClick={() => handleDelete(item.id)}
+                                    >
+                                      Delete
+                                    </button>
+                                  </>
+                                ) : (
+                                  <>
+                                    <button className="completed-button" disabled>Completed</button>
+                                    <button
+                                      className="delete-button"
+                                      onClick={() => handleDelete(item.id)}
+                                    >
+                                      Delete
+                                    </button>
+                                  </>
+                                )}
+                              </td>
+                            </tr>
+                           ))}
+                        </tbody>
+                      </table>
                     </div>
                 </>
             ) : (
-                <p>Redirecting...</p>
+                <p>Loading...</p>
             )}
         </>
     );
-}
+};
 
 export default ToDoList;
