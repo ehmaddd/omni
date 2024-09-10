@@ -87,6 +87,26 @@ const ToDoList = () => {
           },
         });
     }
+
+    const handleDelete = async (taskId) => {
+      try {
+        const response = await fetch(`http://localhost:5000/delete_task/${taskId}`, {
+          method: 'DELETE',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        });
+    
+        if (!response.ok) {
+          throw new Error(`Error: ${response.statusText}`);
+        }
+    
+        const result = await response.json();
+        console.log('Task deleted successfully', result);
+      } catch (error) {
+        console.error('Failed to delete the task:', error);
+      }
+    }
   
     // Function to filter tasks by priority
     const filterByPriority = (priority) => dbList.filter(item => item.priority === priority);
@@ -156,12 +176,26 @@ const ToDoList = () => {
                                           >
                                             Mark as Complete
                                           </button>
-                                          <button className="delete-button">Delete</button>
+                                          <button
+                                            className="delete-button"
+                                            onClick={()=> {
+                                              handleDelete(item.id);
+                                            }}
+                                          >
+                                            Delete
+                                          </button>
                                       </>
                                   ) : (
                                       <>
                                           <button className="completed-button" disabled>Completed</button>
-                                          <button className="delete-button">Delete</button>
+                                          <button
+                                            className="delete-button"
+                                            onClick={()=> {
+                                              handleDelete(item.id);
+                                            }}
+                                          >
+                                            Delete
+                                          </button>
                                       </>
                                   )}
                               </td>
@@ -195,12 +229,26 @@ const ToDoList = () => {
                                           >
                                             Mark as Complete
                                           </button>
-                                  <button className="delete-button">Delete</button>
+                                          <button
+                                            className="delete-button"
+                                            onClick={()=> {
+                                              handleDelete(item.id);
+                                            }}
+                                          >
+                                            Delete
+                                          </button>
                                   </>
                               ) : (
                                 <>
                                   <button className="completed-button" disabled>Completed</button>
-                                  <button className="delete-button">Delete</button>
+                                  <button
+                                            className="delete-button"
+                                            onClick={()=> {
+                                              handleDelete(item.id);
+                                            }}
+                                          >
+                                            Delete
+                                          </button>
                                   </>
                               )}
                             </td>
@@ -234,12 +282,26 @@ const ToDoList = () => {
                                           >
                                             Mark as Complete
                                           </button>
-                                        <button className="delete-button">Delete</button>
+                                          <button
+                                            className="delete-button"
+                                            onClick={()=> {
+                                              handleDelete(item.id);
+                                            }}
+                                          >
+                                            Delete
+                                          </button>
                                         </>
                                     ) : (
                                       <>
                                         <button className="completed-button" disabled>Completed</button>
-                                        <button className="delete-button">Delete</button>
+                                        <button
+                                            className="delete-button"
+                                            onClick={()=> {
+                                              handleDelete(item.id);
+                                            }}
+                                          >
+                                            Delete
+                                          </button>
                                         </>
                                     )}
                                   </td>

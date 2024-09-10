@@ -11,7 +11,7 @@ const app = express();
 
 app.use(cors({
   origin: 'http://localhost:3000', // Replace with your frontend URL
-  methods: ['GET', 'POST'],
+  methods: ['GET', 'POST', 'DELETE', 'PUT'],
   credentials: true
 }));
 app.use(bodyParser.json());
@@ -513,6 +513,20 @@ app.post('/complete_task/:taskId', async (req, res) => {
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: 'Error updating' });
+  }
+});
+
+app.delete('/delete_task/:taskId', async (req, res) => {
+  const { taskId } = req.params;
+  try {
+    const result = await pool.query(
+      'DELETE FROM todos WHERE id=$1',
+      [taskId]
+    );
+    res.json(result.rows);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'Error deleting' });
   }
 });
 
