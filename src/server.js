@@ -501,6 +501,21 @@ app.get('/fetch_todos/:userId', async (req, res) => {
   }
 });
 
+app.post('/complete_task/:taskId', async (req, res) => {
+  const { taskId } = req.params;
+  const status = 'complete';
+  try {
+    const result = await pool.query(
+      'UPDATE todos SET status=$1 WHERE id=$2',
+      [status, taskId]
+    );
+    res.json(result.rows);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'Error updating' });
+  }
+});
+
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });

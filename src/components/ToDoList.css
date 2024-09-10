@@ -1,157 +1,165 @@
 /* Form styling */
 .todo-form {
-    background-color: #f4f4f4;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-    max-width: 500px;
-    margin: 20px auto;
+  background-color: #f4f4f4;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  max-width: 500px;
+  margin: 20px auto;
 }
 
 /* Form layout adjustments */
 .todo-form label {
-    display: inline-block;
-    width: 25%; /* Adjust width as needed */
-    font-weight: bold;
-    vertical-align: middle;
+  display: inline-block;
+  width: 25%; /* Adjust width as needed */
+  font-weight: bold;
+  vertical-align: middle;
 }
 
 .todo-form input[type="text"],
 .todo-form input[type="date"],
 .todo-form select {
-    display: inline-block;
-    width: 70%; /* Adjust width as needed */
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    font-size: 16px;
-    margin-bottom: 10px;
-    vertical-align: middle;
+  display: inline-block;
+  width: 70%; /* Adjust width as needed */
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 16px;
+  margin-bottom: 10px;
+  vertical-align: middle;
 }
 
 .submit-button {
-    padding: 10px 20px;
-    border: none;
-    border-radius: 8px;
-    background-color: #007bff;
-    color: #fff;
-    font-size: 16px;
-    cursor: pointer;
-    margin-top: 10px;
-    width: 100%; /* Full width for better alignment */
-    text-align: center; /* Center the button text */
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  background-color: #007bff;
+  color: #fff;
+  font-size: 16px;
+  cursor: pointer;
+  margin-top: 10px;
+  width: 100%; /* Full width for better alignment */
+  text-align: center; /* Center the button text */
 }
 
 .submit-button:hover {
-    background-color: #0056b3;
+  background-color: #0056b3;
 }
 
 /* Complete button and delete button adjustments */
 .complete-button,
 .delete-button {
-    border: none;
-    border-radius: 8px;
-    color: #fff;
-    font-size: 16px;
-    cursor: pointer;
-    width: 100px; /* Fixed width for both buttons */
-    text-align: center; /* Center text within the button */
-    display: inline-block; /* Align buttons horizontally */
-    margin-left: 10px; /* Space between buttons */
-    margin-bottom: 10px; /* Space below buttons */
-    height: 50px;
+  border: none;
+  border-radius: 8px;
+  color: #fff;
+  font-size: 16px;
+  cursor: pointer;
+  width: 100px; /* Fixed width for both buttons */
+  text-align: center; /* Center text within the button */
+  display: inline-block; /* Align buttons horizontally */
+  margin-left: 10px; /* Space between buttons */
+  margin-bottom: 10px; /* Space below buttons */
+  height: 50px;
+}
+
+.delete-button img {
+  width: 60px;
+  background: none !important;
 }
 
 /* Specific button colors */
 .complete-button {
-    background-color: #28a745; /* Green background for complete button */
-    width: 180px;
+  background-color: #28a745; /* Green background for complete button */
+  width: 180px;
+}
+
+.completed-button {
+  border: none;
+  border-radius: 8px;
+  color: #fff;
+  font-size: 16px;
+  width: 100px; /* Fixed width for both buttons */
+  text-align: center; /* Center text within the button */
+  display: inline-block; /* Align buttons horizontally */
+  margin-left: 10px; /* Space between buttons */
+  margin-bottom: 10px; /* Space below buttons */
+  height: 50px;
+  width: 180px;
+  pointer-events: none;
 }
 
 .complete-button:hover {
-    background-color: #218838; /* Darker green on hover */
-}
-
-.delete-button {
-    background-color: #dc3545; /* Red background for delete button */
-}
-
-.delete-button:hover {
-    background-color: #c82333; /* Darker red on hover */
+  background-color: #218838; /* Darker green on hover */
 }
 
 /* Table styling */
 table {
-    width: 100%;
-    margin: 20px auto;
-    border-collapse: collapse;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  width: 100%;
+  margin: 20px auto;
+  border-collapse: collapse;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
 }
 
 thead th {
-    color: #fff;
-    background-color: #000;
-    text-align: center;
+  color: #fff;
+  background-color: #000;
+  text-align: center;
 }
 
 table th, table td {
-    padding: 12px;
-    border-bottom: 1px solid #ddd;
-}
-
-table td {
-    text-align: center;
+  padding: 12px;
+  border-bottom: 1px solid #ddd;
 }
 
 table th:nth-child(1), table td:nth-child(1) {
-    width: 50%;
+  width: 50%;
 }
 
 table th:nth-child(2), table td:nth-child(2) {
-    width: 20%;
+  width: 20%;
 }
 
 table th:nth-child(3), table td:nth-child(3) {
-    width: 30%;
+  width: 30%;
 }
 
 /* High Priority Table */
 table.high-priority thead th {
-    background-color: #e74c3c;
+  background-color: #e74c3c;
 }
 
 table.high-priority tr:nth-child(even) {
-    background-color: #f9b7b7;
+  background-color: #f9b7b7;
 }
 
 table.high-priority tr:nth-child(odd) {
-    background-color: #f5a9a9;
+  background-color: #f5a9a9;
 }
 
 /* Medium Priority Table */
 table.medium-priority thead th {
-    background-color: #f39c12;
+  background-color: #f39c12;
 }
 
 table.medium-priority tr:nth-child(even) {
-    background-color: #fef6e4;
+  background-color: #fef6e4;
 }
 
 table.medium-priority tr:nth-child(odd) {
-    background-color: #fce5c7;
+  background-color: #fce5c7;
 }
 
 /* Low Priority Table */
 table.low-priority thead th {
-    background-color: #2ecc71;
+  background-color: #2ecc71;
 }
 
 table.low-priority tr:nth-child(even) {
-    background-color: #e8f6e8;
+  background-color: #e8f6e8;
 }
 
 table.low-priority tr:nth-child(odd) {
-    background-color: #d0f0c0;
+  background-color: #d0f0c0;
 }
 
 .today {
