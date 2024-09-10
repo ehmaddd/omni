@@ -9,8 +9,9 @@ const ToDoList = () => {
     const token = localStorage.getItem('token');
     const navigate = useNavigate();
     const currentDate = new Date().toISOString().split('T')[0];
+    const [dateTasks, setDateTasks] = useState(currentDate);
     const [list, setList] = useState({
-      date: currentDate,
+      date: dateTasks,
       priority: 'Low',
       task: ''
     });
@@ -18,7 +19,7 @@ const ToDoList = () => {
 
     const fetchDB = async () => {
         try {
-            const response = await fetch(`http://localhost:5000/fetch_todos/${userId}?date=${currentDate}`, {
+            const response = await fetch(`http://localhost:5000/fetch_todos/${userId}?date=${dateTasks}`, {
                 method: 'GET',
             });
         
@@ -32,6 +33,27 @@ const ToDoList = () => {
             console.error('Cannot reach database:', error);
         }
     }
+
+    const fetchSpecific = async (e) => {
+      setDbList([]);
+      setDateTasks(e.target.value);
+      console.log(dateTasks);
+      try {
+          const response = await fetch(`http://localhost:5000/fetch_todos/${userId}?date=${dateTasks}`, {
+              method: 'GET',
+          });
+      
+          if (!response.ok) {
+              throw new Error('No Task Found');
+          }
+      
+          const result = await response.json();
+          console.log(result);
+          setDbList(result);
+      } catch (error) {
+          console.error('Cannot reach database:', error);
+      }
+  }
 
     useEffect(() => {
         // Redirect if no token is present
@@ -197,7 +219,14 @@ const ToDoList = () => {
                         Add Task
                       </button>
                     </form>
-                    <h5 className="today">Date : {currentDate}</h5>
+                    <label>
+                      Select Date
+                      <input
+                        type="date"
+                        onChange={(e) => fetchSpecific(e)}
+                      />
+                    </label>
+                    <h5 className="today">Date : {dateTasks}</h5>
                     <div className="output-div">
                       <h2>High Priority</h2>
                       <table className="high-priority">
