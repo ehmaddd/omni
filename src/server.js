@@ -5,6 +5,7 @@ const bcrypt = require('bcryptjs');
 const request = require('request');
 const jwt = require('jsonwebtoken');
 const pool = require('./db');
+const { toHaveFormValues } = require('@testing-library/jest-dom/matchers');
 const PORT = 5000;
 
 const app = express();
@@ -528,6 +529,21 @@ app.delete('/delete_task/:taskId', async (req, res) => {
     console.error(err);
     res.status(500).json({ message: 'Error deleting' });
   }
+});
+
+app.post('/store_task/', async (req, res) => {
+  const { user_id, date, priority, task } = req.body;
+  try {
+    const result = await pool.query(
+      'INSERT INTO todos (user_id, task, priority, date) VALUES($1, $2, $3, $4)',
+      [user_id, task, priority, date]
+    )
+    res.json(result.rows);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'Error storing' });
+  }
+
 });
 
 app.listen(PORT, () => {

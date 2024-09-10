@@ -107,6 +107,25 @@ const ToDoList = () => {
         console.error('Failed to delete the task:', error);
       }
     }
+
+    const handleSubmit = async (e) => {
+      e.preventDefault();
+      const requestBody = {
+        user_id: userId,
+        date: list.date,
+        priority: list.priority,
+        task: list.task,
+      };
+      
+      const response = await fetch('http://localhost:5000/store_task', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(requestBody),
+      });
+      
+    }
   
     // Function to filter tasks by priority
     const filterByPriority = (priority) => dbList.filter(item => item.priority === priority);
@@ -147,7 +166,15 @@ const ToDoList = () => {
                           value={list.date}
                           onChange={(e) => setList({ ...list, date: e.target.value })}
                       />
-                      <button type="submit" className="submit-button">Add Task</button>
+                      <button
+                        type="submit"
+                        className="submit-button"
+                        onClick={(e)=> {
+                          handleSubmit(e);
+                        }}
+                      >
+                        Add Task
+                      </button>
                     </form>
                     <h5 class="today">Date : {currentDate}</h5>
                     <div className="output-div">
