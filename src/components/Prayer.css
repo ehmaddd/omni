@@ -41,6 +41,7 @@
 /* Table styling */
 .prayer-table {
   margin-top: 20px;
+  width: 100%;
 }
 
 .prayer-table thead th {
