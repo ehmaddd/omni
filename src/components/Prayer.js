@@ -114,109 +114,112 @@ const Prayer = () => {
   };
 
   return (
-    <div className="container mt-4">
-      <div className="row">
-        {/* Latitude and Longitude Input on the Left */}
-        <div className="col-md-6">
-          <div className="card p-4">
-            <h1 className="mb-4">Prayer Time Finder</h1>
-            <div className="form-group mb-3">
-              <label htmlFor="lat">Latitude:</label>
-              <input
-                type="number"
-                id="lat"
-                name="lat"
-                min="-90"
-                max="90"
-                onChange={handleLatChange}
-                step="0.1"
-                style={{ width: '100%', height: '40px' }}
-                placeholder="Enter latitude"
-                className="form-control"
-                value={lat !== null ? lat : ''}
-              />
-            </div>
-            <div className="form-group mb-3">
-              <label htmlFor="long">Longitude:</label>
-              <input
-                type="number"
-                id="long"
-                name="long"
-                min="-180"
-                max="180"
-                onChange={handleLonChange}
-                step="0.1"
-                style={{ width: '100%', height: '40px' }}
-                placeholder="Enter longitude"
-                className="form-control"
-                value={lon !== null ? lon : ''}
-              />
-            </div>
-            <button
-              className="btn btn-primary btn-block"
-              onClick={() => fetchData(lat, lon)}
-            >
-              Get Prayer Times
-            </button>
+    <div className="container">
+      <div className="prayer-row">
+        <div className="prayer-inputs">
+          <h4>Your Coordinates</h4><br></br>
+          <div>
+            <label htmlFor="lat">Latitude:</label>
+            <input
+              type="number"
+              id="lat"
+              name="lat"
+              min="-90"
+              max="90"
+              onChange={handleLatChange}
+              step="0.1"
+              style={{ width: '100%', height: '40px' }}
+              placeholder="Enter latitude"
+              className="form-control"
+              value={lat !== null ? lat : ''}
+            />
           </div>
+          <div>
+            <label htmlFor="long">Longitude:</label>
+            <input
+              type="number"
+              id="long"
+              name="long"
+              min="-180"
+              max="180"
+              onChange={handleLonChange}
+              step="0.1"
+              style={{ width: '100%', height: '40px' }}
+              placeholder="Enter longitude"
+              className="form-control"
+              value={lon !== null ? lon : ''}
+            />
+          </div>
+          <button
+          className="prayer-btn"
+            onClick={() => fetchData(lat, lon)}
+          >
+            Get Prayer Times
+          </button>
         </div>
 
         {/* Prayer Times Display on the Right */}
-        <div className="col-md-6">
-          <div className="card p-4">
-            {sunriseSunsetData && (
-                <div className="d-flex justify-content-between mb-4 flex-container">
-                  <div className="text-center">
-                    <img src={location} alt="Location" className="img-fluid" />
-                    <p>{sunriseSunsetData.city}, {sunriseSunsetData.country}</p>
-                  </div>
-                  <div></div>
-                  <div className="text-center mr-3">
-                    <img src={sunrise} alt="Sunrise" className="img-fluid" />
+        <div className="prayer-right-pane">
+          {sunriseSunsetData && (
+            <div className="prayer-detail-div">
+              <div className="upper-row">
+                {/* Location Icon and Details */}
+                <div className="location-container">
+                  <img src={location} alt="Location" className="location-img" />
+                  <p className="location-text">
+                    {sunriseSunsetData.city}, {sunriseSunsetData.country}
+                  </p>
+                </div>
+        
+                {/* Sunrise and Sunset */}
+                <div className="sun-timings">
+                  <div>
+                    <img src={sunrise} alt="Sunrise" className="sun-img" />
                     <p>{sunriseSunsetData.sunrise}</p>
                   </div>
-                  <div className="text-center">
-                    <img src={sunset} alt="Sunset" className="img-fluid" />
+                  <div>
+                    <img src={sunset} alt="Sunset" className="sun-img" />
                     <p>{sunriseSunsetData.sunset}</p>
                   </div>
                 </div>
-            )}
-            {prayerTimes && (
-              <div className="mt-4">
-                <h2 className="mb-4 d-inline">Prayer Times</h2>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                <h5 className="d-inline ml-3">( {prayerTimes.date} )</h5>
-                <table className="table">
-                  <thead>
-                    <tr>
-                      <th>Fajr</th>
-                      <th>Dhuhr</th>
-                      <th>Asr</th>
-                      <th>Maghrib</th>
-                      <th>Isha</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td>{prayerTimes.fajr}</td>
-                      <td>{prayerTimes.dhuhr}</td>
-                      <td>{prayerTimes.asr}</td>
-                      <td>{prayerTimes.maghrib}</td>
-                      <td>{prayerTimes.isha}</td>
-                    </tr>
-                  </tbody>
-                </table>
               </div>
-            )}
-          </div>
+        
+              {/* Prayer Times */}
+              {prayerTimes && (
+                <div className="prayer-times-section">
+                  <h5>Prayer Times ( {prayerTimes.date} )</h5>
+                  <table className="table">
+                    <thead>
+                      <tr>
+                        <th>Fajr</th>
+                        <th>Dhuhr</th>
+                        <th>Asr</th>
+                        <th>Maghrib</th>
+                        <th>Isha</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>{prayerTimes.fajr}</td>
+                        <td>{prayerTimes.dhuhr}</td>
+                        <td>{prayerTimes.asr}</td>
+                        <td>{prayerTimes.maghrib}</td>
+                        <td>{prayerTimes.isha}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              )}
+            </div>
+          )}
         </div>
       </div>
 
       {/* Display History */}
       {history.length > 0 && (
-        <div className="mt-4">
+        <div>
           <h2>History</h2>
-          <div className="card p-4">
+          <div>
             <table className="table">
               <thead>
                 <tr>

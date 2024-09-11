@@ -5,6 +5,10 @@
   margin-bottom: 20px;
 }
 
+.card h2 {
+  margin-bottom: 20px;
+}
+
 /* Styling for form elements */
 .form-group label {
   font-weight: bold;
@@ -61,15 +65,7 @@
   color: #dc3545;
 }
 
-.card {
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-}
-
-.card h2 {
-  margin-bottom: 20px;
-}
-
+/* Flexbox and layout styling */
 .d-flex {
   display: flex;
   align-items: center;
@@ -83,15 +79,30 @@
   margin-top: 8px;
 }
 
+/* Image styling */
 .img-fluid {
   width: 70%;
   height: 70%;
 }
 
-d-flex {
-  flex-direction: row;
+.location-img {
+  width: 4rem;
+  height: 4rem;
+  margin-bottom: 0.5rem;
 }
 
+.sun-img {
+  width: 3rem;
+  height: 2.5rem;
+  margin-right: 0.5rem;
+}
+
+.weather-icon {
+  width: 6rem;
+  height: 6rem;
+}
+
+/* Flex container styling */
 .flex-container {
   display: flex;
   flex-wrap: nowrap;
@@ -102,4 +113,98 @@ d-flex {
   margin: 10px;
   text-align: center;
   font-size: 15px;
+}
+
+.prayer-row {
+  display: flex;
+  flex-direction: row;
+  margin-top: 2rem;
+  margin-left: 2rem;
+}
+
+.input-div {
+  padding: 0.5rem 1.5rem;
+}
+
+.input-div input {
+  width: 5rem;
+}
+
+.prayer-inputs {
+  border: 1px solid gainsboro;
+  border-radius: 16px;
+  background-color: gainsboro;
+  display: flex;
+  flex-direction: column;
+  padding-top: 1.5rem;
+  width: 25rem !important;
+  height: 21rem;
+  padding: 1.5rem 2.5rem;
+  margin-right: 1rem;
+}
+
+.prayer-inputs input {
+  margin-bottom: 0.8rem;
+}
+
+.btn-primary {
+  width: 10rem;
+}
+
+.temp-data {
+  text-align: right;
+}
+
+.upper-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.prayer-right-pane {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  flex-direction: column;
+}
+
+.location-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.location-text {
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+/* Sun timings section */
+.sun-timings {
+  display: flex;
+  flex-direction: column;
+  margin-right: 2rem;
+}
+
+.sun-timings div {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+/* Prayer times section */
+.prayer-times-section {
+  margin-top: 1rem;
+}
+
+.prayer-btn {
+  margin: auto;
+  width: 15rem;
+}
+
+.prayer-detail-div {
+  width: 43rem;
+  border: 1px solid gainsboro;
+  border-radius: 10px;
+  padding: 0.5rem 1rem;
 }
