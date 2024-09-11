@@ -546,6 +546,20 @@ app.post('/store_task/', async (req, res) => {
 
 });
 
+app.post('/shift_task/', async (req, res) => {
+  const { id, date } = req.body;
+  try {
+    const result = await pool.query(
+      'UPDATE todos SET date=$2 WHERE id=$1',
+      [id, date]
+    )
+    res.json(result.rows);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'Error storing' });
+  }
+});
+
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
