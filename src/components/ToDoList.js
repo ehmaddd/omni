@@ -256,7 +256,7 @@ const ToDoList = () => {
                     <h5 className="today">Date : {dateTasks}</h5>
                     <div className="output-div">
                       <h2>High Priority</h2>
-                      <table className="high-priority">
+                      <table className="todo-table high-priority">
                         <thead>
                           <tr>
                             <th>Task</th>
@@ -309,7 +309,7 @@ const ToDoList = () => {
                       </table>
 
                       <h2>Medium Priority</h2>
-                      <table className="medium-priority">
+                      <table className="todo-table medium-priority">
                         <thead>
                           <tr>
                             <th>Task</th>
@@ -362,7 +362,7 @@ const ToDoList = () => {
                       </table>
 
                       <h2>Low Priority</h2>
-                      <table className="low-priority">
+                      <table className="todo-table low-priority">
                         <thead>
                           <tr>
                             <th>Task</th>

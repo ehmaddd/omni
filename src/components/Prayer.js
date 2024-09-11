@@ -188,7 +188,7 @@ const Prayer = () => {
               {prayerTimes && (
                 <div className="prayer-times-section">
                   <h5>Prayer Times ( {prayerTimes.date} )</h5>
-                  <table className="table">
+                  <table className="prayer-table">
                     <thead>
                       <tr>
                         <th>Fajr</th>
@@ -220,32 +220,30 @@ const Prayer = () => {
         <div>
           <h2>History</h2>
           <div>
-            <table className="table">
+            <table className="prayer-table">
               <thead>
                 <tr>
                   <th>Date</th>
+                  <th>Location</th>
+                  <th>Coordinates</th>
                   <th>Fajr</th>
                   <th>Dhuhr</th>
                   <th>Asr</th>
                   <th>Maghrib</th>
                   <th>Isha</th>
-                  <th>Latitude</th>
-                  <th>Longitude</th>
-                  <th>Location</th> {/* New column for location */}
                 </tr>
               </thead>
               <tbody>
                 {history.map((entry, index) => (
                   <tr key={index}>
                     <td>{entry.date}</td>
+                    <td>{entry.city}, {entry.country}</td>
+                    <td>{entry.lat}<br></br>{entry.lon}</td>
                     <td>{entry.fajr}</td>
                     <td>{entry.dhuhr}</td>
                     <td>{entry.asr}</td>
                     <td>{entry.maghrib}</td>
                     <td>{entry.isha}</td>
-                    <td>{entry.lat}</td>
-                    <td>{entry.lon}</td>
-                    <td>{entry.city}, {entry.country}</td> {/* Display location */}
                   </tr>
                 ))}
               </tbody>

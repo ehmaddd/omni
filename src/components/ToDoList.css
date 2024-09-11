@@ -101,72 +101,72 @@
 }
 
 /* Table styling */
-table {
+.todo-table {
   width: 100%;
   margin: 20px auto;
   border-collapse: collapse;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
 }
 
-thead th {
+.todo-table thead th {
   color: #fff;
   background-color: #000;
   text-align: center;
 }
 
-table th, table td {
+.todo-table th, .todo-table td {
   padding: 12px;
   border-bottom: 1px solid #ddd;
 }
 
-table th:nth-child(1), table td:nth-child(1) {
+.todo-table th:nth-child(1), .todo-table td:nth-child(1) {
   width: 50%;
 }
 
-table th:nth-child(2), table td:nth-child(2) {
+.todo-table th:nth-child(2), .todo-table td:nth-child(2) {
   width: 20%;
 }
 
-table th:nth-child(3), table td:nth-child(3) {
+.todo-table th:nth-child(3), .todo-table td:nth-child(3) {
   width: 30%;
 }
 
 /* High Priority Table */
-table.high-priority thead th {
+.todo-table.high-priority thead th {
   background-color: #e74c3c;
 }
 
-table.high-priority tr:nth-child(even) {
+.todo-table.high-priority tr:nth-child(even) {
   background-color: #f9b7b7;
 }
 
-table.high-priority tr:nth-child(odd) {
+.todo-table.high-priority tr:nth-child(odd) {
   background-color: #f5a9a9;
 }
 
 /* Medium Priority Table */
-table.medium-priority thead th {
+.todo-table.medium-priority thead th {
   background-color: #f39c12;
 }
 
-table.medium-priority tr:nth-child(even) {
+.todo-table.medium-priority tr:nth-child(even) {
   background-color: #fef6e4;
 }
 
-table.medium-priority tr:nth-child(odd) {
+.todo-table.medium-priority tr:nth-child(odd) {
   background-color: #fce5c7;
 }
 
 /* Low Priority Table */
-table.low-priority thead th {
+.todo-table.low-priority thead th {
   background-color: #2ecc71;
 }
 
-table.low-priority tr:nth-child(even) {
+.todo-table.low-priority tr:nth-child(even) {
   background-color: #e8f6e8;
 }
 
-table.low-priority tr:nth-child(odd) {
+.todo-table.low-priority tr:nth-child(odd) {
   background-color: #d0f0c0;
 }
 
