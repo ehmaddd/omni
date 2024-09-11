@@ -249,7 +249,7 @@ const ToDoList = () => {
                                             className="complete-button"
                                             onClick={() => handleComplete(item.id)}
                                           >
-                                            Mark as Complete
+                                            Mark Complete
                                           </button>
                                           <button
                                             className="delete-button"
@@ -296,7 +296,7 @@ const ToDoList = () => {
                                       className="complete-button"
                                       onClick={() => handleComplete(item.id)}
                                     >
-                                      Mark as Complete
+                                      Mark Complete
                                     </button>
                                     <button
                                       className="delete-button"
@@ -343,7 +343,7 @@ const ToDoList = () => {
                                       className="complete-button"
                                       onClick={() => handleComplete(item.id)}
                                     >
-                                      Mark as Complete
+                                      Mark Complete
                                     </button>
                                     <button
                                       className="delete-button"
