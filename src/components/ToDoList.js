@@ -140,8 +140,24 @@ const ToDoList = () => {
     }
 
     const handleShift = async (itemId) => {
-      console.log(itemId);
-      console.log(getNextDate(dateTasks));
+      const requestBody = {
+        id: itemId,
+        date: getNextDate(dateTasks)
+      };
+      
+      const response = await fetch('http://localhost:5000/shift_task', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(requestBody),
+      });
+
+      if (response.ok) {
+        console.log('Updated Successfully');
+      } else {
+        console.error('Failed to store task:', await response.text());
+      }
     }
 
     const handleSubmit = async (e) => {
