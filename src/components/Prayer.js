@@ -174,11 +174,11 @@ const Prayer = () => {
                 {/* Sunrise and Sunset */}
                 <div className="sun-timings">
                   <div>
-                    <img src={sunrise} alt="Sunrise" className="sun-img" />
+                    <img src={sunrise} alt="Sunrise" className="sunrise-img" />
                     <p>{sunriseSunsetData.sunrise}</p>
                   </div>
                   <div>
-                    <img src={sunset} alt="Sunset" className="sun-img" />
+                    <img src={sunset} alt="Sunset" className="sunset-img" />
                     <p>{sunriseSunsetData.sunset}</p>
                   </div>
                 </div>
