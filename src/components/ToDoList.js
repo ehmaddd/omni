@@ -133,6 +133,10 @@ const ToDoList = () => {
       }
     }
 
+    const handleShift = async (e) => {
+      console.log(e.target.value);
+    }
+
     const handleSubmit = async (e) => {
       e.preventDefault();
 
@@ -257,6 +261,12 @@ const ToDoList = () => {
                                           >
                                             Delete
                                           </button>
+                                          <button
+                                            className="shift-button"
+                                            onClick={() => handleShift(item.id)}
+                                          >
+                                            Shift &gt;
+                                          </button>
                                       </>
                                   ) : (
                                       <>
@@ -304,6 +314,12 @@ const ToDoList = () => {
                                     >
                                       Delete
                                     </button>
+                                    <button
+                                      className="shift-button"
+                                      onClick={() => handleShift(item.id)}
+                                    >
+                                      Shift &gt;
+                                    </button>
                                   </>
                                 ) : (
                                   <>
@@ -350,6 +366,12 @@ const ToDoList = () => {
                                       onClick={() => handleDelete(item.id)}
                                     >
                                       Delete
+                                    </button>
+                                    <button
+                                      className="shift-button"
+                                      onClick={() => handleShift(item.id)}
+                                    >
+                                      Shift &gt;
                                     </button>
                                   </>
                                 ) : (
