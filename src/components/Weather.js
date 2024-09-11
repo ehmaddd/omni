@@ -93,58 +93,56 @@ const Weather = () => {
   };
 
   return (
-    <div className="container mt-4">
+    <div className="container">
       <div className="row">
-        {/* Weather Finder on the Left */}
-        <div className="col-md-6">
-          <div className="card p-4">
-            <h1 className="mb-4">Weather Finder</h1>
-            <div className="form-group mb-3">
-              <label htmlFor="lat">Latitude:</label>
-              <input
-                type="number"
-                id="lat"
-                name="lat"
-                min="-90"
-                max="90"
-                onChange={handleLatChange}
-                step="0.1"
-                style={{ width: '100%', height: '40px' }}
-                placeholder="Enter latitude"
-                className="form-control"
-                value={lat !== null ? lat : ''}
-              />
-            </div>
-            <div className="form-group mb-3">
-              <label htmlFor="long">Longitude:</label>
-              <input
-                type="number"
-                id="long"
-                name="long"
-                min="-180"
-                max="180"
-                onChange={handleLonChange}
-                step="0.1"
-                style={{ width: '100%', height: '40px' }}
-                placeholder="Enter longitude"
-                className="form-control"
-                value={lon !== null ? lon : ''}
-              />
-            </div>
-            <button className="btn btn-primary btn-block" onClick={() => fetchWeather(lat, lon)}>
-              Get Weather
-            </button>
+        <div className="inputs">
+          <div className="input-div">
+            <h4>Your Coordinates</h4><br></br>
+            <label htmlFor="lat">Latitude:</label>
+            <input
+              type="number"
+              id="lat"
+              name="lat"
+              min="-90"
+              max="90"
+              onChange={handleLatChange}
+              step="0.1"
+              style={{ width: '100%', height: '40px' }}
+              placeholder="Enter latitude"
+              className="form-control"
+              value={lat !== null ? lat : ''}
+            />
           </div>
+          <div className="input-div">
+            <label htmlFor="long">Longitude:</label>
+            <input
+              type="number"
+              id="long"
+              name="long"
+              min="-180"
+              max="180"
+              onChange={handleLonChange}
+              step="0.1"
+              style={{ width: '100%', height: '40px' }}
+              placeholder="Enter longitude"
+              className="form-control"
+              value={lon !== null ? lon : ''}
+            />
+          </div>
+          <button className="weather-btn btn-primary" onClick={() => fetchWeather(lat, lon)}>
+            Get Weather
+          </button>
         </div>
 
         {/* Weather Information on the Right */}
-        <div className="col-md-6">
+        <div className="weather-detail-div">
           {weather && (
             <div className="card p-4">
-              <h2>Weather Information</h2>
+              <div class="upper-row">
+                <p class="temp-data"><img class="weather-icon" src={weather.icon} alt="Weather Icon" />{weather.text}</p>
+                <h2 class="temp-data">{weather.temp} &deg;C</h2>
+              </div>
               <p>{weather.location}, {weather.country}</p>
-              <p>{weather.temp} &deg;C</p>
-              <p><img src={weather.icon} alt="Weather Icon" />{weather.text}</p>
               <p>Humidity : {weather.humidity}%</p>
             </div>
           )}

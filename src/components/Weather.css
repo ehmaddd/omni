@@ -77,3 +77,56 @@
   color: red;
   text-align: center;
 }
+
+.input-div input {
+  width: 5rem;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+  margin-top: 2rem;
+  margin-left: 2rem;
+}
+
+.input-div {
+  padding: 0.5rem 1.5rem;
+}
+
+.inputs {
+  border: 1px solid gainsboro;
+  border-radius: 16px;
+  background-color: gainsboro;
+  display: flex;
+  flex-direction: column;
+  padding-top: 1.5rem;
+  width: 25rem !important;
+  height: 21rem;
+}
+
+.btn-primary {
+  width: 10rem;
+}
+
+.temp-data {
+  text-align: right;
+}
+
+.weather-icon {
+  width: 6rem;
+  height: 6rem;
+}
+
+.upper-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.weather-btn {
+  margin: auto;
+}
+
+.weather-detail-div {
+  width: 43rem;
+}
