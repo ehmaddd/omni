@@ -104,6 +104,12 @@ const ToDoList = () => {
         fetchDB();
     }, [dbList]);
 
+    const getNextDate = (dateStr) => {
+      const currentDate = new Date(dateStr);
+      currentDate.setDate(currentDate.getDate() + 1);
+      return currentDate.toISOString().split('T')[0];
+    };
+
     const handleComplete = async (taskId) => {
         const response = await fetch(`http://localhost:5000/complete_task/${taskId}`, {
           method: 'POST',
@@ -133,8 +139,9 @@ const ToDoList = () => {
       }
     }
 
-    const handleShift = async (e) => {
-      console.log(e.target.value);
+    const handleShift = async (itemId) => {
+      console.log(itemId);
+      console.log(getNextDate(dateTasks));
     }
 
     const handleSubmit = async (e) => {
