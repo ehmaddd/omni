@@ -210,6 +210,17 @@ function FitnessTracker() {
         ) : (
           <form onSubmit={handleSubmit} className="fitness-form">
             <div className="form-group">
+              <label>Gender:</label>
+              <div>
+                <input type="radio" id="male" name="gender" value="Male" checked={formData.gender === "Male"} onChange={handleInputChange} required />
+                <label htmlFor="male">Male</label>
+              </div>
+              <div>
+                <input type="radio" id="female" name="gender" value="Female" checked={formData.gender === "Female"} onChange={handleInputChange} required />
+                <label htmlFor="female">Female</label>
+              </div>
+            </div>
+            <div className="form-group">
               <label>Age:</label>
               <input type="number" name="age" value={formData.age} min="15" onChange={handleInputChange} required />
             </div>
