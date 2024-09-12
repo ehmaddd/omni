@@ -133,3 +133,35 @@ label {
   align-items: center;
   gap: 5px; /* Small gap between checkbox and label */
 }
+
+.slider-group {
+  display: flex;
+  align-items: center;
+  gap: 10px; /* Adjust spacing between values and slider */
+}
+
+/* Style for eye sight values */
+.eye-sight-value {
+  color: green; /* Change text color to green */
+  font-weight: bold; /* Optional: make the text bold for better visibility */
+}
+
+/* Additional styling for the slider itself */
+.slider-group input[type="range"] {
+  flex-grow: 1; /* Allow the slider to take up remaining space */
+  margin: 0 10px; /* Adjust margin around slider for better spacing */
+}
+
+/* Optional: To ensure sliders have a consistent look */
+.slider {
+  height: 10px; /* Adjust height of the slider */
+}
+
+.left-eye {
+  margin-top: 1.3rem;
+  margin-bottom: 1.3rem;
+}
+
+.right-eye {
+  margin-bottom: 1.3rem;
+}

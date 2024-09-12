@@ -240,82 +240,85 @@ function FitnessTracker() {
               </select>
             </div>
 
-            <div className="profile-form-group">
+            <div className="left-eye profile-form-group">
               <label>Eye Sight (Left):</label>
-              <input
-                type="range"
-                name="eye_sight_left"
-                value={formData.eye_sight_left}
-                min="-4"
-                max="4"
-                step="0.25"
-                onChange={handleSliderChange}
-                required
-              />
-              <span>{formData.eye_sight_left}</span>
+              <div className="slider-group">
+                <span className="eye-sight-value">{formData.eye_sight_left}</span>
+                <input
+                  type="range"
+                  name="eye_sight_left"
+                  min="-4"
+                  max="4"
+                  step="0.25"
+                  value={formData.eye_sight_left}
+                  onChange={handleSliderChange}
+                  className="slider"
+                />
+              </div>
             </div>
-
-            <div className="profile-form-group">
+            <div className="right-eye profile-form-group">
               <label>Eye Sight (Right):</label>
-              <input
-                type="range"
-                name="eye_sight_right"
-                value={formData.eye_sight_right}
-                min="-4"
-                max="4"
-                step="0.25"
-                onChange={handleSliderChange}
-                required
-              />
-              <span>{formData.eye_sight_right}</span>
+              <div className="slider-group">
+                <span className="eye-sight-value">{formData.eye_sight_right}</span>
+                <input
+                  type="range"
+                  name="eye_sight_right"
+                  min="-4"
+                  max="4"
+                  step="0.25"
+                  value={formData.eye_sight_right}
+                  onChange={handleSliderChange}
+                  className="slider"
+                />
+              </div>
             </div>
 
             <div className="profile-form-group">
-  <label>Health Issues:</label>
-  <div className="checkbox-group">
-    <label>
-      <input
-        type="checkbox"
-        name="disability"
-        checked={formData.disability}
-        onChange={handleInputChange}
-      /> 
-      Any Disability
-    </label>
+              <label>Health Issues:</label>
+              <div className="checkbox-group">
+                <label>
+                  <input
+                    type="checkbox"
+                    name="disability"
+                    checked={formData.disability}
+                    onChange={handleInputChange}
+                  /> 
+                  Physical Disability
+                </label>
+            
+                <label>
+                  <input
+                    type="checkbox"
+                    name="heart_problem"
+                    checked={formData.heart_problem}
+                    onChange={handleInputChange}
+                  /> 
+                  Heart Problem
+                </label>
+            
+                <label>
+                  <input
+                    type="checkbox"
+                    name="diabetes"
+                    checked={formData.diabetes}
+                    onChange={handleInputChange}
+                  /> 
+                  Diabetes
+                </label>
+            
+                <label>
+                  <input
+                    type="checkbox"
+                    name="kidney_issue"
+                    checked={formData.kidney_issue}
+                    onChange={handleInputChange}
+                  /> 
+                  Kidney Issue
+                </label>
+              </div>
+            </div>
 
-    <label>
-      <input
-        type="checkbox"
-        name="heart_problem"
-        checked={formData.heart_problem}
-        onChange={handleInputChange}
-      /> 
-      Any Heart Problem
-    </label>
-
-    <label>
-      <input
-        type="checkbox"
-        name="diabetes"
-        checked={formData.diabetes}
-        onChange={handleInputChange}
-      /> 
-      Diabetes
-    </label>
-
-    <label>
-      <input
-        type="checkbox"
-        name="kidney_issue"
-        checked={formData.kidney_issue}
-        onChange={handleInputChange}
-      /> 
-      Kidney Issue
-    </label>
-  </div>
-</div>
-
-            <button type="submit" className="submit-btn">Save Profile</button>
+            <button type="submit" className="submit-btn">Create Profile</button>
           </form>
         )}
       </div>
