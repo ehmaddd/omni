@@ -182,7 +182,7 @@ function FitnessTracker() {
             <div className="profile-grid">
               {Object.keys(profile.data[0]).map((key, idx) => (
                 <div key={idx}>
-                  <strong>{key.replace('_', ' ').toUpperCase()}:</strong> {profile.data[0][key].toString()}
+                  <strong>{key.replace('_', ' ')}:</strong> {profile.data[0][key].toString()}
                 </div>
               ))}
             </div>
