@@ -244,37 +244,37 @@ function FitnessTracker() {
             </div>
 
             <div className="profile-form-group">
-  <label>Eye Sight (Left):</label>
-  <div className="slider-group">
-    <span className="eye-sight-value">{(formData.eye_sight_left ?? 0).toString()}</span>
-    <input
-      type="range"
-      name="eye_sight_left"
-      min="-4"
-      max="4"
-      step="0.25"
-      value={formData.eye_sight_left ?? 0}
-      onChange={handleSliderChange}
-      className="slider"
-    />
-  </div>
-</div>
-<div className="profile-form-group">
-  <label>Eye Sight (Right):</label>
-  <div className="slider-group">
-    <span className="eye-sight-value">{(formData.eye_sight_right ?? 0).toString()}</span>
-    <input
-      type="range"
-      name="eye_sight_right"
-      min="-4"
-      max="4"
-      step="0.25"
-      value={formData.eye_sight_right ?? 0}
-      onChange={handleSliderChange}
-      className="slider"
-    />
-  </div>
-</div>
+              <label>Eye Sight (Left):</label>
+              <div className="slider-group">
+                <span className="eye-sight-value">{(formData.eye_sight_left ?? 0).toString()}</span>
+                <input
+                  type="range"
+                  name="eye_sight_left"
+                  min="-4"
+                  max="4"
+                  step="0.25"
+                  value={formData.eye_sight_left ?? 0}
+                  onChange={handleSliderChange}
+                  className="slider"
+                />
+              </div>
+            </div>
+            <div className="profile-form-group">
+              <label>Eye Sight (Right):</label>
+              <div className="slider-group">
+                <span className="eye-sight-value">{(formData.eye_sight_right ?? 0).toString()}</span>
+                <input
+                  type="range"
+                  name="eye_sight_right"
+                  min="-4"
+                  max="4"
+                  step="0.25"
+                  value={formData.eye_sight_right ?? 0}
+                  onChange={handleSliderChange}
+                  className="slider"
+                />
+              </div>
+            </div>
 
             <div className="profile-form-group">
               <label>Health Issues:</label>
