@@ -14,6 +14,7 @@ function FitnessTracker() {
   const [isLoading, setIsLoading] = useState(true);
   const [formData, setFormData] = useState({
     age: '',
+    gender: '',
     height: '',
     weight: '',
     blood_group: '',
@@ -39,6 +40,7 @@ function FitnessTracker() {
         setProfile(data);
         setFormData({
           age: data.age || '',
+          gender: data.gender || '',
           height: data.height || '',
           weight: data.weight || '',
           blood_group: data.blood_group || '',
@@ -130,6 +132,7 @@ function FitnessTracker() {
 
     const requestBody = {
       user_id: userId,
+      gender: formData.gender,
       age: formData.age ? parseInt(formData.age, 10) : null,
       height: formData.height ? parseFloat(formData.height).toFixed(2) : null,
       weight: formData.weight ? parseFloat(formData.weight).toFixed(2) : null,
@@ -187,30 +190,30 @@ function FitnessTracker() {
         ) : (
           <form onSubmit={handleSubmit} className="fitness-form">
             <div className="profile-form-group">
-  <label>Gender:</label>
-  <div className="radio-group">
-    <label>
-      <input
-        type="radio"
-        name="gender"
-        value="male"
-        checked={formData.gender === 'male'}
-        onChange={handleInputChange}
-      /> 
-      Male
-    </label>
-    <label>
-      <input
-        type="radio"
-        name="gender"
-        value="female"
-        checked={formData.gender === 'female'}
-        onChange={handleInputChange}
-      /> 
-      Female
-    </label>
-  </div>
-</div>
+              <label>Gender:</label>
+              <div className="radio-group">
+                <label>
+                  <input
+                    type="radio"
+                    name="gender"
+                    value="male"
+                    checked={formData.gender === 'male'}
+                    onChange={handleInputChange}
+                  /> 
+                  Male
+                </label>
+                <label>
+                  <input
+                    type="radio"
+                    name="gender"
+                    value="female"
+                    checked={formData.gender === 'female'}
+                    onChange={handleInputChange}
+                  /> 
+                  Female
+                </label>
+              </div>
+            </div>
 
             <div className="profile-form-group">
               <label>Age:</label>
@@ -240,38 +243,38 @@ function FitnessTracker() {
               </select>
             </div>
 
-            <div className="left-eye profile-form-group">
-              <label>Eye Sight (Left):</label>
-              <div className="slider-group">
-                <span className="eye-sight-value">{formData.eye_sight_left}</span>
-                <input
-                  type="range"
-                  name="eye_sight_left"
-                  min="-4"
-                  max="4"
-                  step="0.25"
-                  value={formData.eye_sight_left}
-                  onChange={handleSliderChange}
-                  className="slider"
-                />
-              </div>
-            </div>
-            <div className="right-eye profile-form-group">
-              <label>Eye Sight (Right):</label>
-              <div className="slider-group">
-                <span className="eye-sight-value">{formData.eye_sight_right}</span>
-                <input
-                  type="range"
-                  name="eye_sight_right"
-                  min="-4"
-                  max="4"
-                  step="0.25"
-                  value={formData.eye_sight_right}
-                  onChange={handleSliderChange}
-                  className="slider"
-                />
-              </div>
-            </div>
+            <div className="profile-form-group">
+  <label>Eye Sight (Left):</label>
+  <div className="slider-group">
+    <span className="eye-sight-value">{(formData.eye_sight_left ?? 0).toString()}</span>
+    <input
+      type="range"
+      name="eye_sight_left"
+      min="-4"
+      max="4"
+      step="0.25"
+      value={formData.eye_sight_left ?? 0}
+      onChange={handleSliderChange}
+      className="slider"
+    />
+  </div>
+</div>
+<div className="profile-form-group">
+  <label>Eye Sight (Right):</label>
+  <div className="slider-group">
+    <span className="eye-sight-value">{(formData.eye_sight_right ?? 0).toString()}</span>
+    <input
+      type="range"
+      name="eye_sight_right"
+      min="-4"
+      max="4"
+      step="0.25"
+      value={formData.eye_sight_right ?? 0}
+      onChange={handleSliderChange}
+      className="slider"
+    />
+  </div>
+</div>
 
             <div className="profile-form-group">
               <label>Health Issues:</label>
