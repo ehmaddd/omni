@@ -347,12 +347,6 @@ const ToDoList = () => {
                                 ) : (
                                   <>
                                     <button className="completed-button" disabled>Completed</button>
-                                    <button
-                                      className="delete-button"
-                                      onClick={() => handleDelete(item.id)}
-                                    >
-                                      Delete
-                                    </button>
                                   </>
                                 )}
                               </td>
