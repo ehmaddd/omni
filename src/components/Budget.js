@@ -160,7 +160,7 @@ const Budget = () => {
             {categories.map((category, index) => (
               <th key={index}>{category.charAt(0).toUpperCase() + category.slice(1)}</th>
             ))}
-            <th>Total for Date</th>
+            <th>Date Total</th>
           </tr>
         </thead>
         <tbody>
@@ -171,21 +171,21 @@ const Budget = () => {
                 <td>{formattedDate}</td>
                 {categories.map((category, index) => (
                   <td key={index}>
-                    {expensesByDate[formattedDate][category].toFixed(2)}
+                    {expensesByDate[formattedDate][category]}
                   </td>
                 ))}
-                <td>{dateTotals[formattedDate].toFixed(2)}</td>
+                <td>{dateTotals[formattedDate]}</td>
               </tr>
             );
           })}
           <tr>
-            <td><strong>Total for Category</strong></td>
+            <td><strong>Category Total</strong></td>
             {categories.map((category, index) => (
               <td key={index}>
-                <strong>{categoryTotals[category].toFixed(2)}</strong>
+                <strong>{categoryTotals[category]}</strong>
               </td>
             ))}
-            <td><strong>{grandTotal.toFixed(2)}</strong></td>
+            <td><strong>{grandTotal}</strong></td>
           </tr>
         </tbody>
       </table>
