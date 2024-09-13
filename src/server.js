@@ -18,6 +18,9 @@ app.use(cors({
 app.use(bodyParser.json());
 app.use(express.json());
 
+app.use(express.json({ limit: '10mb' }));
+app.use(express.urlencoded({ limit: '10mb', extended: true }));
+
 app.post('/verify-token', (req, res) => {
   const token = req.headers.authorization?.split(' ')[1];
   
@@ -559,6 +562,23 @@ app.post('/shift_task/', async (req, res) => {
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: 'Error storing' });
+  }
+});
+
+app.get('/expenses/:userId/:year/:month', async (req, res) => {
+  const { userId, year, month } = req.params;
+  try {
+    const result = await pool.query(
+      `SELECT date, category, amount, description
+       FROM daily_expenses
+       WHERE user_id = $1 AND EXTRACT(YEAR FROM date) = $2 AND EXTRACT(MONTH FROM date) = $3
+       ORDER BY date ASC`,
+      [userId, year, month]
+    );
+    res.json(result.rows);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Server Error');
   }
 });
 

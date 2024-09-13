@@ -81,7 +81,7 @@ const Budget = () => {
       // Fetch expenses for the selected month and year
       const fetchExpenses = async () => {
         try {
-          const response = await fetch(`/api/expenses/${userId}/${year}/${month}`);
+          const response = await fetch(`http://localhost:5000/expenses/${userId}/${year}/${month}`);
           const data = await response.json();
           setExpenses(data);
         } catch (error) {
