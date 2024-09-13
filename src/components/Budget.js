@@ -171,10 +171,10 @@ const Budget = () => {
                 <td>{formattedDate}</td>
                 {categories.map((category, index) => (
                   <td key={index}>
-                    ${expensesByDate[formattedDate][category].toFixed(2)}
+                    {expensesByDate[formattedDate][category].toFixed(2)}
                   </td>
                 ))}
-                <td>${dateTotals[formattedDate].toFixed(2)}</td>
+                <td>{dateTotals[formattedDate].toFixed(2)}</td>
               </tr>
             );
           })}
@@ -182,10 +182,10 @@ const Budget = () => {
             <td><strong>Total for Category</strong></td>
             {categories.map((category, index) => (
               <td key={index}>
-                <strong>${categoryTotals[category].toFixed(2)}</strong>
+                <strong>{categoryTotals[category].toFixed(2)}</strong>
               </td>
             ))}
-            <td><strong>${grandTotal.toFixed(2)}</strong></td>
+            <td><strong>{grandTotal.toFixed(2)}</strong></td>
           </tr>
         </tbody>
       </table>
