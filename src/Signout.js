@@ -8,6 +8,8 @@ function Signout() {
     // Clear the token from localStorage
     localStorage.removeItem('token');
     localStorage.removeItem('isKidneyPatient');
+    localStorage.removeItem('isHeartPatient');
+    localStorage.removeItem('isDiabetesPatient');
     sessionStorage.clear();
 
     // Redirect to the login page
