@@ -173,3 +173,20 @@
 .today {
   text-align: center;
 }
+
+.priority-container {
+  display: flex;
+  align-items: center;
+}
+
+.priority-label {
+  margin-right: 10px; /* Adjust as needed */
+}
+
+.priority-dropdown {
+  margin: 0; /* Ensure no extra margin */
+}
+
+#priority {
+  width: 19rem;
+}
