@@ -32,6 +32,70 @@ const Budget = () => {
     const [year, setYear] = useState(new Date().getFullYear());     // Current year
     const [totals, setTotals] = useState({});
 
+    const [formData, setFormData] = useState({
+      date: '',
+      category: '',
+      amount: '',
+      description: '',
+  });
+
+  const fetchExpenses = async () => {
+    try {
+        const response = await fetch(`http://localhost:5000/expenses/${userId}/${year}/${month}`);
+        const data = await response.json();
+        setExpenses(data);
+    } catch (error) {
+        console.error('Error fetching expenses:', error);
+    }
+};
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevData) => ({
+        ...prevData,
+        [name]: value,
+    }));
+};
+
+const handleSubmit = async (e) => {
+  e.preventDefault();
+  const { date, category, amount, description } = formData;
+  const newExpense = {
+      user_id: userId,
+      date,
+      category,
+      amount: parseFloat(amount),
+      description,
+  };
+
+  try {
+      const response = await fetch('http://localhost:5000/store_expenses', {
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${token}`,
+          },
+          body: JSON.stringify(newExpense),
+      });
+      if (!response.ok) {
+          throw new Error('Error adding expense');
+      }
+      const data = await response.json();
+      console.log('Expense added:', data);
+      // Clear the form
+      setFormData({
+          date: '',
+          category: '',
+          amount: '',
+          description: '',
+      });
+      // Fetch updated expenses
+      fetchExpenses();
+  } catch (error) {
+      console.error('Error:', error);
+  }
+};
+
     useEffect(() => {
         // Redirect if no token is present
         if (!token) {
@@ -139,6 +203,53 @@ const Budget = () => {
                     <Outlet />
                     <div>
                   <br></br>
+                  <form onSubmit={handleSubmit} className="expense-form">
+                        <label>
+                            Date:
+                            <input
+                                type="date"
+                                name="date"
+                                value={formData.date}
+                                onChange={handleChange}
+                                required
+                            />
+                        </label>
+                        <label>
+                            Category:
+                            <select
+                                name="category"
+                                value={formData.category}
+                                onChange={handleChange}
+                                required
+                            >
+                                {categories.map((cat) => (
+                                    <option key={cat} value={cat}>
+                                        {cat.charAt(0).toUpperCase() + cat.slice(1)}
+                                    </option>
+                                ))}
+                            </select>
+                        </label>
+                        <label>
+                            Amount:
+                            <input
+                                type="number"
+                                name="amount"
+                                value={formData.amount}
+                                onChange={handleChange}
+                                required
+                                step="0.01"
+                            />
+                        </label>
+                        <label>
+                            Description:
+                            <textarea
+                                name="description"
+                                value={formData.description}
+                                onChange={handleChange}
+                            />
+                        </label>
+                        <button type="submit">Add Expense</button>
+                    </form>
                   <label htmlFor="month">Select Month:</label>
                   <input
                     type="month"

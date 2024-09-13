@@ -569,7 +569,7 @@ app.get('/expenses/:userId/:year/:month', async (req, res) => {
   const { userId, year, month } = req.params;
   try {
     const result = await pool.query(
-      `SELECT date, category, amount, description
+      `SELECT date + INTERVAL '1 day' AS date, category, amount, description
        FROM daily_expenses
        WHERE user_id = $1 AND EXTRACT(YEAR FROM date) = $2 AND EXTRACT(MONTH FROM date) = $3
        ORDER BY date ASC`,
@@ -580,6 +580,48 @@ app.get('/expenses/:userId/:year/:month', async (req, res) => {
     console.error(error);
     res.status(500).send('Server Error');
   }
+});
+
+app.post('/store_expenses', async (req, res) => {
+  const { user_id, date, category, amount, description } = req.body;
+  // if (!user_id || !date || !category || isNaN(amount)) {
+  //     return res.status(400).json({ error: 'Missing required fields or invalid data' });
+  // }
+
+  // try {
+  //     const client = await pool.connect();
+  //     try {
+  //         // Check if an expense with the same date and category already exists
+  //         const result = await client.query(
+  //             `SELECT * FROM daily_expenses WHERE user_id = $1 AND date = $2 AND category = $3`,
+  //             [user_id, date, category]
+  //         );
+
+  //         if (result.rows.length > 0) {
+  //             // Update existing expense
+  //             await client.query(
+  //                 `UPDATE daily_expenses
+  //                  SET amount = amount + $1, description = COALESCE($2, description)
+  //                  WHERE user_id = $3 AND date = $4 AND category = $5`,
+  //                 [amount, description, user_id, date, category]
+  //             );
+  //         } else {
+  //             // Insert new expense
+  //             await client.query(
+  //                 `INSERT INTO daily_expenses (user_id, date, category, amount, description)
+  //                  VALUES ($1, $2, $3, $4, $5)`,
+  //                 [user_id, date, category, amount, description]
+  //             );
+  //         }
+
+  //         res.status(201).json({ message: 'Expense added/updated successfully' });
+  //     } finally {
+  //         client.release();
+  //     }
+  // } catch (error) {
+  //     console.error('Database error:', error);
+  //     res.status(500).json({ error: 'Database error' });
+  // }
 });
 
 app.listen(PORT, () => {
