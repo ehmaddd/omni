@@ -169,3 +169,23 @@ label {
 .bloodgroup-dd {
   width: 98%;
 }
+
+.profile-table {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem; /* Adjust the gap between columns */
+}
+
+.profile-row {
+  display: contents;
+}
+
+.profile-cell {
+  border: 1px solid #ddd;
+  padding: 0.5rem;
+  background: #f9f9f9;
+}
+
+.profile-cell strong {
+  display: block;
+}

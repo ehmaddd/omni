@@ -26,6 +26,22 @@ function FitnessTracker() {
     kidney_issue: false,
   });
 
+  const calculateAge = (dob) => {
+    if (!dob) return 'N/A'; // Return 'N/A' if dob is not provided
+  
+    const today = new Date();
+    const birthDate = new Date(dob);
+    let age = today.getFullYear() - birthDate.getFullYear();
+    const monthDifference = today.getMonth() - birthDate.getMonth();
+  
+    // Adjust age if the birthday has not occurred yet this year
+    if (monthDifference < 0 || (monthDifference === 0 && today.getDate() < birthDate.getDate())) {
+      age--;
+    }
+  
+    return age;
+  };
+
   // Function to fetch profile data
   const fetchProfile = async () => {
     try {
@@ -39,17 +55,17 @@ function FitnessTracker() {
         const data = await response.json();
         setProfile(data);
         setFormData({
-          dob: data.dob || '',
-          gender: data.gender || '',
-          height: data.height || '',
-          weight: data.weight || '',
-          blood_group: data.blood_group || '',
-          eye_sight_left: data.eye_sight_left || '',
-          eye_sight_right: data.eye_sight_right || '',
-          disability: data.disability || false,
-          heart_problem: data.heart_problem || false,
-          diabetes: data.diabetes || false,
-          kidney_issue: data.kidney_issue || false,
+          dob: data.data[0].dob || '',
+          gender: data.data[0].gender || '',
+          height: data.data[0].height || '',
+          weight: data.data[0].weight || '',
+          blood_group: data.data[0].blood_group || '',
+          eye_sight_left: data.data[0].eye_sight_left || '',
+          eye_sight_right: data.data[0].eye_sight_right || '',
+          disability: data.data[0].disability || false,
+          heart_problem: data.data[0].heart_problem || false,
+          diabetes: data.data[0].diabetes || false,
+          kidney_issue: data.data[0].kidney_issue || false,
         });
 
         localStorage.setItem('isKidneyPatient', data.data[0].kidney_issue);
@@ -181,15 +197,30 @@ function FitnessTracker() {
       <div className="fitness-tracker-container">
         {profile && profile.data && profile.data.length > 0 ? (
           <div className="profile-summary-container">
-            <h5>Summary</h5>
-            <div className="profile-grid">
-              {Object.keys(profile.data[0]).map((key, idx) => (
-                <div key={idx}>
-                  <strong>{key.replace('_', ' ')}:</strong> {profile.data[0][key].toString()}
-                </div>
-              ))}
+          <h5>Summary</h5>
+          <div className="profile-table">
+            <div className="profile-row">
+              <div className="profile-cell"><strong>Age:</strong> {calculateAge(formData.dob)}</div>
+              <div className="profile-cell"><strong>Gender:</strong> {formData.gender}</div>
+            </div>
+            <div className="profile-row">
+              <div className="profile-cell"><strong>Height:</strong> {formData.height}</div>
+              <div className="profile-cell"><strong>Weight:</strong> {formData.weight}</div>
+            </div>
+            <div className="profile-row">
+              <div className="profile-cell"><strong>Blood Group:</strong> {formData.blood_group}</div>
+              <div className="profile-cell"><strong>Eye Sight:</strong> {formData.eye_sight_left}(L) - {formData.eye_sight_right}(R)</div>
+            </div>
+            <div className="profile-row">
+              <div className="profile-cell"><strong>Physical Disability:</strong> {formData.disability ? 'Yes' : 'No'}</div>
+              <div className="profile-cell"><strong>Diabetes:</strong> {formData.diabetes ? 'Yes' : 'No'}</div>
+            </div>
+            <div className="profile-row">
+              <div className="profile-cell"><strong>Heart Problem:</strong> {formData.heart_problem ? 'Yes' : 'No'}</div>
+              <div className="profile-cell"><strong>Kidney Problem:</strong> {formData.kidney_issue ? 'Yes' : 'No'}</div>
             </div>
           </div>
+        </div>
         ) : (
           <form onSubmit={handleSubmit} className="fitness-form">
             <div className="profile-form-group">

@@ -178,7 +178,7 @@ app.delete('/mood-logs/:id', async (req, res) => {
 app.post('/create_profile', async (req, res) => {
   const {
     user_id,
-    age,
+    dob,
     gender,
     height,
     weight,
@@ -193,19 +193,19 @@ app.post('/create_profile', async (req, res) => {
 
   async function createOrUpdateProfile(profileData) {
     // Assuming you save profile data to the database
-    const { user_id, age, gender, height, weight, blood_group, eye_sight_left, eye_sight_right, disability, heart_problem, diabetes, kidney_issue } = profileData;
+    const { user_id, dob, gender, height, weight, blood_group, eye_sight_left, eye_sight_right, disability, heart_problem, diabetes, kidney_issue } = profileData;
     
     // Example logic: update the profile if it exists or create a new one
     const result = await pool.query(
-      `INSERT INTO health_profile (user_id, age, gender, height, weight, blood_group, eye_sight_left, eye_sight_right, disability, heart_problem, diabetes, kidney_issue)
+      `INSERT INTO health_profile (user_id, dob, gender, height, weight, blood_group, eye_sight_left, eye_sight_right, disability, heart_problem, diabetes, kidney_issue)
        VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)`,
-      [user_id, age, gender, height, weight, blood_group, eye_sight_left, eye_sight_right, disability, heart_problem, diabetes, kidney_issue]
+      [user_id, dob, gender, height, weight, blood_group, eye_sight_left, eye_sight_right, disability, heart_problem, diabetes, kidney_issue]
   );
   return result;
 }
 
   // Validate required fields
-  if (!user_id || !age || !height || !weight || !blood_group || !eye_sight_left || !eye_sight_right) {
+  if (!user_id || !dob || !height || !weight || !blood_group || !eye_sight_left || !eye_sight_right) {
     return res.status(400).json({ message: 'Missing required fields' });
   }
 
@@ -215,7 +215,7 @@ app.post('/create_profile', async (req, res) => {
     // Assuming you have a function `createOrUpdateProfile`
     await createOrUpdateProfile({
       user_id,
-      age,
+      dob,
       gender,
       height,
       weight,
