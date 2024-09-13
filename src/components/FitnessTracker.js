@@ -186,6 +186,37 @@ function FitnessTracker() {
                 </div>
               ))}
             </div> */}
+            <table 
+  border="1" 
+  cellPadding="10" 
+  cellSpacing="0" 
+  style={{ borderCollapse: 'collapse', width: '100%' }}
+>
+  <tr>
+    <td><strong>Age:</strong> {profile.data[0].age}</td>
+    <td><strong>Gender:</strong> {profile.data[0].gender}</td>
+  </tr>
+  <tr>
+    <td><strong>Height:</strong> {profile.data[0].height}</td>
+    <td><strong>Weight:</strong> {profile.data[0].weight}</td>
+  </tr>
+  <tr>
+    <td><strong>Blood Group:</strong> {profile.data[0].blood_group}</td>
+    <td><strong>Eye Sight (L):</strong> {profile.data[0].eye_sight_left}</td>
+  </tr>
+  <tr>
+    <td><strong>Eye Sight (R):</strong> {profile.data[0].eye_sight_right}</td>
+    <td><strong>Physical Disability:</strong> {profile.data[0].disability ? 'Yes' : 'N/A'}</td>
+  </tr>
+  <tr>
+    <td><strong>Heart Problem:</strong> {profile.data[0].heart_problem ? 'Yes' : 'N/A'}</td>
+    <td><strong>Diabetes:</strong> {profile.data[0].diabetes ? 'Yes' : 'N/A'}</td>
+  </tr>
+  <tr>
+    <td><strong>Kidney Issue:</strong> {profile.data[0].kidney_issue ? 'Yes' : 'N/A'}</td>
+    <td></td>
+  </tr>
+</table>
           </div>
         ) : (
           <form onSubmit={handleSubmit} className="fitness-form">
