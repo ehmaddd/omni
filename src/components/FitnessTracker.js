@@ -13,7 +13,7 @@ function FitnessTracker() {
   const [profile, setProfile] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [formData, setFormData] = useState({
-    age: '',
+    dob: '',
     gender: '',
     height: '',
     weight: '',
@@ -39,7 +39,7 @@ function FitnessTracker() {
         const data = await response.json();
         setProfile(data);
         setFormData({
-          age: data.age || '',
+          dob: data.dob || '',
           gender: data.gender || '',
           height: data.height || '',
           weight: data.weight || '',
@@ -136,7 +136,7 @@ function FitnessTracker() {
     const requestBody = {
       user_id: userId,
       gender: formData.gender,
-      age: formData.age ? parseInt(formData.age, 10) : null,
+      dob: formData.dob,
       height: formData.height ? parseFloat(formData.height).toFixed(2) : null,
       weight: formData.weight ? parseFloat(formData.weight).toFixed(2) : null,
       blood_group: formData.blood_group,
@@ -219,8 +219,8 @@ function FitnessTracker() {
             </div>
 
             <div className="profile-form-group">
-              <label>Age:</label>
-              <input type="number" name="age" value={formData.age} min="15" onChange={handleInputChange} required />
+              <label>Dob:</label>
+              <input type="date" name="dob" value={formData.dob} onChange={handleInputChange} required />
             </div>
             <div className="profile-form-group">
               <label>Height (cm):</label>
@@ -233,7 +233,7 @@ function FitnessTracker() {
 
             <div className="profile-form-group full-width">
               <label>Blood Group:</label>
-              <select name="blood_group" value={formData.blood_group} onChange={handleInputChange} required>
+              <select name="blood_group" className="bloodgroup-dd" value={formData.blood_group} onChange={handleInputChange} required>
                 <option value="">Select Blood Group</option>
                 <option value="A+">A+</option>
                 <option value="A-">A-</option>
