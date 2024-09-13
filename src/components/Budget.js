@@ -4,10 +4,16 @@ import DashNav from '../components/DashNav';
 import './Budget.css';
 
 const Budget = () => {
+    const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
     const { userId } = useParams();
     const storedUserId = localStorage.getItem('user');
     const token = localStorage.getItem('token');
     const navigate = useNavigate();
+    const categories = ['food', 'fuel', 'health', 'grocery', 'recreation', 'clothes', 'other']; // Expense categories
+    const [expenses, setExpenses] = useState([]);
+    const [month, setMonth] = useState(new Date().getMonth() + 1); // Current month
+    const [year, setYear] = useState(new Date().getFullYear());     // Current year
+    const [totals, setTotals] = useState({});
 
     useEffect(() => {
         // Redirect if no token is present
@@ -54,6 +60,53 @@ const Budget = () => {
         verifyToken();
     }, [token, navigate, userId, storedUserId]);
 
+    const getDaysInMonth = (year, month) => {
+      const date = new Date(year, month - 1, 1);
+      const days = [];
+      while (date.getMonth() === month - 1) {
+        days.push(new Date(date));
+        date.setDate(date.getDate() + 1);
+      }
+      return days;
+    };
+
+    const daysInMonth = getDaysInMonth(year, month);
+
+    const expensesByDate = {};
+    daysInMonth.forEach((date) => {
+      const formattedDate = date.toISOString().split('T')[0];
+      expensesByDate[formattedDate] = {};
+      categories.forEach((category) => {
+        expensesByDate[formattedDate][category] = 0;
+      });
+    });
+
+    expenses.forEach((expense) => {
+      const expenseDate = expense.date.split('T')[0]; // Extract date in YYYY-MM-DD format
+      if (expensesByDate[expenseDate]) {
+        expensesByDate[expenseDate][expense.category] += parseFloat(expense.amount);
+      }
+    });
+
+    const categoryTotals = {};
+  const dateTotals = {};
+  let grandTotal = 0;
+
+  categories.forEach((category) => {
+    categoryTotals[category] = 0;
+  });
+
+  daysInMonth.forEach((date) => {
+    const formattedDate = date.toISOString().split('T')[0];
+    dateTotals[formattedDate] = 0;
+    categories.forEach((category) => {
+      const amount = expensesByDate[formattedDate][category];
+      categoryTotals[category] += amount;
+      dateTotals[formattedDate] += amount;
+      grandTotal += amount;
+    });
+  });
+
     return (
         <>
             {token ? (
@@ -64,6 +117,59 @@ const Budget = () => {
                     </div>
                     <Outlet />
                     <p>Your To Budget ID: {userId}</p>
+                    <div>
+      <h3>{monthNames[parseInt(month.toString().padStart(2, '0'))-1]}-{year}</h3>
+
+      <label htmlFor="month">Select Month:</label>
+      <input
+        type="month"
+        id="month"
+        value={`${year}-${month.toString().padStart(2, '0')}`}
+        onChange={(e) => {
+          const [selectedYear, selectedMonth] = e.target.value.split('-');
+          setYear(parseInt(selectedYear));
+          setMonth(parseInt(selectedMonth));
+        }}
+      />
+
+      <table border="1" style={{ width: '100%', marginTop: '20px', textAlign: 'center' }}>
+        <thead>
+          <tr>
+            <th>Date</th>
+            {categories.map((category, index) => (
+              <th key={index}>{category.charAt(0).toUpperCase() + category.slice(1)}</th>
+            ))}
+            <th>Total for Date</th>
+          </tr>
+        </thead>
+        <tbody>
+          {daysInMonth.map((date, index) => {
+            const formattedDate = date.toISOString().split('T')[0];
+            return (
+              <tr key={index}>
+                <td>{formattedDate}</td>
+                {categories.map((category, index) => (
+                  <td key={index}>
+                    ${expensesByDate[formattedDate][category].toFixed(2)}
+                  </td>
+                ))}
+                <td>${dateTotals[formattedDate].toFixed(2)}</td>
+              </tr>
+            );
+          })}
+          <tr>
+            <td><strong>Total for Category</strong></td>
+            {categories.map((category, index) => (
+              <td key={index}>
+                <strong>${categoryTotals[category].toFixed(2)}</strong>
+              </td>
+            ))}
+            <td><strong>${grandTotal.toFixed(2)}</strong></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+                    
                 </>
             ) : (
                 <p>Loading...</p>
