@@ -5,6 +5,8 @@ import './FitNav.css'; // Import the CSS file for styling
 const FitNav = (props) => {
   const { id } = props;
   const isKidneyPatient = JSON.parse(localStorage.getItem('isKidneyPatient'));
+  const isHeartPatient = JSON.parse(localStorage.getItem('isHeartPatient'));
+  const isDiabetesPatient = JSON.parse(localStorage.getItem('isDiabetesPatient'));
 
   return (
     <nav className="nav-links">
@@ -12,12 +14,16 @@ const FitNav = (props) => {
       <li className="nav-item">
           <Link className="nav-link" to={`/dashboard/${id}/fitness_tracker/track_workout`}>Track Workout</Link>
         </li>
+        {isDiabetesPatient && (
         <li className="nav-item">
           <Link className="nav-link" to={`/dashboard/${id}/fitness_tracker/track_sugar`}>Track Sugar</Link>
         </li>
+        )}
+        {isHeartPatient && (
         <li className="nav-item">
           <Link className="nav-link" to={`/dashboard/${id}/fitness_tracker/track_bp`}>Track BP</Link>
         </li>
+        )}
         <li className="nav-item">
           <Link className="nav-link" to={`/dashboard/${id}/fitness_tracker/track_weight`}>Track Weight</Link>
         </li>
