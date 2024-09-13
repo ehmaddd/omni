@@ -134,62 +134,60 @@ const Budget = () => {
                 <>
                     <DashNav />
                     <div className="nav-bar">
-                      <h1 className="nav-title">Budget</h1>
+                      <h1 className="nav-title">Budget ({monthNames[parseInt(month.toString().padStart(2, '0'))-1]}-{year}) </h1>
                     </div>
                     <Outlet />
-                    <p>Your To Budget ID: {userId}</p>
                     <div>
-      <h3>{monthNames[parseInt(month.toString().padStart(2, '0'))-1]}-{year}</h3>
+                  <br></br>
+                  <label htmlFor="month">Select Month:</label>
+                  <input
+                    type="month"
+                    id="month"
+                    value={`${year}-${month.toString().padStart(2, '0')}`}
+                    onChange={(e) => {
+                      const [selectedYear, selectedMonth] = e.target.value.split('-');
+                      setYear(parseInt(selectedYear));
+                      setMonth(parseInt(selectedMonth));
+                    }}
+                  />
 
-      <label htmlFor="month">Select Month:</label>
-      <input
-        type="month"
-        id="month"
-        value={`${year}-${month.toString().padStart(2, '0')}`}
-        onChange={(e) => {
-          const [selectedYear, selectedMonth] = e.target.value.split('-');
-          setYear(parseInt(selectedYear));
-          setMonth(parseInt(selectedMonth));
-        }}
-      />
-
-      <table border="1" style={{ width: '100%', marginTop: '20px', textAlign: 'center' }}>
-        <thead>
-          <tr>
-            <th>Date</th>
-            {categories.map((category, index) => (
-              <th key={index}>{category.charAt(0).toUpperCase() + category.slice(1)}</th>
-            ))}
-            <th>Date Total</th>
-          </tr>
-        </thead>
-        <tbody>
-          {daysInMonth.map((date, index) => {
-            const formattedDate = date.toISOString().split('T')[0];
-            return (
-              <tr key={index}>
-                <td>{formattedDate}</td>
-                {categories.map((category, index) => (
-                  <td key={index}>
-                    {expensesByDate[formattedDate][category]}
-                  </td>
-                ))}
-                <td>{dateTotals[formattedDate]}</td>
-              </tr>
-            );
-          })}
-          <tr>
-            <td><strong>Category Total</strong></td>
-            {categories.map((category, index) => (
-              <td key={index}>
-                <strong>{categoryTotals[category]}</strong>
-              </td>
-            ))}
-            <td><strong>{grandTotal}</strong></td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+                 <table border="1" style={{ width: '100%', marginTop: '20px', textAlign: 'center' }}>
+                   <thead>
+                     <tr>
+                       <th>Date</th>
+                       {categories.map((category, index) => (
+                         <th key={index}>{category.charAt(0).toUpperCase() + category.slice(1)}</th>
+                       ))}
+                       <th>Date Total</th>
+                     </tr>
+                   </thead>
+                   <tbody>
+                     {daysInMonth.map((date, index) => {
+                       const formattedDate = date.toISOString().split('T')[0];
+                       return (
+                         <tr key={index}>
+                           <td>{formattedDate}</td>
+                           {categories.map((category, index) => (
+                             <td key={index}>
+                               {expensesByDate[formattedDate][category]}
+                             </td>
+                           ))}
+                           <td>{dateTotals[formattedDate]}</td>
+                         </tr>
+                       );
+                     })}
+                     <tr>
+                       <td><strong>Category Total</strong></td>
+                       {categories.map((category, index) => (
+                         <td key={index}>
+                           <strong>{categoryTotals[category]}</strong>
+                         </td>
+                       ))}
+                       <td><strong>{grandTotal}</strong></td>
+                     </tr>
+                   </tbody>
+                 </table>
+               </div>
                     
                 </>
             ) : (
