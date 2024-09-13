@@ -89,7 +89,7 @@ const Budget = () => {
         }
       };
       fetchExpenses();
-    }, [month, year, userId]);
+    }, [month, year, userId, expenses]);
 
     const daysInMonth = getDaysInMonth(year, month);
 
@@ -110,23 +110,23 @@ const Budget = () => {
     });
 
     const categoryTotals = {};
-  const dateTotals = {};
-  let grandTotal = 0;
+    const dateTotals = {};
+    let grandTotal = 0;
 
-  categories.forEach((category) => {
-    categoryTotals[category] = 0;
-  });
-
-  daysInMonth.forEach((date) => {
-    const formattedDate = date.toISOString().split('T')[0];
-    dateTotals[formattedDate] = 0;
     categories.forEach((category) => {
-      const amount = expensesByDate[formattedDate][category];
-      categoryTotals[category] += amount;
-      dateTotals[formattedDate] += amount;
-      grandTotal += amount;
+      categoryTotals[category] = 0;
     });
-  });
+  
+    daysInMonth.forEach((date) => {
+      const formattedDate = date.toISOString().split('T')[0];
+      dateTotals[formattedDate] = 0;
+      categories.forEach((category) => {
+        const amount = expensesByDate[formattedDate][category];
+        categoryTotals[category] += amount;
+        dateTotals[formattedDate] += amount;
+        grandTotal += amount;
+      });
+    });
 
     return (
         <>
