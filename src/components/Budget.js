@@ -204,52 +204,47 @@ const handleSubmit = async (e) => {
                     <div>
                   <br></br>
                   <form onSubmit={handleSubmit} className="expense-form">
-                        <label>
-                            Date:
-                            <input
-                                type="date"
-                                name="date"
-                                value={formData.date}
-                                onChange={handleChange}
-                                required
-                            />
-                        </label>
-                        <label>
-                            Category:
-                            <select
-                                name="category"
-                                value={formData.category}
-                                onChange={handleChange}
-                                required
-                            >
-                                {categories.map((cat) => (
-                                    <option key={cat} value={cat}>
-                                        {cat.charAt(0).toUpperCase() + cat.slice(1)}
-                                    </option>
-                                ))}
-                            </select>
-                        </label>
-                        <label>
-                            Amount:
-                            <input
-                                type="number"
-                                name="amount"
-                                value={formData.amount}
-                                onChange={handleChange}
-                                required
-                                step="0.01"
-                            />
-                        </label>
-                        <label>
-                            Description:
-                            <textarea
-                                name="description"
-                                value={formData.description}
-                                onChange={handleChange}
-                            />
-                        </label>
-                        <button type="submit">Add Expense</button>
+                        <label>Date</label>
+                        <input
+                          type="date"
+                          name="date"
+                          value={formData.date}
+                          onChange={handleChange}
+                          required
+                        />
+                        <label>Category</label>
+                        <select
+                          name="category"
+                          value={formData.category}
+                          onChange={handleChange}
+                          required
+                        >
+                          {categories.map((cat) => (
+                            <option key={cat} value={cat}>
+                              {cat.charAt(0).toUpperCase() + cat.slice(1)}
+                            </option>
+                          ))}
+                        </select>
+                        <label>Amount</label>
+                        <input
+                           type="number"
+                           name="amount"
+                           value={formData.amount}
+                           onChange={handleChange}
+                           required
+                           step="0.01"
+                        />
+                        <label>Description</label>
+                        <textarea
+                            name="description"
+                            value={formData.description}
+                            onChange={handleChange}
+                        />
+
+                        <button type="submit" className="add-expense">Add Expense</button>
                     </form>
+
+                    <br></br>
                   <label htmlFor="month">Select Month:</label>
                   <input
                     type="month"

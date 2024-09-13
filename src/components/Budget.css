@@ -21,3 +21,27 @@ th {
   background-color: #f2f2f2;
   font-weight: bold;
 }
+
+.expense-form {
+  margin-left: 1rem !important;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin: auto;
+}
+
+.expense-form input, select, textarea {
+  width: 10rem;
+  margin-left: 1rem;
+  margin-right: 1rem;
+}
+
+.expense-form textarea {
+  width: 13rem;
+  height: 5rem;
+}
+
+.add-expense {
+  width: 10rem;
+  height: 3rem;
+}
