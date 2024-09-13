@@ -3,6 +3,23 @@ import { useParams, useNavigate, Outlet } from 'react-router-dom';
 import DashNav from '../components/DashNav';
 import './Budget.css';
 
+const getDaysInMonth = (year, month) => {
+  // Get the first day of the current month
+  const firstDay = new Date(year, month - 1, 2);
+  // Get the last day of the current month
+  const lastDay = new Date(year, month, 1);
+
+  // Create an array to store all the days of the month
+  const days = [];
+  
+  // Iterate from the first day to the last day of the month
+  for (let day = new Date(firstDay); day <= lastDay; day.setDate(day.getDate() + 1)) {
+    days.push(new Date(day));
+  }
+
+  return days;
+};
+
 const Budget = () => {
     const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
     const { userId } = useParams();
@@ -60,15 +77,19 @@ const Budget = () => {
         verifyToken();
     }, [token, navigate, userId, storedUserId]);
 
-    const getDaysInMonth = (year, month) => {
-      const date = new Date(year, month - 1, 1);
-      const days = [];
-      while (date.getMonth() === month - 1) {
-        days.push(new Date(date));
-        date.setDate(date.getDate() + 1);
-      }
-      return days;
-    };
+    useEffect(() => {
+      // Fetch expenses for the selected month and year
+      const fetchExpenses = async () => {
+        try {
+          const response = await fetch(`/api/expenses/${userId}/${year}/${month}`);
+          const data = await response.json();
+          setExpenses(data);
+        } catch (error) {
+          console.error('Error fetching expenses:', error);
+        }
+      };
+      fetchExpenses();
+    }, [month, year, userId]);
 
     const daysInMonth = getDaysInMonth(year, month);
 
