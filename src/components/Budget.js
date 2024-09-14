@@ -34,7 +34,7 @@ const Budget = () => {
 
     const [formData, setFormData] = useState({
       date: '',
-      category: '',
+      category: categories[0],
       amount: '',
       description: '',
   });
@@ -73,7 +73,6 @@ const handleSubmit = async (e) => {
           method: 'POST',
           headers: {
               'Content-Type': 'application/json',
-              'Authorization': `Bearer ${token}`,
           },
           body: JSON.stringify(newExpense),
       });
