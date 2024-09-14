@@ -135,6 +135,7 @@ function FitnessTracker() {
           navigate('/login');
         } else {
           fetchProfile();
+          await fetchWeightData();
         }
       } catch (error) {
         console.error('Token verification failed:', error);
@@ -145,10 +146,6 @@ function FitnessTracker() {
 
     verifyToken();
   }, [token, navigate, userId, storedUserId]);
-
-  useEffect(() => {
-    fetchWeightData();
-  }, [weight]);
 
   // Handle input change
   const handleInputChange = (e) => {
