@@ -87,23 +87,23 @@ hr {
 }
 
 /* Ensure the filter container has proper spacing between elements */
-.filter-container {
+.log-filter-container {
   display: flex;
   align-items: center;
   gap: 10px; /* Adds spacing between the elements */
   margin: 20px 0; /* Adds vertical spacing above and below the filter container */
 }
 
-.filter-container label {
+.log-filter-container label {
   margin-right: 5px; /* Adds spacing between the label and input */
 }
 
-.filter-container input[type="date"] {
+.log-filter-container input[type="date"] {
   padding: 5px; /* Adds padding to the date picker inputs */
   margin-right: 15px; /* Adds spacing after the date picker */
 }
 
-.filter-container button {
+.log-filter-container button {
   padding: 5px 10px; /* Adjusts the padding for a concise button */
   cursor: pointer;
   background-color: #007bff;
@@ -115,6 +115,6 @@ hr {
   height: 2rem;
 }
 
-.filter-container button:hover {
+.log-filter-container button:hover {
   background-color: #0056b3; /* Darkens the button on hover */
 }

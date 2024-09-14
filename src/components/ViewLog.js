@@ -155,7 +155,7 @@ function ViewLog() {
             <MoodNav id={userId} />
           </div>
           <Outlet />
-          <div className="filter-container">
+          <div className="log-filter-container">
             <div className="filter-left">
               <label htmlFor="startDate">From:</label>
               <input
