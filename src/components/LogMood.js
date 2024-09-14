@@ -124,7 +124,7 @@ function LogMood() {
           <table className="mood-logger-table">
             <tbody>
               <tr>
-                <td className="form-group">
+                <td className="mood-form-group">
                   <label>Valence Level
                     <br />
                     <span style={{ color: 'grey' }}>(Positivity/Negativity)</span>
@@ -142,7 +142,7 @@ function LogMood() {
                 </td>
               </tr>
               <tr>
-                <td className="form-group">
+                <td className="mood-form-group">
                   <label>Arousal Level
                     <br />
                     <span style={{ color: 'grey' }}>(Intensity)</span>
@@ -160,7 +160,7 @@ function LogMood() {
                 </td>
               </tr>
               <tr>
-                <td className="form-group">
+                <td className="mood-form-group">
                   <label>Estimated Duration (minutes):</label>
                   <input
                     type="number"
@@ -175,7 +175,7 @@ function LogMood() {
                 </td>
               </tr>
               <tr>
-                <td className="form-group">
+                <td className="mood-form-group">
                   <label>Date:</label>
                   <input
                     type="date"
@@ -186,7 +186,7 @@ function LogMood() {
                 </td>
               </tr>
               <tr>
-                <td className="form-group">
+                <td className="mood-form-group">
                   <label>Time:</label>
                   <input
                     type="time"
@@ -197,7 +197,7 @@ function LogMood() {
                 </td>
               </tr>
               <tr>
-                <td className="form-group">
+                <td className="mood-form-group">
                   <label>Contextual Trigger:</label>
                   <select
                     value={trigger}
