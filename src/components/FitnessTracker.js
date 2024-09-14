@@ -11,6 +11,7 @@ function FitnessTracker() {
   const navigate = useNavigate();
 
   const [profile, setProfile] = useState(null);
+  const [weight, setWeight] = useState('');
   const [isLoading, setIsLoading] = useState(true);
   const [formData, setFormData] = useState({
     dob: '',
@@ -82,6 +83,24 @@ function FitnessTracker() {
     }
   };
 
+  const fetchWeightData = async () => {
+    try {
+      const response = await fetch(`http://localhost:5000/weight/${userId}`, {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+        },
+      });
+      if (response.ok) {
+        const data = await response.json();
+        setWeight(data[data.length-1].weight);
+      } else {
+        console.error('Failed to fetch weight data:', await response.text());
+      }
+    } catch (error) {
+      console.error('Failed to fetch weight data:', error);
+    }
+  };
+
   // Token and profile verification
   useEffect(() => {
     if (!token) {
@@ -126,6 +145,10 @@ function FitnessTracker() {
 
     verifyToken();
   }, [token, navigate, userId, storedUserId]);
+
+  useEffect(() => {
+    fetchWeightData();
+  }, [weight]);
 
   // Handle input change
   const handleInputChange = (e) => {
@@ -205,7 +228,7 @@ function FitnessTracker() {
             </div>
             <div className="profile-row">
               <div className="profile-cell"><strong>Height:</strong> {formData.height}</div>
-              <div className="profile-cell"><strong>Weight:</strong> {formData.weight}</div>
+              <div className="profile-cell"><strong>Weight:</strong> {weight}</div>
             </div>
             <div className="profile-row">
               <div className="profile-cell"><strong>Blood Group:</strong> {formData.blood_group}</div>
