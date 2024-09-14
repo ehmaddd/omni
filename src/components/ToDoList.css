@@ -133,11 +133,11 @@
 
 /* High Priority Table */
 .todo-table.high-priority thead th {
-  background-color: #e74c3c;
+  background-color: #aa291a;
 }
 
 .todo-table.high-priority tr:nth-child(even) {
-  background-color: #f9b7b7;
+  background-color: #d3adad;
 }
 
 .todo-table.high-priority tr:nth-child(odd) {
@@ -146,7 +146,7 @@
 
 /* Medium Priority Table */
 .todo-table.medium-priority thead th {
-  background-color: #f39c12;
+  background-color: #c57f0e;
 }
 
 .todo-table.medium-priority tr:nth-child(even) {
@@ -159,11 +159,11 @@
 
 /* Low Priority Table */
 .todo-table.low-priority thead th {
-  background-color: #2ecc71;
+  background-color: #0ba34b;
 }
 
 .todo-table.low-priority tr:nth-child(even) {
-  background-color: #e8f6e8;
+  background-color: #caddca;
 }
 
 .todo-table.low-priority tr:nth-child(odd) {
