@@ -39,9 +39,8 @@
   position: relative;
   width: 20px; /* Adjust as needed */
   height: 20px; /* Adjust as needed */
-  border-radius: 50%;
+  border-radius: 20%;
   display: inline-block;
-  cursor: pointer;
 }
 
 .tooltip {
