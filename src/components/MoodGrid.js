@@ -7,20 +7,19 @@ const MoodGrid = ({ data }) => {
   const getDaysInMonth = (month) => new Date(year, month, 0).getDate();
 
   const getMoodColor = (meanValence, meanArousal) => {
-    // Calculate the mood score based on valence and arousal
     const moodScore = meanValence * meanArousal;
 
-    if (moodScore <= 100 && moodScore >80) return '#00e600';
-    else if (moodScore < 80 && moodScore > 60) return '#1aff1a';
-    else if (moodScore < 60 && moodScore > 40) return '#4dff4d';
-    else if (moodScore < 40 && moodScore > 20) return '#80ff80';
-    else if (moodScore < 20 && moodScore > 0) return '#b3ffb3';
-    else if (moodScore === 0) return '#4d0000';
-    else if (moodScore > 0 && moodScore > -20) return '#ff8080';
-    else if (moodScore > -20 && moodScore > -40) return '#ff4d4d';
-    else if (moodScore > -40 && moodScore > -60) return '#ff1a1a';
-    else if (moodScore > -60 && moodScore > -80) return '#e60000';
-    else if (moodScore > -80 && moodScore > -100) return '#b30000';
+    if (moodScore <= 100 && moodScore > 80) return '#00e600'; // Very Positive
+    if (moodScore <= 80 && moodScore > 60) return '#1aff1a'; // Positive
+    if (moodScore <= 60 && moodScore > 40) return '#4dff4d'; // Slightly Positive
+    if (moodScore <= 40 && moodScore > 20) return '#80ff80'; // Neutral Positive
+    if (moodScore <= 20 && moodScore > 0) return '#b3ffb3'; // Slightly Neutral Positive
+    if (moodScore === 0) return '#4d0000'; // Neutral
+    if (moodScore < 0 && moodScore > -20) return '#ff8080'; // Slightly Negative
+    if (moodScore <= -20 && moodScore > -40) return '#ff4d4d'; // Negative
+    if (moodScore <= -40 && moodScore > -60) return '#ff1a1a'; // Strongly Negative
+    if (moodScore <= -60 && moodScore > -80) return '#e60000'; // Very Negative
+    if (moodScore <= -80 && moodScore > -100) return '#b30000'; // Extremely Negative
   };
 
   const generateGrid = () => {
@@ -35,26 +34,22 @@ const MoodGrid = ({ data }) => {
       const days = Array.from({ length: daysInMonth }, (_, day) => {
         const dayData = monthData.filter(log => new Date(log.date).getDate() === day + 1);
 
-        if (dayData.length === 0) {
-          return (
-            <div key={day} className="day" style={{ backgroundColor: '#ccc' }} />
-          );
-        }
-
-        // Calculate the mean valence and arousal
         const totalValence = dayData.reduce((acc, log) => acc + log.valence, 0);
         const totalArousal = dayData.reduce((acc, log) => acc + log.arousal, 0);
         const meanValence = totalValence / dayData.length;
         const meanArousal = totalArousal / dayData.length;
 
         const moodColor = getMoodColor(meanValence, meanArousal);
+        const date = new Date(year, month - 1, day + 1).toLocaleDateString();
 
         return (
           <div
             key={day}
             className="day"
             style={{ backgroundColor: moodColor }}
-          />
+          >
+            <div className="tooltip">{date}</div>
+          </div>
         );
       });
 
