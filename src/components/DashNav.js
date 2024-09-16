@@ -18,16 +18,19 @@ const DashNav = () => {
           <Link to={`/dashboard/${userId}`}>Dashboard</Link>
         </li>
         <li>
-          <Link to={`/dashboard/${userId}/mood_tracker`}>Mood Tracker</Link>
+          <Link to={`/dashboard/${userId}/mood_tracker`}>Mood</Link>
         </li>
         <li>
-          <Link to={`/dashboard/${userId}/fitness_tracker`}>Fitness Section</Link>
+          <Link to={`/dashboard/${userId}/fitness_tracker`}>Fitness</Link>
         </li>
         <li>
-          <Link to={`/dashboard/${userId}/todo`}>ToDo List</Link>
+          <Link to={`/dashboard/${userId}/todo`}>ToDoList</Link>
         </li>
         <li>
           <Link to={`/dashboard/${userId}/budget`}>Budget</Link>
+        </li>
+        <li>
+        <Link to={`/dashboard/${userId}/events`}>Events</Link>
         </li>
         <li>
           <Link to="/signout" class="signout-button">Sign Out</Link>
