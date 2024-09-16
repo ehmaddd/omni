@@ -91,23 +91,23 @@ const Events = () => {
         break;
   
       case 'this_month':
-        startDate = new Date(now.getFullYear(), now.getMonth(), 1);
-        endDate = new Date(now.getFullYear(), now.getMonth() + 1, 0); // Last day of the month
+        startDate = new Date(now.getFullYear(), now.getMonth(), 2);
+        endDate = new Date(now.getFullYear(), now.getMonth() + 1, 1); // Last day of the month
         break;
   
       case 'last_month':
-        startDate = new Date(now.getFullYear(), now.getMonth() - 1, 1);
-        endDate = new Date(now.getFullYear(), now.getMonth(), 0); // Last day of the previous month
+        startDate = new Date(now.getFullYear(), now.getMonth() - 1, 2);
+        endDate = new Date(now.getFullYear(), now.getMonth(), 1); // Last day of the previous month
         break;
   
       case 'next_month':
-        startDate = new Date(now.getFullYear(), now.getMonth() + 1, 1);
-        endDate = new Date(now.getFullYear(), now.getMonth() + 2, 0); // Last day of next month
+        startDate = new Date(now.getFullYear(), now.getMonth() + 1, 2);
+        endDate = new Date(now.getFullYear(), now.getMonth() + 2, 1); // Last day of next month
         break;
   
       case 'this_year':
-        startDate = new Date(now.getFullYear(), 0, 1);
-        endDate = new Date(now.getFullYear(), 11, 31); // December 31
+        startDate = new Date(now.getFullYear(), 0, 2);
+        endDate = new Date(now.getFullYear(), 11, 32); // December 31
         break;
   
       default:
