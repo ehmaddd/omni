@@ -175,18 +175,7 @@ const Events = () => {
     <>
       <DashNav />
       <div className="nav-bar">
-        <h1 className="nav-title">Events</h1>
-      </div>
-      <div className="filter-section">
-        <label htmlFor="filter">Filter Events:</label>
-        <select id="filter" value={filter} onChange={handleFilterChange}>
-          <option value="this_week">This Week</option>
-          <option value="next_week">Next Week</option>
-          <option value="this_month">This Month</option>
-          <option value="last_month">Last Month</option>
-          <option value="next_month">Next Month</option>
-          <option value="this_year">This Year</option>
-        </select>
+        <h1 className="nav-title">Add Events</h1>
       </div>
       <div className="event-form">
         <form onSubmit={handleSubmit}>
@@ -267,22 +256,35 @@ const Events = () => {
           <button type="submit">Add Event</button>
         </form>
       </div>
-      <div className="event-list">
-        <h2>Filtered Events</h2>
-        {events.length > 0 ? (
-          events.map((event) => (
-            <div key={event.id}>
-              <h3>{event.name}</h3>
-              <p>Type: {event.type}</p>
-              <p>Date & Time: {event.datetime}</p>
-              <p>Location: {event.location}</p>
-              <p>Notes: {event.notes}</p>
-            </div>
-          ))
-        ) : (
-          <p>No events to display.</p>
-        )}
+      <h2>Events</h2>
+      <div className="filter-section">
+        <label htmlFor="filter">Filter Events:</label>
+        <select id="filter" value={filter} onChange={handleFilterChange}>
+          <option value="this_week">This Week</option>
+          <option value="next_week">Next Week</option>
+          <option value="this_month">This Month</option>
+          <option value="last_month">Last Month</option>
+          <option value="next_month">Next Month</option>
+          <option value="this_year">This Year</option>
+        </select>
       </div>
+      <div className="event-list">
+  {events.length > 0 ? (
+    events.map((event) => (
+      <div className="event-card" key={event.id}>
+        <h3 className="event-title">{event.name}</h3>
+        <div className="event-details">
+          <p><strong>Type:</strong> {event.type}</p>
+          <p><strong>Date & Time:</strong> {event.datetime}</p>
+          <p><strong>Location:</strong> {event.location}</p>
+          <p><strong>Notes:</strong> {event.notes}</p>
+        </div>
+      </div>
+    ))
+  ) : (
+    <p>No events to display.</p>
+  )}
+</div>
       <Outlet />
     </>
   );

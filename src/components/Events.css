@@ -64,3 +64,35 @@
 .event-form button:hover {
     background-color: #0056b3;
 }
+
+.event-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+    padding: 20px;
+  }
+  
+  .event-card {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .event-title {
+    font-size: 18px;
+    color: #007bff; /* Title color */
+    margin-bottom: 10px;
+  }
+  
+  .event-details {
+    font-size: 14px;
+    color: #333;
+  }
+  
+  .event-details p {
+    margin: 5px 0;
+  }

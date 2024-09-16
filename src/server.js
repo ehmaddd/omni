@@ -663,14 +663,12 @@ app.post('/store_event', async (req, res) => {
 app.get('/fetch_events/:userId', async (req, res) => {
   const { userId } = req.params;
   const { start_date, end_date } = req.query;
-  console.log(start_date);
-  console.log(end_date);
   try {
     const result = await pool.query(
       `SELECT * FROM events 
        WHERE user_id = $1 
          AND datetime BETWEEN $2 AND $3
-       ORDER BY datetime DESC`,
+       ORDER BY datetime ASC`,
       [userId, start_date, end_date]
     );
     res.json(result.rows);
