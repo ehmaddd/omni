@@ -6,6 +6,7 @@
 
 .year-selector {
   margin-bottom: 20px;
+  text-align: center;
 }
 
 .year-selector button {
@@ -62,4 +63,9 @@
 .day:hover .tooltip {
   opacity: 1;
   visibility: visible;
+}
+
+.year-span {
+  font-size: larger;
+  color: #000000;
 }

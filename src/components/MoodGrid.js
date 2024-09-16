@@ -70,7 +70,7 @@ const MoodGrid = ({ data }) => {
     <div className="mood-grid">
       <div className="year-selector">
         <button onClick={() => setYear(year - 1)}>Previous Year</button>
-        <span>{year}</span>
+        <span class="year-span">{year}</span>
         <button onClick={() => setYear(year + 1)}>Next Year</button>
       </div>
       <div className="months-container">
