@@ -225,7 +225,7 @@ function FitnessTracker() {
             </div>
             <div className="profile-row">
               <div className="profile-cell"><strong>Height:</strong> {formData.height}</div>
-              <div className="profile-cell"><strong>Weight:</strong> {weight}</div>
+              <div className="profile-cell"><strong>Weight:</strong> {weight || formData.weight}</div>
             </div>
             <div className="profile-row">
               <div className="profile-cell"><strong>Blood Group:</strong> {formData.blood_group}</div>

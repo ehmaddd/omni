@@ -1,10 +1,13 @@
 .signout-button {
-  background-color: red !important;
+  border: 1px solid red;
+  color: red !important;
+  background-color: white !important;
   font-weight: bold;
 }
 
 .signout-button:hover {
-  color: white !important;
+  border: 1px solid rgb(59, 211, 84);
+  color: rgb(59, 211, 84) !important;
 }
 
 /* Navbar Container */
