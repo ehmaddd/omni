@@ -37,7 +37,6 @@
 
 .day {
   position: relative;
-  border: 1px solid gainsboro;
   width: 20px; /* Adjust as needed */
   height: 20px; /* Adjust as needed */
   border-radius: 50%;

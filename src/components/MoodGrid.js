@@ -20,6 +20,8 @@ const MoodGrid = ({ data }) => {
     if (moodScore <= -40 && moodScore > -60) return '#ff1a1a'; // Strongly Negative
     if (moodScore <= -60 && moodScore > -80) return '#e60000'; // Very Negative
     if (moodScore <= -80 && moodScore > -100) return '#b30000'; // Extremely Negative
+
+    return '#dadada';
   };
 
   const generateGrid = () => {
