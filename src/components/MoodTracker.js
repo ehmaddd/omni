@@ -3,7 +3,8 @@ import { useParams, Link, useNavigate, Outlet } from 'react-router-dom';
 import DashNav from '../components/DashNav';
 import MoodNav from '../components/MoodNav';
 import MoodGrid from '../components/MoodGrid';
-import './Nav.css'; // Ensure to import the CSS file
+import valenceImg from '../images/valence_measure.png';
+import './Nav.css';
 
 function MoodTracker() {
   const { userId } = useParams();
@@ -98,6 +99,7 @@ function MoodTracker() {
             <MoodNav id={userId} />
           </div>
           <MoodGrid data={moodData} />
+          <img src={valenceImg} class="valence-img"></img>
           <Outlet />
           <p>Your Mood Track User ID: {userId}</p>
         </>

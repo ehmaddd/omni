@@ -83,3 +83,9 @@ p {
   border-radius: 0.25rem; /* Match border radius with other form elements */
   background-color: #f9f9f9; /* Match background color with other form elements */
 }
+
+.valence-img {
+  margin-left: 4rem;
+  margin-top: 1rem;
+  width: 25%;
+}
