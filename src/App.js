@@ -27,6 +27,7 @@ import TrackFever from './components/TrackFever';
 import TrackCreatinine from './components/TrackCreatinine';
 import ToDoList from './components/ToDoList';
 import Budget from './components/Budget';
+import Events from './components/Events';
 
 function App() {
   const location = useLocation();
@@ -58,6 +59,7 @@ function App() {
         <Route path="/dashboard/:userId/fitness_tracker/track_creatinine" element={<TrackCreatinine />} />
         <Route path="/dashboard/:userId/todo" element={<ToDoList />} />
         <Route path="/dashboard/:userId/budget" element={<Budget />} />
+        <Route path="/dashboard/:userId/events" element={<Events />} />
         <Route path="/signout" element={<Signout />} />
         <Route path="*" element={<NotFound />} />
       </Routes>

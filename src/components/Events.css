@@ -1,0 +1,66 @@
+.event-form {
+    width: 50%;
+    margin: auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+}
+
+.event-form div {
+    display: flex;
+    align-items: center;
+    margin-bottom: 5px;
+}
+
+.event-form label {
+    width: 30%;
+    font-size: 16px;
+    color: #333;
+    margin-right: 10px;
+    text-align: left;
+}
+
+.event-form input,
+.event-form select,
+.event-form textarea {
+    width: 70%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 16px;
+    box-sizing: border-box;
+}
+
+.event-form input {
+  width: 65%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 16px;
+  box-sizing: border-box;
+  margin-left: 0.2rem;
+}
+
+.event-form textarea {
+    height: 100px;
+}
+
+.event-form button {
+    width: 100%;
+    height: 45px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s;
+}
+
+.event-form button:hover {
+    background-color: #0056b3;
+}
