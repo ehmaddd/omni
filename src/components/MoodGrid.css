@@ -1,0 +1,43 @@
+.mood-grid {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.year-selector {
+  margin-bottom: 20px;
+}
+
+.year-selector button {
+  margin: 0 10px;
+  padding: 5px 10px;
+  font-size: 16px;
+}
+
+.months-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.month {
+  margin: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 10px;
+  text-align: center;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(7, 20px);
+  grid-gap: 2px;
+  justify-content: center;
+}
+
+.day {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  cursor: pointer;
+}

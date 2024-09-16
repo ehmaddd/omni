@@ -172,6 +172,39 @@ app.delete('/mood-logs/:id', async (req, res) => {
   }
 });
 
+// Fetch a specific mood log by its ID
+app.get('/fetch_mood_data', async (req, res) => {
+  const { userId, year } = req.query;
+
+  // if (!userId || !year) {
+  //   return res.status(400).json({ message: 'User ID and year are required' });
+  // }
+
+  // try {
+  //   // Convert year to integer and ensure it's valid
+  //   const yearInt = parseInt(year, 10);
+  //   if (isNaN(yearInt) || yearInt < 1900 || yearInt > new Date().getFullYear()) {
+  //     return res.status(400).json({ message: 'Invalid year provided' });
+  //   }
+
+  //   // Construct the date range for the specified year
+  //   const startDate = `${year}-01-01`;
+  //   const endDate = `${year}-12-31`;
+
+  //   // Prepare SQL query
+  //   let query = 'SELECT * FROM mood_logs WHERE user_id = $1 AND date BETWEEN $2 AND $3 ORDER BY date DESC, time DESC';
+  //   const queryParams = [userId, startDate, endDate];
+
+  //   // Execute query
+  //   const result = await pool.query(query, queryParams);
+  //   res.json(result.rows);
+  // } catch (err) {
+  //   console.error('Error fetching mood logs:', err);
+  //   res.status(500).json({ message: 'Error fetching mood logs' });
+  // }
+});
+
+
 // MOOD END ---------------------------------------
 
 // Define a new route for storing health data

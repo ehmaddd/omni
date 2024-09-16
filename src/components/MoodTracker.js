@@ -1,7 +1,8 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams, Link, useNavigate, Outlet } from 'react-router-dom';
 import DashNav from '../components/DashNav';
 import MoodNav from '../components/MoodNav';
+import MoodGrid from '../components/MoodGrid';
 import './Nav.css'; // Ensure to import the CSS file
 
 function MoodTracker() {
@@ -9,6 +10,28 @@ function MoodTracker() {
   const storedUserId = localStorage.getItem('user');
   const token = localStorage.getItem('token');
   const navigate = useNavigate();
+  const [year, setYear] = useState(() => new Date().getFullYear());
+  const [moodData, setMoodData] = useState([]);
+
+  const fetchMoodData = async () => {
+    try {
+      const response = await fetch(`http://localhost:5000/fetch_mood_data?userId=${userId}&year=${year}`, {
+        method: 'GET',
+        headers: {
+          'Authorization': `Bearer ${localStorage.getItem('token')}`,
+          'Content-Type': 'application/json'
+        }
+      });
+  
+      if (!response.ok) {
+        throw new Error('Failed to fetch mood data');
+      }
+      return await response.json();
+    } catch (error) {
+      console.error('Error fetching mood data:', error);
+      throw error;
+    }
+  };
 
   useEffect(() => {
     // Redirect if no token is present
@@ -52,7 +75,17 @@ function MoodTracker() {
       }
     };
 
+    const loadData = async () => {
+      try {
+        const data = await fetchMoodData();
+        setMoodData(data);
+      } catch (error) {
+        console.error('Error loading mood data:', error);
+      }
+    };
+
     verifyToken();
+    loadData();
   }, [token, navigate, userId, storedUserId]);
 
   return (
@@ -64,6 +97,7 @@ function MoodTracker() {
             <h1 className="nav-title">Mood Tracker</h1>
             <MoodNav id={userId} />
           </div>
+          <MoodGrid data={moodData} />
           <Outlet />
           <p>Your Mood Track User ID: {userId}</p>
         </>
