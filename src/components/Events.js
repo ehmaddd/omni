@@ -11,9 +11,10 @@ const Events = () => {
     
     const [events, setEvents] = useState([]);
     const [formData, setFormData] = useState({
-        event_name: '',
-        event_type: 'Birthday',
-        event_date_time: '',
+        id: userId,
+        name: '',
+        type: 'Birthday',
+        date_time: '',
         recurrence: 'None',
         location: '',
         notes: '',
@@ -72,7 +73,7 @@ const Events = () => {
 
     const fetchEvents = async () => {
         try {
-            const response = await fetch('/api/events', {
+            const response = await fetch('http://localhost:5000/fetch_events', {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }
@@ -94,7 +95,7 @@ const Events = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await fetch('/api/events', {
+            const response = await fetch('http://localhost:5000/store_event', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -128,9 +129,9 @@ const Events = () => {
                       <input
                           type="text"
                           id="event_name"
-                          name="event_name"
+                          name="name"
                           placeholder="Event Name"
-                          value={formData.event_name}
+                          value={formData.name}
                           onChange={handleChange}
                           required
                       />
@@ -139,8 +140,8 @@ const Events = () => {
                       <label htmlFor="event_type">Event Type</label>
                       <select
                           id="event_type"
-                          name="event_type"
-                          value={formData.event_type}
+                          name="type"
+                          value={formData.type}
                           onChange={handleChange}
                       >
                           <option value="Birthday">Birthday</option>
@@ -154,9 +155,9 @@ const Events = () => {
                       <label htmlFor="event_date_time">Event Date & Time</label>
                       <input
                           type="datetime-local"
-                          id="event_date_time"
-                          name="event_date_time"
-                          value={formData.event_date_time}
+                          id="date_time"
+                          name="date_time"
+                          value={formData.date_time}
                           onChange={handleChange}
                           required
                       />
@@ -204,10 +205,10 @@ const Events = () => {
             <h2>Upcoming Events</h2>
             {events.length > 0 ? (
               events.map(event => (
-                <div key={event.event_id}>
-                  <h3>{event.event_name}</h3>
-                  <p>Type: {event.event_type}</p>
-                  <p>Date & Time: {event.event_date_time}</p>
+                <div key={event.id}>
+                  <h3>{event.name}</h3>
+                  <p>Type: {event.type}</p>
+                  <p>Date & Time: {event.date_time}</p>
                   <p>Location: {event.location}</p>
                   <p>Notes: {event.notes}</p>
                 </div>

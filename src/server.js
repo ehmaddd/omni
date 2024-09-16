@@ -624,6 +624,42 @@ app.post('/store_expenses', async (req, res) => {
   }
 });
 
+app.post('/store_event', async (req, res) => {
+  const { id, name, type, date_time, recurrence, location, notes } = req.body;
+  if (!id || !name || !type || !date_time|| !recurrence || !location) {
+      return res.status(400).json({ error: 'Missing required fields or invalid data' });
+  }
+
+  try {
+      const client = await pool.connect();
+      try {
+          // Check if an event with the same date and category already exists
+          const result = await client.query(
+              `SELECT * FROM events WHERE user_id = $1 AND name = $2 AND datetime = $3`,
+              [id, name, date_time]
+          );
+
+          if (result.rows.length > 0) {
+              console.log("Event Already exists");
+          } else {
+              // Insert new expense
+              await client.query(
+                  `INSERT INTO events (user_id, name, type, datetime, recurrence, location, notes)
+                   VALUES ($1, $2, $3, $4, $5, $6, $7)`,
+                  [id, name, type, date_time, recurrence, location, notes]
+              );
+          }
+
+          res.status(201).json({ message: 'Event added successfully' });
+      } finally {
+          client.release();
+      }
+  } catch (error) {
+      console.error('Database error:', error);
+      res.status(500).json({ error: 'Database error' });
+  }
+});
+
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
