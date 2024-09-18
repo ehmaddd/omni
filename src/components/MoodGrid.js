@@ -50,6 +50,8 @@ const MoodGrid = ({ data }) => {
 
           const moodColor = getMoodColor(meanValence, meanArousal);
           const date = new Date(year, month - 1, day + 1).toLocaleDateString();
+          const showValence = isNaN(meanValence) ? 'Nil' : meanValence;
+          const showArousal = isNaN(meanArousal) ? 'Nil' : meanArousal;
 
           return (
             <div
@@ -57,7 +59,7 @@ const MoodGrid = ({ data }) => {
               className="day"
               style={{ backgroundColor: moodColor }}
             >
-              <div className="tooltip">{date} Valence : {meanValence}, Arousal : {meanArousal}</div>
+              <div className="tooltip">{date} Valence : {showValence}, Arousal : {showArousal}</div>
             </div>
           );
         })
