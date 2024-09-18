@@ -270,17 +270,25 @@ const Events = () => {
       </div>
       <div className="event-list">
   {events.length > 0 ? (
-    events.map((event) => (
-      <div className="event-card" key={event.id}>
-        <h3 className="event-title">{event.name}</h3>
-        <div className="event-details">
-          <p><strong>Type:</strong> {event.type}</p>
-          <p><strong>Date & Time:</strong> {event.datetime}</p>
-          <p><strong>Location:</strong> {event.location}</p>
-          <p><strong>Notes:</strong> {event.notes}</p>
+    events.map((event) => {
+      const eventDate = new Date(event.datetime);  // Convert event's datetime to a Date object
+      const currentDate = new Date();  // Get the current date
+
+      // Determine the class based on whether the event date is in the future or the past
+      const eventClass = eventDate > currentDate ? 'event-card pending' : 'event-card passed';
+
+      return (
+        <div className={eventClass} key={event.id}>
+          <h3 className="event-title">{event.name}</h3>
+          <div className="event-details">
+            <p><strong>Type:</strong> {event.type}</p>
+            <p><strong>Date & Time:</strong> {event.datetime}</p>
+            <p><strong>Location:</strong> {event.location}</p>
+            <p><strong>Notes:</strong> {event.notes}</p>
+          </div>
         </div>
-      </div>
-    ))
+      );
+    })
   ) : (
     <p>No events to display.</p>
   )}

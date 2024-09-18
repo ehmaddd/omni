@@ -96,3 +96,22 @@
   .event-details p {
     margin: 5px 0;
   }
+
+  /* Default event card styles */
+.event-card {
+  border: 2px solid #ccc;
+  padding: 10px;
+  margin: 10px 0;
+  border-radius: 5px;
+  transition: border-color 0.3s ease;
+}
+
+/* Green border for pending events */
+.event-card.pending {
+  border-color: green;
+}
+
+/* Red border for passed events */
+.event-card.passed {
+  border-color: red;
+}
