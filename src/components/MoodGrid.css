@@ -36,6 +36,25 @@
   justify-content: center;
 }
 
+.weekdays {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  width: 90%;
+  margin-bottom: 5px;
+  margin: auto;
+}
+
+/* Styles for each weekday abbreviation */
+.weekday {
+  text-align: center;
+  font-size: 0.5rem; /* Smaller font size */
+  font-weight: bold;
+  padding: 2.2px;
+  border-bottom: 1px solid #ccc; /* Optional: border for separation */
+  box-sizing: border-box;
+  margin-right: 0.18rem;
+}
+
 .day {
   position: relative;
   width: 20px; /* Adjust as needed */

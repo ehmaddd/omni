@@ -26,6 +26,7 @@ const MoodGrid = ({ data }) => {
 
   const generateGrid = () => {
     const months = Array.from({ length: 12 }, (_, i) => i + 1); // Months from 1 to 12
+    const weekDays = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']; // Weekday abbreviations
     return months.map(month => {
       const daysInMonth = getDaysInMonth(month);
       const firstDayOfMonth = new Date(year, month - 1, 1).getDay();
@@ -62,11 +63,24 @@ const MoodGrid = ({ data }) => {
         })
       ];
 
+      const totalCells = adjustedFirstDay + daysInMonth;
+      const fillCells = Math.ceil(totalCells / 7) * 7 - totalCells;
+
+      const filledDays = [
+        ...allDays,
+        ...Array.from({ length: fillCells }, (_, index) => <div key={`fill-${month}-${index}`} className="day empty"></div>)
+      ];
+
       return (
         <div key={month} className="month">
           <h3>{new Date(year, month - 1).toLocaleString('default', { month: 'long' })}</h3>
+          <div className="weekdays">
+              {weekDays.map(day => (
+                <div key={day} className="weekday">{day}</div>
+              ))}
+            </div>
           <div className="grid">
-            {allDays}
+            {filledDays}
           </div>
         </div>
       );
