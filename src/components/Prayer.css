@@ -45,16 +45,25 @@
 }
 
 .prayer-table thead th {
-  background-color: #343a40;
-  color: #fff;
+  background-color: #ffff;
+  font-weight: bold;
+  color: black;
 }
 
 .prayer-table tbody tr {
   transition: background-color 0.3s ease;
 }
 
-.prayer-table tbody tr:hover {
+.prayer-table tbody tr:nth-child(odd) {
   background-color: #f1f1f1;
+}
+
+.prayer-history-div {
+  border: 1px solid gainsboro;
+  border-radius: 16px;
+  margin-top: 2rem;
+  padding: 1rem;
+  text-align: center;
 }
 
 /* Text styling */

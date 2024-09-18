@@ -217,7 +217,7 @@ const Prayer = () => {
 
       {/* Display History */}
       {history.length > 0 && (
-        <div>
+        <div className="prayer-history-div">
           <h2>History</h2>
           <div>
             <table className="prayer-table">
