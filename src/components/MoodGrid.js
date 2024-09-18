@@ -9,11 +9,11 @@ const MoodGrid = ({ data }) => {
   const getMoodColor = (meanValence, meanArousal) => {
     const moodScore = meanValence * meanArousal;
 
-    if (moodScore <= 100 && moodScore > 80) return '#00e600'; // Very Positive
-    if (moodScore <= 80 && moodScore > 60) return '#1aff1a'; // Positive
-    if (moodScore <= 60 && moodScore > 40) return '#4dff4d'; // Slightly Positive
-    if (moodScore <= 40 && moodScore > 20) return '#80ff80'; // Neutral Positive
-    if (moodScore <= 20 && moodScore > 0) return '#b3ffb3'; // Slightly Neutral Positive
+    if (moodScore <= 100 && moodScore > 80) return '#00e600'; // Extremely Positive
+    if (moodScore <= 80 && moodScore > 60) return '#1aff1a'; // Very Positive
+    if (moodScore <= 60 && moodScore > 40) return '#4dff4d'; // Strongly Positive
+    if (moodScore <= 40 && moodScore > 20) return '#80ff80'; // Positive
+    if (moodScore <= 20 && moodScore > 0) return '#b3ffb3'; // Slightly Positive
     if (moodScore === 0) return '#FFFF00'; // Neutral
     if (moodScore < 0 && moodScore > -20) return '#ff8080'; // Slightly Negative
     if (moodScore <= -20 && moodScore > -40) return '#ff4d4d'; // Negative
@@ -21,7 +21,7 @@ const MoodGrid = ({ data }) => {
     if (moodScore <= -60 && moodScore > -80) return '#e60000'; // Very Negative
     if (moodScore <= -80 && moodScore > -100) return '#b30000'; // Extremely Negative
 
-    return '#dadada';
+    return '#dadada'; //Neutral
   };
 
   const generateGrid = () => {
