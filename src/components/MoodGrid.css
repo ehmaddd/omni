@@ -31,8 +31,8 @@
 
 .grid {
   display: grid;
-  grid-template-columns: repeat(7, 20px);
-  grid-gap: 2px;
+  grid-template-columns: repeat(7, 25px);
+  grid-gap: 1px;
   justify-content: center;
 }
 
@@ -57,8 +57,8 @@
 
 .day {
   position: relative;
-  width: 20px; /* Adjust as needed */
-  height: 20px; /* Adjust as needed */
+  width: 25px; /* Adjust as needed */
+  height: 25px; /* Adjust as needed */
   border-radius: 20%;
   display: inline-block;
 }
