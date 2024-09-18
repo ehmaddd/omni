@@ -44,12 +44,12 @@
 /* Styles for each weekday abbreviation */
 .weekday {
   text-align: center;
-  font-size: 0.5rem;
+  font-size: 0.6rem;
   font-weight: bold;
   padding: 2.2px;
   border-bottom: 1px solid #ccc;
   box-sizing: border-box;
-  margin-right: 0.18rem;
+  margin-right: 0.11rem;
 }
 
 .day {
