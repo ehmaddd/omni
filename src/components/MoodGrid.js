@@ -28,38 +28,45 @@ const MoodGrid = ({ data }) => {
     const months = Array.from({ length: 12 }, (_, i) => i + 1); // Months from 1 to 12
     return months.map(month => {
       const daysInMonth = getDaysInMonth(month);
+      const firstDayOfMonth = new Date(year, month - 1, 1).getDay();
+      const adjustedFirstDay = (firstDayOfMonth === 0) ? 6 : firstDayOfMonth - 1; // Adjust to start on Monday
+
       const monthData = data.filter(log => {
         const logDate = new Date(log.date);
         return logDate.getFullYear() === year && logDate.getMonth() + 1 === month;
       });
 
-      const days = Array.from({ length: daysInMonth }, (_, day) => {
-        const dayData = monthData.filter(log => new Date(log.date).getDate() === day + 1);
+      // Create an array for the grid cells, including empty cells for days before the start of the month
+      const allDays = [
+        ...Array.from({ length: adjustedFirstDay }, () => <div key={`empty-${month}-${Math.random()}`} className="day empty"></div>),
+        ...Array.from({ length: daysInMonth }, (_, day) => {
+          const dayData = monthData.filter(log => new Date(log.date).getDate() === day + 1);
 
-        const totalValence = dayData.reduce((acc, log) => acc + log.valence, 0);
-        const totalArousal = dayData.reduce((acc, log) => acc + log.arousal, 0);
-        const meanValence = totalValence / dayData.length;
-        const meanArousal = totalArousal / dayData.length;
+          const totalValence = dayData.reduce((acc, log) => acc + log.valence, 0);
+          const totalArousal = dayData.reduce((acc, log) => acc + log.arousal, 0);
+          const meanValence = totalValence / dayData.length;
+          const meanArousal = totalArousal / dayData.length;
 
-        const moodColor = getMoodColor(meanValence, meanArousal);
-        const date = new Date(year, month - 1, day + 1).toLocaleDateString();
+          const moodColor = getMoodColor(meanValence, meanArousal);
+          const date = new Date(year, month - 1, day + 1).toLocaleDateString();
 
-        return (
-          <div
-            key={day}
-            className="day"
-            style={{ backgroundColor: moodColor }}
-          >
-            <div className="tooltip">{date}</div>
-          </div>
-        );
-      });
+          return (
+            <div
+              key={day}
+              className="day"
+              style={{ backgroundColor: moodColor }}
+            >
+              <div className="tooltip">{date}</div>
+            </div>
+          );
+        })
+      ];
 
       return (
         <div key={month} className="month">
           <h3>{new Date(year, month - 1).toLocaleString('default', { month: 'long' })}</h3>
           <div className="grid">
-            {days}
+            {allDays}
           </div>
         </div>
       );
@@ -70,7 +77,7 @@ const MoodGrid = ({ data }) => {
     <div className="mood-grid">
       <div className="year-selector">
         <button onClick={() => setYear(year - 1)}>Previous Year</button>
-        <span class="year-span">{year}</span>
+        <span className="year-span">{year}</span>
         <button onClick={() => setYear(year + 1)}>Next Year</button>
       </div>
       <div className="months-container">
