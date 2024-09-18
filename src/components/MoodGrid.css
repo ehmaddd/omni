@@ -47,25 +47,25 @@
 /* Styles for each weekday abbreviation */
 .weekday {
   text-align: center;
-  font-size: 0.5rem; /* Smaller font size */
+  font-size: 0.5rem;
   font-weight: bold;
   padding: 2.2px;
-  border-bottom: 1px solid #ccc; /* Optional: border for separation */
+  border-bottom: 1px solid #ccc;
   box-sizing: border-box;
   margin-right: 0.18rem;
 }
 
 .day {
   position: relative;
-  width: 25px; /* Adjust as needed */
-  height: 25px; /* Adjust as needed */
+  width: 25px;
+  height: 25px;
   border-radius: 20%;
   display: inline-block;
 }
 
 .tooltip {
   position: absolute;
-  bottom: 120%; /* Position above the circle */
+  bottom: 120%;
   left: 50%;
   transform: translateX(-50%);
   background-color: #333;
