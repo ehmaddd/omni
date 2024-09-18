@@ -8,7 +8,6 @@ const MoodGrid = ({ data }) => {
 
   const getMoodColor = (meanValence, meanArousal) => {
     const moodScore = meanValence * meanArousal;
-    console.log(moodScore);
 
     if (moodScore <= 100 && moodScore > 80) return '#00e600'; // Very Positive
     if (moodScore <= 80 && moodScore > 60) return '#1aff1a'; // Positive
@@ -27,11 +26,11 @@ const MoodGrid = ({ data }) => {
 
   const generateGrid = () => {
     const months = Array.from({ length: 12 }, (_, i) => i + 1); // Months from 1 to 12
-    const weekDays = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']; // Weekday abbreviations
+    const weekDays = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
     return months.map(month => {
       const daysInMonth = getDaysInMonth(month);
       const firstDayOfMonth = new Date(year, month - 1, 1).getDay();
-      const adjustedFirstDay = (firstDayOfMonth === 0) ? 6 : firstDayOfMonth - 1; // Adjust to start on Monday
+      const adjustedFirstDay = (firstDayOfMonth === 0) ? 6 : firstDayOfMonth - 1;
 
       const monthData = data.filter(log => {
         const logDate = new Date(log.date);
