@@ -57,7 +57,7 @@ const MoodGrid = ({ data }) => {
               className="day"
               style={{ backgroundColor: moodColor }}
             >
-              <div className="tooltip">{date}</div>
+              <div className="tooltip">{date} Valence : {meanValence}, Arousal : {meanArousal}</div>
             </div>
           );
         })
