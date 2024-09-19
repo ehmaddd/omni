@@ -387,13 +387,22 @@ app.post('/record_weight', async (req, res) => {
   const { user_id, date, time, weight } = req.body;
 
   try {
+    await pool.query('BEGIN');
+
     await pool.query(
       'INSERT INTO weights (user_id, date, time, weight) VALUES ($1, $2, $3, $4)',
       [user_id, date, time, weight]
     );
+    await pool.query(
+      'UPDATE health_profile SET weight=$2 WHERE user_id=$1',
+      [user_id, weight]
+    );
+
+    await pool.query('COMMIT');
 
     res.status(200).send('Weight recorded successfully');
   } catch (err) {
+    await pool.query('ROLLBACK');
     console.error('Error recording weight:', err);
     res.status(500).send('Server error');
   }

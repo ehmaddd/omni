@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import FetchMoodColor from './components/FetchMoodColor';
+import FetchFitness from './FetchFitness';
 import DashNav from './components/DashNav';
 import './Dashboard.css';
 
@@ -115,7 +116,7 @@ function Dashboard() {
               <FetchMoodColor propStartDate={moodDates.propStartDate} propEndDate={moodDates.propEndDate} />
             </div>
             <div className="fitness-div">
-              
+              <FetchFitness />
             </div>
             <div className="todo-div">
               
