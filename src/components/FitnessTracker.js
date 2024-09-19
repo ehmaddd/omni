@@ -69,10 +69,6 @@ function FitnessTracker() {
           kidney_issue: data.data[0].kidney_issue || false,
         });
 
-        localStorage.setItem('isKidneyPatient', data.data[0].kidney_issue);
-        localStorage.setItem('isHeartPatient', data.data[0].heart_problem);
-        localStorage.setItem('isDiabetesPatient', data.data[0].diabetes);
-
       } else {
         console.error('Failed to fetch profile:', await response.text());
       }
