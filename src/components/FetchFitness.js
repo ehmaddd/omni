@@ -51,11 +51,11 @@ const FetchFitness = () => {
   };
 
   const categoryColors = {
-    'Underweight': '#d3eaf2', // Light blue
-    'Normal weight': '#a0d8a6', // Light green
-    'Overweight': '#ffeb6f', // Light yellow
-    'Obese': '#f4a4a4', // Light red
-    'Extremely Obese': '#c94c4c', // Dark red
+    'Underweight': '#ff1a1a', // Blue
+    'Normal weight': '#4dff4d', //Green
+    'Overweight': '#ffcc00', // Yellow
+    'Obese': '#ff6600', // Orange
+    'Extremely Obese': '#ff0000', // Dark red
   };
 
   const backgroundColor = categoryColors[bmiCategory] || 'transparent';
