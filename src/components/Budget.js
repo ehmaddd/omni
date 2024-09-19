@@ -28,8 +28,8 @@ const Budget = () => {
     const navigate = useNavigate();
     const categories = ['food', 'fuel', 'health', 'grocery', 'recreation', 'clothes', 'other']; // Expense categories
     const [expenses, setExpenses] = useState([]);
-    const [month, setMonth] = useState(new Date().getMonth() + 1); // Current month
-    const [year, setYear] = useState(new Date().getFullYear());     // Current year
+    const [month, setMonth] = useState(new Date().getMonth() + 1);
+    const [year, setYear] = useState(new Date().getFullYear());
     const [totals, setTotals] = useState({});
     const [income, setIncome] = useState(0);
     const [fetchedIncome, setFetchedIncome] = useState(0);
@@ -51,16 +51,26 @@ const Budget = () => {
     }
 };
 
-  const fetchIncome = async () => {
+useEffect(() => {
+  fetchIncome(); // Fetch income whenever month or year changes
+}, [year, month, userId]);
+
+// Update the fetchIncome function to clear or set income appropriately
+const fetchIncome = async () => {
     console.log('fetchIncome called');
     try {
         const response = await fetch(`http://localhost:5000/fetch_income/${userId}/${year}/${month}`);
         const data = await response.json();
-        setFetchedIncome(data[0].amount);
+        // Check if the data exists
+        if (data && data.length > 0) {
+            setFetchedIncome(data[0].amount);
+        } else {
+            setFetchedIncome(0); // Clear if no income found for the month
+        }
     } catch (error) {
         console.error('Error fetching income:', error);
     }
-  };
+};
 
   const handleIncome = async () => {
     const newIncome = {
@@ -195,10 +205,6 @@ const handleSubmit = async (e) => {
       };
       fetchExpenses();
     }, [month, year, userId, expenses]);
-
-    useEffect(() => {
-      fetchIncome();
-    }, []);
 
     const daysInMonth = getDaysInMonth(year, month);
 
