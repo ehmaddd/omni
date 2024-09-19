@@ -1,0 +1,16 @@
+.mood-div {
+  width: 20rem;
+  text-align: center;
+  border: 1px solid gainsboro;
+  border-radius: 15px;
+  padding: 10px 15px !important;
+  margin: auto 1rem;
+}
+
+.mood-heading {
+  background-color: gainsboro;
+}
+
+.form-group {
+  margin-left: -20px;
+}
