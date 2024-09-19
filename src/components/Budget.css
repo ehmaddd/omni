@@ -45,3 +45,19 @@ th {
   width: 10rem;
   height: 3rem;
 }
+
+.month-label {
+  margin-left: 1rem;
+  margin-right: 1rem;
+}
+
+.add-income {
+  width: 10rem;
+  height: 3rem;
+  margin-left: 1rem;
+}
+
+.income-label {
+  margin-left: 1rem;
+  margin-right: 1rem;
+}

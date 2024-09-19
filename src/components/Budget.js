@@ -31,6 +31,7 @@ const Budget = () => {
     const [month, setMonth] = useState(new Date().getMonth() + 1); // Current month
     const [year, setYear] = useState(new Date().getFullYear());     // Current year
     const [totals, setTotals] = useState({});
+    const [income, setIncome] = useState(0);
 
     const [formData, setFormData] = useState({
       date: '',
@@ -48,6 +49,35 @@ const Budget = () => {
         console.error('Error fetching expenses:', error);
     }
 };
+
+  const handleIncome = async () => {
+    const newIncome = {
+        userId,
+        year,
+        month,
+        amount: parseFloat(income),
+    };
+    try {
+      const response = await fetch('http://localhost:5000/store_income', {
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(newIncome),
+      });
+      // if (!response.ok) {
+      //     throw new Error('Error adding income');
+      // }
+      // const data = await response.json();
+      // console.log('Income added:', data);
+      // Clear the form
+      setIncome(0);
+      // Fetch updated expenses
+      // fetchExpenses();
+     } catch (error) {
+         console.error('Error:', error);
+     }
+  }
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -244,7 +274,7 @@ const handleSubmit = async (e) => {
                     </form>
 
                     <br></br>
-                  <label htmlFor="month">Select Month:</label>
+                  <label htmlFor="month" className="month-label">Select Month:</label>
                   <input
                     type="month"
                     id="month"
@@ -255,6 +285,20 @@ const handleSubmit = async (e) => {
                       setMonth(parseInt(selectedMonth));
                     }}
                   />
+                  <label htmlFor="month" className="income-label">Monthly Income</label>
+                  <input
+                    type="number"
+                    id="income"
+                    value={income}
+                    onChange={(e)=>setIncome(e.target.value)}
+                  />
+                  <button
+                    type="button"
+                    className="add-income"
+                    onClick={()=> handleIncome()}
+                  >
+                    Add Income
+                  </button>
 
                  <table border="1" style={{ width: '100%', marginTop: '20px', textAlign: 'center' }}>
                    <thead>

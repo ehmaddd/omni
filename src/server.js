@@ -631,6 +631,48 @@ app.post('/shift_task/', async (req, res) => {
   }
 });
 
+app.post('/store_income', async (req, res) => {
+  const { userId, year, month, amount } = req.body;
+  if (!userId || !year || !month || isNaN(amount)) {
+      return res.status(400).json({ error: 'Missing required fields or invalid data' });
+  }
+
+  try {
+      const client = await pool.connect();
+      try {
+          // Check if an expense with the same date and category already exists
+          const result = await client.query(
+              `SELECT * FROM income_record WHERE user_id = $1 AND year = $2 AND month = $3`,
+              [userId, year, month]
+          );
+
+          if (result.rows.length > 0) {
+              // Update existing expense
+              await client.query(
+                  `UPDATE income_record
+                   SET amount = amount + $1
+                   WHERE user_id = $2 AND year = $3 AND month = $4`,
+                  [amount, userId, year, month]
+              );
+          } else {
+              // Insert new expense
+              await client.query(
+                  `INSERT INTO income_record (user_id, year, month, amount)
+                   VALUES ($1, $2, $3, $4)`,
+                  [userId, year, month, amount]
+              );
+          }
+
+          res.status(201).json({ message: 'Income added/updated successfully' });
+      } finally {
+          client.release();
+      }
+  } catch (error) {
+      console.error('Database error:', error);
+      res.status(500).json({ error: 'Database error' });
+  }
+});
+
 app.get('/expenses/:userId/:year/:month', async (req, res) => {
   const { userId, year, month } = req.params;
   try {
