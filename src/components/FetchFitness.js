@@ -4,7 +4,6 @@ import normalweightImg from '../images/normalweight.png';
 import overweightImg from '../images/overweight.png';
 import obeseImg from '../images/obese.png';
 import extremelyobeseImg from '../images/extremelyobese.png';
-import { addListener } from "@reduxjs/toolkit";
 
 const FetchFitness = () => {
   const userId = localStorage.getItem('user');
@@ -42,7 +41,7 @@ const FetchFitness = () => {
     return 'Extremely Obese';
   };
 
-  // Map categories to images
+  // Map categories to images and background colors
   const categoryImages = {
     'Underweight': underweightImg,
     'Normal weight': normalweightImg,
@@ -50,6 +49,16 @@ const FetchFitness = () => {
     'Obese': obeseImg,
     'Extremely Obese': extremelyobeseImg,
   };
+
+  const categoryColors = {
+    'Underweight': '#d3eaf2', // Light blue
+    'Normal weight': '#a0d8a6', // Light green
+    'Overweight': '#ffeb6f', // Light yellow
+    'Obese': '#f4a4a4', // Light red
+    'Extremely Obese': '#c94c4c', // Dark red
+  };
+
+  const backgroundColor = categoryColors[bmiCategory] || 'transparent';
 
   return (
     <div style={{textAlign: 'left', width: '20rem', borderWidth: '1px' ,borderStyle: 'solid', borderColor: 'gainsboro', borderRadius: '16px', padding: '10px', marginLeft: '1rem', marginTop: '0.5rem'}}>
@@ -63,7 +72,9 @@ const FetchFitness = () => {
             style={{ width: '50px', height: 'auto', margin: 'auto' }} // Adjust size as needed
           />
         )}
-        <p><b>Category: </b>{bmiCategory !== '' ? bmiCategory : 'Loading...'}</p>
+        <p style={{ backgroundColor: backgroundColor, padding: '5px', borderRadius: '16px' }}>
+          {bmiCategory !== '' ? bmiCategory : 'Loading...'}
+        </p>
       </div>
     </div>
   );
