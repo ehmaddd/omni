@@ -61,3 +61,17 @@ th {
   margin-left: 1rem;
   margin-right: 1rem;
 }
+
+.balance-div {
+  display: inline-flex;
+  flex-direction: column;
+  border: 1px solid skyblue;
+  border-radius: 16px;
+  padding: 20px;
+  margin-left: 2rem;
+}
+
+.balance-div > * {
+  margin: 0 0 5px 0;
+  padding: 0;
+}

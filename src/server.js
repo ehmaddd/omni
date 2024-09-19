@@ -732,6 +732,39 @@ app.post('/store_expenses', async (req, res) => {
   }
 });
 
+app.get('/fetch_income/:userId/:year/:month', async (req, res) => {
+  const { userId, year, month } = req.params;
+  try {
+    const result = await pool.query(
+      `SELECT amount FROM income_record 
+       WHERE user_id = $1 AND year=$2 AND month=$3`,
+      [userId, year, month]
+    );
+    res.json(result.rows);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'Error fetching income' });
+  }
+});
+
+app.get('/fetch_events/:userId', async (req, res) => {
+  const { userId } = req.params;
+  const { start_date, end_date } = req.query;
+  try {
+    const result = await pool.query(
+      `SELECT * FROM events 
+       WHERE user_id = $1 
+         AND datetime BETWEEN $2 AND $3
+       ORDER BY datetime ASC`,
+      [userId, start_date, end_date]
+    );
+    res.json(result.rows);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'Error fetching events' });
+  }
+});
+
 app.post('/store_event', async (req, res) => {
   const { id, name, type, date_time, recurrence, location, notes } = req.body;
   if (!id || !name || !type || !date_time|| !recurrence || !location) {

@@ -32,6 +32,7 @@ const Budget = () => {
     const [year, setYear] = useState(new Date().getFullYear());     // Current year
     const [totals, setTotals] = useState({});
     const [income, setIncome] = useState(0);
+    const [fetchedIncome, setFetchedIncome] = useState(0);
 
     const [formData, setFormData] = useState({
       date: '',
@@ -50,6 +51,17 @@ const Budget = () => {
     }
 };
 
+  const fetchIncome = async () => {
+    console.log('fetchIncome called');
+    try {
+        const response = await fetch(`http://localhost:5000/fetch_income/${userId}/${year}/${month}`);
+        const data = await response.json();
+        setFetchedIncome(data[0].amount);
+    } catch (error) {
+        console.error('Error fetching income:', error);
+    }
+  };
+
   const handleIncome = async () => {
     const newIncome = {
         userId,
@@ -65,15 +77,15 @@ const Budget = () => {
           },
           body: JSON.stringify(newIncome),
       });
-      // if (!response.ok) {
-      //     throw new Error('Error adding income');
-      // }
-      // const data = await response.json();
-      // console.log('Income added:', data);
+      if (!response.ok) {
+          throw new Error('Error adding income');
+      }
+      const data = await response.json();
+      console.log('Income added:', data);
       // Clear the form
       setIncome(0);
       // Fetch updated expenses
-      // fetchExpenses();
+      fetchIncome();
      } catch (error) {
          console.error('Error:', error);
      }
@@ -183,6 +195,10 @@ const handleSubmit = async (e) => {
       };
       fetchExpenses();
     }, [month, year, userId, expenses]);
+
+    useEffect(() => {
+      fetchIncome();
+    }, []);
 
     const daysInMonth = getDaysInMonth(year, month);
 
@@ -299,6 +315,17 @@ const handleSubmit = async (e) => {
                   >
                     Add Income
                   </button>
+                  <div className="balance-div">
+                    <p>
+                      <b>Income : </b>{fetchedIncome}
+                    </p>
+                    <p>
+                      <b>Expense : </b>{grandTotal}
+                    </p>
+                    <p>
+                      <b>Balance : </b>{fetchedIncome - grandTotal}
+                    </p>
+                  </div>
 
                  <table border="1" style={{ width: '100%', marginTop: '20px', textAlign: 'center' }}>
                    <thead>
