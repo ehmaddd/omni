@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import FetchMoodColor from './components/FetchMoodColor';
-import FetchFitness from './FetchFitness';
+import FetchFitness from './components/FetchFitness';
 import DashNav from './components/DashNav';
 import './Dashboard.css';
 

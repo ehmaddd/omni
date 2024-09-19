@@ -293,6 +293,30 @@ app.get('/health_profile/:id', async (req, res) => {
   }
 });
 
+app.get('/fetch_specific_health/:userId', async (req, res) => {
+  const { userId } = req.params;
+
+  try {
+    const result = await pool.query(
+      'SELECT gender, height, weight FROM health_profile WHERE user_id = $1',
+      [userId]
+    );
+    
+    if (result.rowCount === 0) {
+      return res.status(404).json({ message: 'Health log not found' });
+    }
+    
+    // Sending the fetched data back to the frontend
+    res.json({
+      message: 'Health log fetched successfully',
+      data: result.rows, // Including the fetched data in the response
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'Error fetching health log' }); // Correcting the error message
+  }
+});
+
 app.post('/record_sugar', async (req, res) => {
   const { user_id, date, time, type, sugar_level } = req.body;
 
