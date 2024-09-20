@@ -42,24 +42,24 @@ const FetchTodo = () => {
   const lowPriorityTasks = dbList.filter(todo => todo.priority === "Low");
 
   return (
-    <div style={{ width: '15rem', borderStyle: 'solid', borderWidth: '1px', borderColor: 'gainsboro', borderRadius: '16px' }}>
-      <h3 className="task-title-div" style={{textAlign: 'center'}}>Today Tasks</h3>
+    <div style={{ width: '20rem', borderStyle: 'solid', borderWidth: '1px', borderColor: 'gainsboro', borderRadius: '16px', padding: '10px', marginLeft: '1rem' }}>
+      <h3 className="task-title-div" style={{textAlign: 'center', backgroundColor: 'gainsboro'}}>Today Tasks</h3>
       
-      <h5>High Priority Tasks</h5>
+      <h5>High Priority</h5>
       <ul>
         {highPriorityTasks.length > 0 ? highPriorityTasks.map((todo, index) => (
           <li key={index}>{todo.task}</li>
         )) : <li>No High Priority Tasks</li>}
       </ul>
 
-      <h5>Medium Priority Tasks</h5>
+      <h5>Medium Priority</h5>
       <ul>
         {mediumPriorityTasks.length > 0 ? mediumPriorityTasks.map((todo, index) => (
           <li key={index}>{todo.task}</li>
         )) : <li>No Medium Priority Tasks</li>}
       </ul>
 
-      <h5>Low Priority Tasks</h5>
+      <h5>Low Priority</h5>
       <ul>
         {lowPriorityTasks.length > 0 ? lowPriorityTasks.map((todo, index) => (
           <li key={index}>{todo.task}</li>

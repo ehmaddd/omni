@@ -90,41 +90,45 @@ function Dashboard() {
       {token ? (
         <>
           <DashNav />
-          <div>
-            <p>Your Dashboard User ID: {userId}</p>
-            <div className="mood-div">
-              <h3 className="mood-heading">Mood Reflection</h3>
-              <form className="mood-form">
-                <div className="form-group">
-                  <label className='mood-label'>From</label>
-                  <input 
-                    type="date" 
-                    className='mood-start-date' 
-                    value={moodDates.propStartDate}
-                    onChange={handleStartDateChange} 
-                  />
-                </div>
-                <div className="form-group">
-                  <label className='mood-label'>To</label>
-                  <input 
-                    type="date" 
-                    className='mood-end-date' 
-                    value={moodDates.propEndDate}
-                    onChange={handleEndDateChange} 
-                  />
-                </div>
-              </form>
-              <FetchMoodColor propStartDate={moodDates.propStartDate} propEndDate={moodDates.propEndDate} />
+          <p>Your Dashboard User ID: {userId}</p>
+          <div className="dashboard-container">
+            <div className="dashboard-column">
+              <div className="mood-div">
+                <h3 className="mood-heading">Mood Reflection</h3>
+                <form className="mood-form">
+                  <div className="form-group">
+                    <label className='mood-label'>From</label>
+                    <input 
+                      type="date" 
+                      className='mood-start-date' 
+                      value={moodDates.propStartDate}
+                      onChange={handleStartDateChange} 
+                    />
+                  </div>
+                  <div className="form-group">
+                    <label className='mood-label'>To</label>
+                    <input 
+                      type="date" 
+                      className='mood-end-date' 
+                      value={moodDates.propEndDate}
+                      onChange={handleEndDateChange} 
+                    />
+                  </div>
+                </form>
+                <FetchMoodColor propStartDate={moodDates.propStartDate} propEndDate={moodDates.propEndDate} />
+              </div>
+              <div className="fitness-div">
+                <FetchFitness />
+              </div>
             </div>
-            <div className="fitness-div">
-              <FetchFitness />
-            </div>
-            <div className="todo-div">
-              <FetchTodo />
-            </div>
-            <div className="budget-div">
-              
-            </div>
+            <div>
+              <div className="todo-div">
+                <FetchTodo />
+              </div>
+              <div className="budget-div">
+                
+              </div>
+          </div>
             <div className="events-div">
               
             </div>
