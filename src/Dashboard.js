@@ -4,6 +4,7 @@ import FetchMoodColor from './components/FetchMoodColor';
 import FetchFitness from './components/FetchFitness';
 import FetchTodo from './components/FetchTodo';
 import FetchBudget from './components/FetchBudget';
+import FetchEvents from './components/FetchEvents';
 import DashNav from './components/DashNav';
 import './Dashboard.css';
 
@@ -132,7 +133,7 @@ function Dashboard() {
                 <FetchBudget />
               </div>
               <div className="events-div">
-              
+                <FetchEvents />
               </div>
             </div>
           </div>
