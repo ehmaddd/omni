@@ -125,12 +125,14 @@ function Dashboard() {
               <div className="todo-div">
                 <FetchTodo />
               </div>
+            </div>
+            <div>
               <div className="budget-div">
                 
               </div>
-          </div>
-            <div className="events-div">
+              <div className="events-div">
               
+              </div>
             </div>
           </div>
         </>
