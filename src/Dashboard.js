@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import FetchMoodColor from './components/FetchMoodColor';
 import FetchFitness from './components/FetchFitness';
+import FetchTodo from './components/FetchTodo';
 import DashNav from './components/DashNav';
 import './Dashboard.css';
 
@@ -119,7 +120,7 @@ function Dashboard() {
               <FetchFitness />
             </div>
             <div className="todo-div">
-              
+              <FetchTodo />
             </div>
             <div className="budget-div">
               
