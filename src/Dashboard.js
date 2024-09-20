@@ -3,6 +3,7 @@ import { useParams, Link, useNavigate } from 'react-router-dom';
 import FetchMoodColor from './components/FetchMoodColor';
 import FetchFitness from './components/FetchFitness';
 import FetchTodo from './components/FetchTodo';
+import FetchBudget from './components/FetchBudget';
 import DashNav from './components/DashNav';
 import './Dashboard.css';
 
@@ -128,7 +129,7 @@ function Dashboard() {
             </div>
             <div>
               <div className="budget-div">
-                
+                <FetchBudget />
               </div>
               <div className="events-div">
               
