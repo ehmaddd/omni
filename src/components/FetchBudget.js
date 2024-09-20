@@ -51,10 +51,20 @@ const FetchBudget = () => {
   return (
     <div className="budgetDiv" style={{width: '20rem', borderStyle: 'solid', borderColor: 'gainsboro', borderRadius: '16px', borderWidth: '1px', padding: '12px', height: 'auto', marginLeft: '2rem'}}>
       <h3 style={{backgroundColor: 'gainsboro', textAlign: 'center'}}>Monthly Budget</h3>
-      <p style={{display: 'inline-block', marginBottom: '-15px', marginLeft: '-10px'}}><strong>Total Income:</strong> {parseInt(income)}</p><br></br>
-      <p style={{display: 'inline-block', marginBottom: '-15px', marginLeft: '-10px'}}><strong>Total Expenses:</strong> {totalExpenses}</p><br></br>
+      <p style={{display: 'inline-block', marginBottom: '-15px', marginLeft: '-10px'}}><strong style={{backgroundColor: 'purple', color: 'white', borderRadius: '16px', display: 'inline', padding: '3px 15px'}}>Total Income</strong> {parseInt(income)}</p><br></br>
+      <p style={{display: 'inline-block', marginBottom: '-15px', marginLeft: '-10px'}}><strong style={{backgroundColor: 'blue', color: 'white', borderRadius: '16px', display: 'inline', padding: '3px 15px'}}>Total Expenses</strong> {totalExpenses}</p><br></br>
       <p style={{display: 'inline-block', marginLeft: '-10px'}}>
-        <strong>{inHandAmount >= 0 ? 'In Hand Amount' : 'Deficit Amount'}:</strong> {Math.abs(inHandAmount)}
+        <strong
+          style={{
+            backgroundColor: inHandAmount >= 0 ? 'lightgreen' : 'orange',
+            color: 'black', // Optional: for better readability on colored backgrounds
+            padding: '5px', // Optional: some padding for styling
+            borderRadius: '4px' // Optional: rounded corners for a nicer look
+          }}
+        >
+         {inHandAmount >= 0 ? 'In Hand Amount' : 'Deficit Amount'}:
+       </strong>
+       {' '}{Math.abs(inHandAmount)}
       </p>
     </div>
   );
