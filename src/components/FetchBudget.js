@@ -49,8 +49,8 @@ const FetchBudget = () => {
   const inHandAmount = income - totalExpenses;
 
   return (
-    <div className="budgetDiv" style={{width: '20rem', borderStyle: 'solid', borderColor: 'gainsboro', borderRadius: '16px', borderWidth: '1px', padding: '12px', height: 'auto', marginLeft: '2rem', textAlign: 'center'}}>
-      <h3 style={{backgroundColor: 'gainsboro'}}>Monthly Budget</h3>
+    <div className="budgetDiv" style={{width: '20rem', borderStyle: 'solid', borderColor: 'gainsboro', borderRadius: '16px', borderWidth: '1px', padding: '12px', height: 'auto', marginLeft: '2rem'}}>
+      <h3 style={{backgroundColor: 'gainsboro', textAlign: 'center'}}>Monthly Budget</h3>
       <p style={{display: 'inline-block', marginBottom: '-15px', marginLeft: '-10px'}}><strong>Total Income:</strong> {parseInt(income)}</p><br></br>
       <p style={{display: 'inline-block', marginBottom: '-15px', marginLeft: '-10px'}}><strong>Total Expenses:</strong> {totalExpenses}</p><br></br>
       <p style={{display: 'inline-block', marginLeft: '-10px'}}>
