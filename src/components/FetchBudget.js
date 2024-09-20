@@ -49,11 +49,11 @@ const FetchBudget = () => {
   const inHandAmount = income - totalExpenses;
 
   return (
-    <div className="budgetDiv" style={{borderStyle: 'solid', borderColor: 'gainsboro', borderRadius: '16px', borderWidth: '1px', padding: '12px', height: 'auto', marginLeft: '2rem'}}>
-      <h3>Monthly Budget</h3>
-      <p style={{display: 'inline-block', marginBottom: '-15px'}}><strong>Total Income:</strong> {parseInt(income)}</p><br></br>
-      <p style={{display: 'inline-block', marginBottom: '-15px'}}><strong>Total Expenses:</strong> {totalExpenses}</p><br></br>
-      <p style={{display: 'inline-block'}}>
+    <div className="budgetDiv" style={{width: '20rem', borderStyle: 'solid', borderColor: 'gainsboro', borderRadius: '16px', borderWidth: '1px', padding: '12px', height: 'auto', marginLeft: '2rem', textAlign: 'center'}}>
+      <h3 style={{backgroundColor: 'gainsboro'}}>Monthly Budget</h3>
+      <p style={{display: 'inline-block', marginBottom: '-15px', marginLeft: '-10px'}}><strong>Total Income:</strong> {parseInt(income)}</p><br></br>
+      <p style={{display: 'inline-block', marginBottom: '-15px', marginLeft: '-10px'}}><strong>Total Expenses:</strong> {totalExpenses}</p><br></br>
+      <p style={{display: 'inline-block', marginLeft: '-10px'}}>
         <strong>{inHandAmount >= 0 ? 'In Hand Amount' : 'Deficit Amount'}:</strong> {Math.abs(inHandAmount)}
       </p>
     </div>
