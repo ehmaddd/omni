@@ -43,24 +43,24 @@ const FetchTodo = () => {
 
   return (
     <div style={{ width: '20rem', borderStyle: 'solid', borderWidth: '1px', borderColor: 'gainsboro', borderRadius: '16px', padding: '10px', marginLeft: '1rem' }}>
-      <h3 className="task-title-div" style={{textAlign: 'center', backgroundColor: 'gainsboro'}}>Today Tasks</h3>
+      <h3 className="task-title-div" style={{textAlign: 'center', backgroundColor: 'gainsboro', marginBottom: '1.2rem'}}>Today Tasks</h3>
       
       <h5 style={{backgroundColor: 'orange', color: 'white', borderRadius: '16px', display: 'inline', padding: '3px 15px'}}>High Priority</h5>
-      <ul>
+      <ul style={{marginTop: '0.5rem'}}>
         {highPriorityTasks.length > 0 ? highPriorityTasks.map((todo, index) => (
           <li key={index}>{todo.task}</li>
         )) : <li>No High Priority Tasks</li>}
       </ul>
 
       <h5 style={{backgroundColor: 'blue', color: 'white', borderRadius: '16px', display: 'inline', padding: '3px 15px'}}>Medium Priority</h5>
-      <ul>
+      <ul style={{marginTop: '0.5rem'}}>
         {mediumPriorityTasks.length > 0 ? mediumPriorityTasks.map((todo, index) => (
           <li key={index}>{todo.task}</li>
         )) : <li>No Medium Priority Tasks</li>}
       </ul>
 
       <h5 style={{backgroundColor: 'green', color: 'white', borderRadius: '16px', display: 'inline', padding: '3px 15px'}}>Low Priority</h5>
-      <ul>
+      <ul style={{marginTop: '0.5rem'}}>
         {lowPriorityTasks.length > 0 ? lowPriorityTasks.map((todo, index) => (
           <li key={index}>{todo.task}</li>
         )) : <li>No Low Priority Tasks</li>}
