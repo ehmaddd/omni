@@ -334,7 +334,7 @@ const handleSubmit = async (e) => {
                   </div>
 
                  <table border="1" style={{ width: '100%', marginTop: '20px', textAlign: 'center' }}>
-                   <thead>
+                   <thead className="sticky-header">
                      <tr>
                        <th>Date</th>
                        {categories.map((category, index) => (
@@ -344,20 +344,31 @@ const handleSubmit = async (e) => {
                      </tr>
                    </thead>
                    <tbody>
-                     {daysInMonth.map((date, index) => {
-                       const formattedDate = date.toISOString().split('T')[0];
-                       return (
-                         <tr key={index}>
-                           <td>{formattedDate}</td>
-                           {categories.map((category, index) => (
-                             <td key={index}>
-                               {expensesByDate[formattedDate][category]}
-                             </td>
-                           ))}
-                           <td>{dateTotals[formattedDate]}</td>
-                         </tr>
-                       );
-                     })}
+                   {daysInMonth.map((date, index) => {
+                     const formattedDate = date.toISOString().split('T')[0];
+                     return (
+                       <tr key={index}>
+                         <td>{formattedDate}</td>
+                         {categories.map((category, catIndex) => (
+                           <td key={catIndex}>
+                             {Math.floor(expensesByDate[formattedDate][category])} {/* Show as integer */}
+                             {/* Show all descriptions for the current category */}
+                             {expenses
+                               .filter(expense => 
+                                 expense.date.split('T')[0] === formattedDate && 
+                                 expense.category === category
+                               )
+                               .map((expense, expIndex) => (
+                                 <div key={expIndex} style={{ fontSize: 'small', color: 'gray' }}>
+                                   {expense.description}
+                                 </div>
+                             ))}
+                           </td>
+                         ))}
+                         <td>{Math.floor(dateTotals[formattedDate])}</td> {/* Show date total as integer */}
+                       </tr>
+                     );
+                   })} 
                      <tr>
                        <td><strong>Category Total</strong></td>
                        {categories.map((category, index) => (
