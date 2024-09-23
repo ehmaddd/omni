@@ -323,7 +323,7 @@ const handleSubmit = async (e) => {
                   </button>
                   <div className="balance-div">
                     <p>
-                      <b>Income : </b>{fetchedIncome}
+                      <b>Income : </b>{parseInt(fetchedIncome)}
                     </p>
                     <p>
                       <b>Expense : </b>{grandTotal}
