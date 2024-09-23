@@ -781,7 +781,7 @@ app.post('/store_event', async (req, res) => {
           );
 
           if (result.rows.length > 0) {
-              console.log("Event Already exists");
+              res.status(500).json({ message: 'Event already exist' });
           } else {
               // Insert new expense
               await client.query(
@@ -789,9 +789,8 @@ app.post('/store_event', async (req, res) => {
                    VALUES ($1, $2, $3, $4, $5, $6, $7)`,
                   [id, name, type, date_time, recurrence, location, notes]
               );
+              res.status(201).json({ message: 'Event added successfully' });
           }
-
-          res.status(201).json({ message: 'Event added successfully' });
       } finally {
           client.release();
       }
