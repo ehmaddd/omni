@@ -135,11 +135,11 @@ const handleSubmit = async (e) => {
       console.log('Expense added:', data);
       // Clear the form
       setFormData({
-          date: '',
-          category: '',
-          amount: '',
-          description: '',
-      });
+        date: '',
+        category: categories[0],
+        amount: '',
+        description: '',
+    });
       // Fetch updated expenses
       fetchExpenses();
   } catch (error) {
