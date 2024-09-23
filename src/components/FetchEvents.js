@@ -45,13 +45,13 @@ const FetchEvents = () => {
   }, [userId, token]);
 
   return (
-    <div className="upcoming-events" style={{width: '20rem', marginLeft: '2rem'}}>
+    <div className="upcoming-events" style={{width: '20rem', marginLeft: '2rem', border: '1px solid gainsboro', borderRadius: '16px', padding: '10px'}}>
       <h3 style={{textAlign: 'center', marginTop: '0.5rem', marginBottom: '-20px', backgroundColor: 'gainsboro'}}>Upcoming Events</h3>
       {error && <p className="error">{error}</p>}
       <div className="event-list">
         {events.length > 0 ? (
           events.map((event) => (
-            <div className="event-card" key={event.id} style={{marginBottom: '-25px'}}>
+            <div className="event-card" key={event.id} style={{marginBottom: '-25px', marginLeft: '-20px', width: '19rem'}}>
               <h3 className="event-title">{event.name}</h3>
               <div className="event-details">
                 <p style={{display: 'inline', marginBottom: '-20px', marginLeft: '-10px'}}><strong>Type:</strong> {event.type}</p><br></br>
