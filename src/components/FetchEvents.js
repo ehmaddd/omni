@@ -11,14 +11,12 @@ const FetchEvents = () => {
 
   // Function to get the date range for the next week
   const getDateRangeForNextWeek = () => {
-    const now = new Date();
-    const nextStartOfWeek = new Date(now);
-    nextStartOfWeek.setDate(now.getDate() - now.getDay() + 7);
+    const today = new Date();  // Start from today
+    const startDate = new Date(today);
     
-    const startDate = new Date(nextStartOfWeek);
-    const endDate = new Date(nextStartOfWeek);
-    endDate.setDate(nextStartOfWeek.getDate() + 6);
-
+    const endDate = new Date(today);
+    endDate.setDate(today.getDate() + 7);  // End 6 days from today
+  
     return { startDate: startDate.toISOString(), endDate: endDate.toISOString() };
   };
 
@@ -53,7 +51,7 @@ const FetchEvents = () => {
       <div className="event-list">
         {events.length > 0 ? (
           events.map((event) => (
-            <div className="event-card" key={event.id}>
+            <div className="event-card" key={event.id} style={{marginBottom: '-25px'}}>
               <h3 className="event-title">{event.name}</h3>
               <div className="event-details">
                 <p style={{display: 'inline', marginBottom: '-20px', marginLeft: '-10px'}}><strong>Type:</strong> {event.type}</p><br></br>
