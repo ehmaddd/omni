@@ -133,6 +133,15 @@ const Events = () => {
       }
       const data = await response.json();
       setEvents(data);
+      setFormData({
+        id: userId,
+        name: '',
+        type: 'Birthday',
+        date_time: '',
+        recurrence: 'None',
+        location: '',
+        notes: '',
+      })
     } catch (error) {
       console.error('Error fetching events:', error);
     }
@@ -156,6 +165,8 @@ const Events = () => {
       if (!response.ok) {
         throw new Error('Network response was not ok');
       }
+      alert("Event stored successfully");
+      
       fetchEvents(filter);  // Refresh events after submission
     } catch (error) {
       console.error('Error creating event:', error);
