@@ -84,3 +84,11 @@ th {
   background-color: white; /* Ensures the header has a background */
   z-index: 1; /* Ensures it stays above other content */
 }
+
+.budget-table thead {
+  background-color: #ddd;
+}
+
+.budget-table tr:nth-child(even) {
+  background-color:skyblue;
+}

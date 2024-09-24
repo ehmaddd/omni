@@ -333,7 +333,7 @@ const handleSubmit = async (e) => {
                     </p>
                   </div>
 
-                 <table border="1" style={{ width: '100%', marginTop: '20px', textAlign: 'center' }}>
+                 <table className="budget-table" border="1" style={{ width: '100%', marginTop: '20px', textAlign: 'center' }}>
                    <thead className="sticky-header">
                      <tr>
                        <th>Date</th>
