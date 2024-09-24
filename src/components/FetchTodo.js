@@ -51,6 +51,7 @@ const FetchTodo = () => {
           <li key={index}>{todo.task}</li>
         )) : <li>No High Priority Tasks</li>}
       </ul>
+      <hr style={{border: '1px solid orange', marginBottom: '1rem'}}></hr>
 
       <h5 style={{backgroundColor: 'olive', color: 'white', borderRadius: '16px', display: 'inline', padding: '3px 15px'}}>Medium Priority</h5>
       <ul style={{marginTop: '0.5rem'}}>
@@ -58,6 +59,7 @@ const FetchTodo = () => {
           <li key={index}>{todo.task}</li>
         )) : <li>No Medium Priority Tasks</li>}
       </ul>
+      <hr style={{border: '1px solid olive', marginBottom: '1rem'}}></hr>
 
       <h5 style={{backgroundColor: 'green', color: 'white', borderRadius: '16px', display: 'inline', padding: '3px 15px'}}>Low Priority</h5>
       <ul style={{marginTop: '0.5rem'}}>
@@ -65,6 +67,7 @@ const FetchTodo = () => {
           <li key={index}>{todo.task}</li>
         )) : <li>No Low Priority Tasks</li>}
       </ul>
+      <hr style={{border: '1px solid green', marginBottom: '1rem'}}></hr>
     </div>
   );
 };
