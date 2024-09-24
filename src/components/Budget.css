@@ -90,5 +90,5 @@ th {
 }
 
 .budget-table tr:nth-child(even) {
-  background-color:skyblue;
+  background-color: #d3fcde;
 }
