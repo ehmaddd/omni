@@ -9,6 +9,7 @@ const FetchFitness = () => {
   const userId = localStorage.getItem('user');
   const [bmi, setBmi] = useState(null);
   const [bmiCategory, setBmiCategory] = useState('');
+  const [workoutWarning, setWorkoutWarning] = useState('');
 
   useEffect(() => {
     const fetchData = async () => {
@@ -22,8 +23,30 @@ const FetchFitness = () => {
           const calculatedBmi = realData.weight / (heightInMeters * heightInMeters);
           setBmi(calculatedBmi.toFixed(2));
           setBmiCategory(getBmiCategory(calculatedBmi));
-        } else {
-          console.error('Failed to fetch profile:', await response.text());
+
+          const response2 = await fetch(`http://localhost:5000/fetch_workout/${userId}`);
+        
+          if (response2.ok) {
+            const data2 = await response2.json();
+
+            // Assuming data2[0].date is a date string
+            const today = new Date();  // Start from today
+            const startDate = new Date(data2[0].date);  // Convert to Date object
+            
+            // Find the difference in milliseconds
+            const diffInMs = today - startDate;
+            
+            // Convert milliseconds to days (1000 ms * 60 sec * 60 min * 24 hours)
+            const diffInDays = diffInMs / (1000 * 60 * 60 * 24);
+            
+            if(diffInDays > 2) {
+              setWorkoutWarning('Not doing proper workout');
+            } else {
+              setWorkoutWarning('Doing Proper workout')
+            }
+          } else {
+            console.error('Failed to fitness data:', await response.text());
+          }
         }
       } catch (error) {
         console.error('Failed to fetch profile:', error);
@@ -76,6 +99,7 @@ const FetchFitness = () => {
           {bmiCategory !== '' ? bmiCategory : 'Loading...'}
         </p>
       </div>
+      <p style={{marginTop: '-30px', marginBottom: '-10px', textAlign: 'center'}}>{workoutWarning}</p>
     </div>
   );
 };
