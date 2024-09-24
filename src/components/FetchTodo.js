@@ -52,7 +52,7 @@ const FetchTodo = () => {
         )) : <li>No High Priority Tasks</li>}
       </ul>
 
-      <h5 style={{backgroundColor: 'blue', color: 'white', borderRadius: '16px', display: 'inline', padding: '3px 15px'}}>Medium Priority</h5>
+      <h5 style={{backgroundColor: 'skyblue', color: 'white', borderRadius: '16px', display: 'inline', padding: '3px 15px'}}>Medium Priority</h5>
       <ul style={{marginTop: '0.5rem'}}>
         {mediumPriorityTasks.length > 0 ? mediumPriorityTasks.map((todo, index) => (
           <li key={index}>{todo.task}</li>
