@@ -49,21 +49,65 @@ const FetchBudget = () => {
   const inHandAmount = income - totalExpenses;
 
   return (
-    <div className="budgetDiv" style={{width: '20rem', borderStyle: 'solid', borderColor: 'gainsboro', borderRadius: '16px', borderWidth: '1px', padding: '12px', height: 'auto', marginLeft: '2rem'}}>
+    <div className="budgetDiv" style={{width: '20rem', borderStyle: 'solid', borderColor: 'gainsboro', borderRadius: '16px', borderWidth: '1px', padding: '12px 12px 0 12px', height: 'auto', marginLeft: '2rem', marginBottom: '0.5rem'}}>
       <h3 style={{backgroundColor: 'gainsboro', textAlign: 'center'}}>Monthly Budget</h3>
-      <p style={{display: 'inline-block', marginBottom: '-15px', marginLeft: '-10px'}}><strong style={{backgroundColor: 'purple', color: 'white', borderRadius: '16px', display: 'inline', padding: '3px 15px'}}>Total Income</strong> {parseInt(income)}</p><br></br>
-      <p style={{display: 'inline-block', marginBottom: '-15px', marginLeft: '-10px'}}><strong style={{backgroundColor: 'olive', color: 'white', borderRadius: '16px', display: 'inline', padding: '3px 15px'}}>Total Expenses</strong> {totalExpenses}</p><br></br>
-      <p style={{display: 'inline-block', marginLeft: '-10px'}}>
+      <p style={{ display: 'inline-block', marginBottom: '-15px', marginLeft: '-10px' }}>
+        <strong
+          style={{
+            backgroundColor: 'purple',
+            color: 'white',
+            borderRadius: '16px',
+            display: 'inline-block', // Change to inline-block
+            padding: '3px 15px',
+            width: '150px', // Set a fixed width
+            textAlign: 'center', // Center text for better alignment
+            marginRight: '0.5rem',
+            marginBottom: '-0.5rem',
+            marginTop: '-0.5rem'
+          }}
+        >
+          Total Income
+        </strong>
+        {parseInt(income)}
+      </p>
+      <br />
+      <p style={{ display: 'inline-block', marginBottom: '-15px', marginLeft: '-10px' }}>
+        <strong
+          style={{
+            backgroundColor: 'olive',
+            color: 'white',
+            borderRadius: '16px',
+            display: 'inline-block', // Change to inline-block
+            padding: '3px 15px',
+            width: '150px', // Set a fixed width
+            textAlign: 'center', // Center text for better alignment
+            marginRight: '0.5rem',
+            marginBottom: '-0.5rem',
+            marginTop: '-0.5rem'
+          }}
+        >
+          Total Expenses
+        </strong>
+        {totalExpenses}
+      </p>
+      <br />
+      <p style={{ display: 'inline-block', marginLeft: '-10px' }}>
         <strong
           style={{
             backgroundColor: inHandAmount >= 0 ? 'lightgreen' : 'orange',
-            color: 'black', // Optional: for better readability on colored backgrounds
-            padding: '5px', // Optional: some padding for styling
-            borderRadius: '4px' // Optional: rounded corners for a nicer look
+            color: 'black',
+            padding: '3px 12px',
+            borderRadius: '16px',
+            display: 'inline-block', // Change to inline-block
+            width: '150px', // Set a fixed width
+            textAlign: 'center', // Center text for better alignment
+            marginRight: '0.5rem',
+            marginBottom: '-0.5rem',
+            marginTop: '-0.5rem'
           }}
         >
-         {inHandAmount >= 0 ? 'In Hand Amount' : 'Deficit Amount'}:
-       </strong>
+          {inHandAmount >= 0 ? 'In Hand Amount' : 'Deficit Amount'}
+        </strong>
        {' '}{Math.abs(inHandAmount)}
       </p>
     </div>
