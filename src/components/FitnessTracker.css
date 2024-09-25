@@ -3,9 +3,13 @@
 /* General layout styles */
 .fitness-tracker-container {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
   padding: 20px;
+}
+
+.overview-div {
+  width: 40rem;
 }
 
 .profile-summary-container {

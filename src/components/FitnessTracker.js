@@ -211,169 +211,174 @@ function FitnessTracker() {
       </div>
 
       <div className="fitness-tracker-container">
-        {profile && profile.data && profile.data.length > 0 ? (
-          <div className="profile-summary-container">
-          <h5>Summary</h5>
-          <div className="profile-table">
-            <div className="profile-row">
-              <div className="profile-cell"><strong>Age:</strong> {calculateAge(formData.dob)}</div>
-              <div className="profile-cell"><strong>Gender:</strong> {formData.gender}</div>
-            </div>
-            <div className="profile-row">
-              <div className="profile-cell"><strong>Height:</strong> {formData.height}</div>
-              <div className="profile-cell"><strong>Weight:</strong> {weight || formData.weight}</div>
-            </div>
-            <div className="profile-row">
-              <div className="profile-cell"><strong>Blood Group:</strong> {formData.blood_group}</div>
-              <div className="profile-cell"><strong>Eye Sight:</strong> {formData.eye_sight_left}(L) - {formData.eye_sight_right}(R)</div>
-            </div>
-            <div className="profile-row">
-              <div className="profile-cell"><strong>Physical Disability:</strong> {formData.disability ? 'Yes' : 'No'}</div>
-              <div className="profile-cell"><strong>Diabetes:</strong> {formData.diabetes ? 'Yes' : 'No'}</div>
-            </div>
-            <div className="profile-row">
-              <div className="profile-cell"><strong>Heart Problem:</strong> {formData.heart_problem ? 'Yes' : 'No'}</div>
-              <div className="profile-cell"><strong>Kidney Problem:</strong> {formData.kidney_issue ? 'Yes' : 'No'}</div>
+        <div className="overview-div">
+          {profile && profile.data && profile.data.length > 0 ? (
+            <div className="profile-summary-container">
+            <h5>Summary</h5>
+            <div className="profile-table">
+              <div className="profile-row">
+                <div className="profile-cell"><strong>Age:</strong> {calculateAge(formData.dob)}</div>
+                <div className="profile-cell"><strong>Gender:</strong> {formData.gender}</div>
+              </div>
+              <div className="profile-row">
+                <div className="profile-cell"><strong>Height:</strong> {formData.height}</div>
+                <div className="profile-cell"><strong>Weight:</strong> {weight || formData.weight}</div>
+              </div>
+              <div className="profile-row">
+                <div className="profile-cell"><strong>Blood Group:</strong> {formData.blood_group}</div>
+                <div className="profile-cell"><strong>Eye Sight:</strong> {formData.eye_sight_left}(L) - {formData.eye_sight_right}(R)</div>
+              </div>
+              <div className="profile-row">
+                <div className="profile-cell"><strong>Physical Disability:</strong> {formData.disability ? 'Yes' : 'No'}</div>
+                <div className="profile-cell"><strong>Diabetes:</strong> {formData.diabetes ? 'Yes' : 'No'}</div>
+              </div>
+              <div className="profile-row">
+                <div className="profile-cell"><strong>Heart Problem:</strong> {formData.heart_problem ? 'Yes' : 'No'}</div>
+                <div className="profile-cell"><strong>Kidney Problem:</strong> {formData.kidney_issue ? 'Yes' : 'No'}</div>
+              </div>
             </div>
           </div>
+          ) : (
+            <form onSubmit={handleSubmit} className="fitness-form">
+              <div className="profile-form-group">
+                <label>Gender:</label>
+                <div className="radio-group">
+                  <label>
+                    <input
+                      type="radio"
+                      name="gender"
+                      value="male"
+                      checked={formData.gender === 'male'}
+                      onChange={handleInputChange}
+                    /> 
+                    Male
+                  </label>
+                  <label>
+                    <input
+                      type="radio"
+                      name="gender"
+                      value="female"
+                      checked={formData.gender === 'female'}
+                      onChange={handleInputChange}
+                    /> 
+                    Female
+                  </label>
+                </div>
+              </div>
+  
+              <div className="profile-form-group">
+                <label>Dob:</label>
+                <input type="date" name="dob" value={formData.dob} onChange={handleInputChange} required />
+              </div>
+              <div className="profile-form-group">
+                <label>Height (cm):</label>
+                <input type="number" name="height" value={formData.height} min="140" onChange={handleInputChange} required />
+              </div>
+              <div className="profile-form-group">
+                <label>Weight (kg):</label>
+                <input type="number" name="weight" value={formData.weight} min="40" onChange={handleInputChange} required />
+              </div>
+  
+              <div className="profile-form-group full-width">
+                <label>Blood Group:</label>
+                <select name="blood_group" className="bloodgroup-dd" value={formData.blood_group} onChange={handleInputChange} required>
+                  <option value="">Select Blood Group</option>
+                  <option value="A+">A+</option>
+                  <option value="A-">A-</option>
+                  <option value="B+">B+</option>
+                  <option value="B-">B-</option>
+                  <option value="AB+">AB+</option>
+                  <option value="AB-">AB-</option>
+                  <option value="O+">O+</option>
+                  <option value="O-">O-</option>
+                </select>
+              </div>
+  
+              <div className="profile-form-group">
+                <label>Eye Sight (Left):</label>
+                <div className="slider-group">
+                  <span className="eye-sight-value">{(formData.eye_sight_left ?? 0).toString()}</span>
+                  <input
+                    type="range"
+                    name="eye_sight_left"
+                    min="-4"
+                    max="4"
+                    step="0.25"
+                    value={formData.eye_sight_left ?? 0}
+                    onChange={handleSliderChange}
+                    className="slider"
+                  />
+                </div>
+              </div>
+              <div className="profile-form-group">
+                <label>Eye Sight (Right):</label>
+                <div className="slider-group">
+                  <span className="eye-sight-value">{(formData.eye_sight_right ?? 0).toString()}</span>
+                  <input
+                    type="range"
+                    name="eye_sight_right"
+                    min="-4"
+                    max="4"
+                    step="0.25"
+                    value={formData.eye_sight_right ?? 0}
+                    onChange={handleSliderChange}
+                    className="slider"
+                  />
+                </div>
+              </div>
+  
+              <div className="profile-form-group">
+                <label>Health Issues:</label>
+                <div className="checkbox-group">
+                  <label>
+                    <input
+                      type="checkbox"
+                      name="disability"
+                      checked={formData.disability}
+                      onChange={handleInputChange}
+                    /> 
+                    Physical Disability
+                  </label>
+              
+                  <label>
+                    <input
+                      type="checkbox"
+                      name="heart_problem"
+                      checked={formData.heart_problem}
+                      onChange={handleInputChange}
+                    /> 
+                    Heart Problem
+                  </label>
+              
+                  <label>
+                    <input
+                      type="checkbox"
+                      name="diabetes"
+                      checked={formData.diabetes}
+                      onChange={handleInputChange}
+                    /> 
+                    Diabetes
+                  </label>
+              
+                  <label>
+                    <input
+                      type="checkbox"
+                      name="kidney_issue"
+                      checked={formData.kidney_issue}
+                      onChange={handleInputChange}
+                    /> 
+                    Kidney Issue
+                  </label>
+                </div>
+              </div>
+  
+              <button type="submit" className="submit-btn">Create Profile</button>
+            </form>
+          )}
         </div>
-        ) : (
-          <form onSubmit={handleSubmit} className="fitness-form">
-            <div className="profile-form-group">
-              <label>Gender:</label>
-              <div className="radio-group">
-                <label>
-                  <input
-                    type="radio"
-                    name="gender"
-                    value="male"
-                    checked={formData.gender === 'male'}
-                    onChange={handleInputChange}
-                  /> 
-                  Male
-                </label>
-                <label>
-                  <input
-                    type="radio"
-                    name="gender"
-                    value="female"
-                    checked={formData.gender === 'female'}
-                    onChange={handleInputChange}
-                  /> 
-                  Female
-                </label>
-              </div>
-            </div>
-
-            <div className="profile-form-group">
-              <label>Dob:</label>
-              <input type="date" name="dob" value={formData.dob} onChange={handleInputChange} required />
-            </div>
-            <div className="profile-form-group">
-              <label>Height (cm):</label>
-              <input type="number" name="height" value={formData.height} min="140" onChange={handleInputChange} required />
-            </div>
-            <div className="profile-form-group">
-              <label>Weight (kg):</label>
-              <input type="number" name="weight" value={formData.weight} min="40" onChange={handleInputChange} required />
-            </div>
-
-            <div className="profile-form-group full-width">
-              <label>Blood Group:</label>
-              <select name="blood_group" className="bloodgroup-dd" value={formData.blood_group} onChange={handleInputChange} required>
-                <option value="">Select Blood Group</option>
-                <option value="A+">A+</option>
-                <option value="A-">A-</option>
-                <option value="B+">B+</option>
-                <option value="B-">B-</option>
-                <option value="AB+">AB+</option>
-                <option value="AB-">AB-</option>
-                <option value="O+">O+</option>
-                <option value="O-">O-</option>
-              </select>
-            </div>
-
-            <div className="profile-form-group">
-              <label>Eye Sight (Left):</label>
-              <div className="slider-group">
-                <span className="eye-sight-value">{(formData.eye_sight_left ?? 0).toString()}</span>
-                <input
-                  type="range"
-                  name="eye_sight_left"
-                  min="-4"
-                  max="4"
-                  step="0.25"
-                  value={formData.eye_sight_left ?? 0}
-                  onChange={handleSliderChange}
-                  className="slider"
-                />
-              </div>
-            </div>
-            <div className="profile-form-group">
-              <label>Eye Sight (Right):</label>
-              <div className="slider-group">
-                <span className="eye-sight-value">{(formData.eye_sight_right ?? 0).toString()}</span>
-                <input
-                  type="range"
-                  name="eye_sight_right"
-                  min="-4"
-                  max="4"
-                  step="0.25"
-                  value={formData.eye_sight_right ?? 0}
-                  onChange={handleSliderChange}
-                  className="slider"
-                />
-              </div>
-            </div>
-
-            <div className="profile-form-group">
-              <label>Health Issues:</label>
-              <div className="checkbox-group">
-                <label>
-                  <input
-                    type="checkbox"
-                    name="disability"
-                    checked={formData.disability}
-                    onChange={handleInputChange}
-                  /> 
-                  Physical Disability
-                </label>
-            
-                <label>
-                  <input
-                    type="checkbox"
-                    name="heart_problem"
-                    checked={formData.heart_problem}
-                    onChange={handleInputChange}
-                  /> 
-                  Heart Problem
-                </label>
-            
-                <label>
-                  <input
-                    type="checkbox"
-                    name="diabetes"
-                    checked={formData.diabetes}
-                    onChange={handleInputChange}
-                  /> 
-                  Diabetes
-                </label>
-            
-                <label>
-                  <input
-                    type="checkbox"
-                    name="kidney_issue"
-                    checked={formData.kidney_issue}
-                    onChange={handleInputChange}
-                  /> 
-                  Kidney Issue
-                </label>
-              </div>
-            </div>
-
-            <button type="submit" className="submit-btn">Create Profile</button>
-          </form>
-        )}
+        <div className="second-column">
+          <h1>Second Column</h1>
+        </div>
       </div>
     </div>
   );
