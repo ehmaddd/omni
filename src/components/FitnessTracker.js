@@ -13,6 +13,12 @@ function FitnessTracker() {
   const [profile, setProfile] = useState(null);
   const [weight, setWeight] = useState('');
   const [isLoading, setIsLoading] = useState(true);
+  const [lastWorkout, setLastWorkout] = useState({
+    date: '',
+    time: '',
+    duration: '',
+    calories: ''
+  });
   const [formData, setFormData] = useState({
     dob: '',
     gender: '',
@@ -97,6 +103,36 @@ function FitnessTracker() {
     }
   };
 
+  const getLocalDate = (date) => {
+    const localDate = date.toLocaleDateString();
+    return localDate;
+  }
+
+  const fetchWorkoutData = async () => {
+    try {
+      const response = await fetch(`http://localhost:5000/fetch_workout/${userId}`, {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+        },
+      });
+      if (response.ok) {
+        const data = await response.json();
+        const date = getLocalDate(new Date(data[0].date)); // Convert fetched date to JS Date object
+        console.log(date);
+        setLastWorkout({
+          date,
+          time: data[0].time,
+          duration: data[0].duration,
+          calories: data[0].calories
+        });
+      } else {
+        console.error('Failed to fetch weight data:', await response.text());
+      }
+    } catch (error) {
+      console.error('Failed to fetch weight data:', error);
+    }
+  };
+
   // Token and profile verification
   useEffect(() => {
     if (!token) {
@@ -151,6 +187,10 @@ function FitnessTracker() {
       [name]: type === 'checkbox' ? checked : value,
     });
   };
+
+  useEffect(() => {
+    fetchWorkoutData();
+  }, []);
 
   // Handle slider change
   const handleSliderChange = (e) => {
@@ -377,7 +417,13 @@ function FitnessTracker() {
           )}
         </div>
         <div className="second-column">
-          <h1>Second Column</h1>
+          <div className="workout-div">
+            <h3>Last Workout</h3>
+            <p>Date : {lastWorkout.date}</p>
+            <p>Time : {lastWorkout.time}</p>
+            <p>Duration : {lastWorkout.duration}</p>
+            <p>Calories burned : {lastWorkout.calories}</p>
+          </div>
         </div>
       </div>
     </div>
