@@ -169,11 +169,11 @@ function TrackWorkout() {
               </div>
               <div className="form-group">
                 <label className="track-workout-label">Date:</label>
-                <input type="date" name="date" value={formData.date} onChange={handleInputChange} required />
+                <input type="date" className="workout-date-input " name="date" value={formData.date} onChange={handleInputChange} required />
               </div>
               <div className="form-group">
                 <label className="track-workout-label">Time:</label>
-                <input type="time" name="time" value={formData.time} onChange={handleInputChange} required />
+                <input type="time" className="workout-time-input" name="time" value={formData.time} onChange={handleInputChange} required />
               </div>
             <button type="submit" className="btn-submit">Submit</button>
           </form>

@@ -24,6 +24,7 @@
 .form-group label {
   margin-bottom: 5px;
   font-size: 14px;
+  margin-left: 0.5rem;
 }
 
 .btn-submit {
@@ -49,4 +50,9 @@
 .workout-form > * {
   margin-left: 0.05rem;
   margin-right: 0.05rem;
+}
+
+.workout-time-input,
+.workout-date-input {
+  margin-left: -50px;
 }
