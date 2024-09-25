@@ -178,6 +178,7 @@ function TrackWorkout() {
             <button type="submit" className="btn-submit">Submit</button>
           </form>
         </div>
+        <br></br>
         <div className="workout-charts-container">
           <h2>Workout Duration Over Time</h2>
           <div className="chart">
