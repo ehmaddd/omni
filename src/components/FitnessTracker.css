@@ -196,11 +196,27 @@ label {
 
 .last-workout-div {
   text-align: left;
+  margin-left: 2rem;
+  width: 15rem;
+  border: 1px solid gainsboro;
+  border-radius: 16px;
+  padding: 15px;
 }
 
 .last-workout-div > * {
   display: inline-block;
   margin-top: -10px;
   margin-bottom: -10px;
-  text-align: left;
+}
+
+.last-workout-heading {
+  margin: auto;
+  background-color: gainsboro;
+  width: 100%;
+  text-align: center;
+  padding: 5px;
+}
+
+.last-workout-div p {
+  margin-left: -15px;
 }

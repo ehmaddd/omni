@@ -417,7 +417,7 @@ function FitnessTracker() {
         </div>
         <div className="second-column">
           <div className="last-workout-div">
-            <h3 className="last-workout-heading">Last Workout</h3><br></br>
+            <h4 className="last-workout-heading">Last Workout</h4><br></br>
             <p className="last-workout-date"><strong>Date : </strong>{lastWorkout.date}</p><br></br>
             <p className="last-workout-time"><strong>Time : </strong>{lastWorkout.time}</p><br></br>
             <p className="last-workout-duration"><strong>Duration : </strong>{lastWorkout.duration}</p><br></br>
