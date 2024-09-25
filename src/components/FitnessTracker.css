@@ -9,7 +9,7 @@
 }
 
 .overview-div {
-  width: 40rem;
+  width: 30rem;
 }
 
 .profile-summary-container {
@@ -17,7 +17,7 @@
   border-radius: 10px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   padding: 20px;
-  width: 80%;
+  width: 100%;
   margin-top: 20px;
 }
 
@@ -192,4 +192,15 @@ label {
 
 .profile-cell strong {
   display: block;
+}
+
+.last-workout-div {
+  text-align: left;
+}
+
+.last-workout-div > * {
+  display: inline-block;
+  margin-top: -10px;
+  margin-bottom: -10px;
+  text-align: left;
 }

@@ -118,7 +118,6 @@ function FitnessTracker() {
       if (response.ok) {
         const data = await response.json();
         const date = getLocalDate(new Date(data[0].date)); // Convert fetched date to JS Date object
-        console.log(date);
         setLastWorkout({
           date,
           time: data[0].time,
@@ -417,12 +416,12 @@ function FitnessTracker() {
           )}
         </div>
         <div className="second-column">
-          <div className="workout-div">
-            <h3>Last Workout</h3>
-            <p>Date : {lastWorkout.date}</p>
-            <p>Time : {lastWorkout.time}</p>
-            <p>Duration : {lastWorkout.duration}</p>
-            <p>Calories burned : {lastWorkout.calories}</p>
+          <div className="last-workout-div">
+            <h3 className="last-workout-heading">Last Workout</h3><br></br>
+            <p className="last-workout-date"><strong>Date : </strong>{lastWorkout.date}</p><br></br>
+            <p className="last-workout-time"><strong>Time : </strong>{lastWorkout.time}</p><br></br>
+            <p className="last-workout-duration"><strong>Duration : </strong>{lastWorkout.duration}</p><br></br>
+            <p className="last-workout-calories"><strong>Calories burned : </strong>{lastWorkout.calories}</p>
           </div>
         </div>
       </div>
