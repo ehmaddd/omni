@@ -18,8 +18,8 @@ function FitnessTracker() {
     time: '',
     duration: '',
     calories: '',
-    averageDuration: '',
-    averageCalories: ''
+    averageDuration: 0,
+    averageCalories: 0
   });
   const [formData, setFormData] = useState({
     dob: '',
@@ -137,7 +137,7 @@ function FitnessTracker() {
         // Calculate averages
         const averageDuration = lastWeekWorkouts.length ? (totalDuration / lastWeekWorkouts.length) : 0;
         const averageCalories = lastWeekWorkouts.length ? (totalCalories / lastWeekWorkouts.length) : 0;
-  
+        
         // Set the last workout state
         const latestWorkout = lastWeekWorkouts[0];
         const date = getLocalDate(new Date(latestWorkout.date)); // Convert fetched date to JS Date object
@@ -147,8 +147,8 @@ function FitnessTracker() {
           time: latestWorkout.time,
           duration: latestWorkout.duration,
           calories: latestWorkout.calories,
-          averageDuration,
-          averageCalories
+          averageDuration,  // Ensure this is a number
+          averageCalories    // Ensure this is a number
         });
         
       } else {

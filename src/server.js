@@ -547,7 +547,7 @@ app.get('/fetch_workout/:userId', async (req, res) => {
   const { userId } = req.params;
   try {
     const result = await pool.query(
-      'SELECT id, type, date::timestamptz AT TIME ZONE \'UTC\' AT TIME ZONE \'your_time_zone\' as date, time, duration, calories, user_id FROM workouts WHERE userId = $1 ORDER BY date DESC',
+      'SELECT type, date::timestamptz AT TIME ZONE \'UTC\' AT TIME ZONE \'UTC+5\' as date, time, duration, calories FROM workouts WHERE user_id = $1 ORDER BY date DESC',
       [userId]
     );
     res.json(result.rows);
