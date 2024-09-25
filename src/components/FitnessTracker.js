@@ -452,8 +452,8 @@ function FitnessTracker() {
             </div>
             <div className="average-workout-div">
               <h5>Weekly Average</h5>
-              <p><strong>Workout Duration : </strong>{lastWorkout.averageDuration} mins</p>
-              <p><strong>Calories burned  : </strong>{lastWorkout.averageCalories}</p>
+              <p><strong>Workout Duration : </strong>{lastWorkout.averageDuration.toFixed(2)} mins</p>
+              <p><strong>Calories burned  : </strong>{lastWorkout.averageCalories.toFixed(2)}</p>
             </div>
           </div>
         </div>
