@@ -17,7 +17,9 @@ function FitnessTracker() {
     date: '',
     time: '',
     duration: '',
-    calories: ''
+    calories: '',
+    averageDuration: '',
+    averageCalories: ''
   });
   const [formData, setFormData] = useState({
     dob: '',
@@ -117,21 +119,45 @@ function FitnessTracker() {
       });
       if (response.ok) {
         const data = await response.json();
-        const date = getLocalDate(new Date(data[0].date)); // Convert fetched date to JS Date object
+        
+        // Filter workouts for the last 7 days
+        const today = new Date();
+        const sevenDaysAgo = new Date(today);
+        sevenDaysAgo.setDate(today.getDate() - 7);
+  
+        const lastWeekWorkouts = data.filter(workout => {
+          const workoutDate = new Date(workout.date);
+          return workoutDate >= sevenDaysAgo && workoutDate <= today;
+        });
+  
+        // Calculate total time and calories for the last week
+        const totalDuration = lastWeekWorkouts.reduce((total, workout) => total + workout.duration, 0);
+        const totalCalories = lastWeekWorkouts.reduce((total, workout) => total + workout.calories, 0);
+  
+        // Calculate averages
+        const averageDuration = lastWeekWorkouts.length ? (totalDuration / lastWeekWorkouts.length) : 0;
+        const averageCalories = lastWeekWorkouts.length ? (totalCalories / lastWeekWorkouts.length) : 0;
+  
+        // Set the last workout state
+        const latestWorkout = lastWeekWorkouts[0];
+        const date = getLocalDate(new Date(latestWorkout.date)); // Convert fetched date to JS Date object
+        
         setLastWorkout({
           date,
-          time: data[0].time,
-          duration: data[0].duration,
-          calories: data[0].calories
+          time: latestWorkout.time,
+          duration: latestWorkout.duration,
+          calories: latestWorkout.calories,
+          averageDuration,
+          averageCalories
         });
+        
       } else {
-        console.error('Failed to fetch weight data:', await response.text());
+        console.error('Failed to fetch workout data:', await response.text());
       }
     } catch (error) {
-      console.error('Failed to fetch weight data:', error);
+      console.error('Failed to fetch workout data:', error);
     }
   };
-
   // Token and profile verification
   useEffect(() => {
     if (!token) {
@@ -416,12 +442,19 @@ function FitnessTracker() {
           )}
         </div>
         <div className="second-column">
-          <div className="last-workout-div">
-            <h4 className="last-workout-heading">Last Workout</h4><br></br>
-            <p className="last-workout-date"><strong>Date : </strong>{lastWorkout.date}</p><br></br>
-            <p className="last-workout-time"><strong>Time : </strong>{lastWorkout.time}</p><br></br>
-            <p className="last-workout-duration"><strong>Duration : </strong>{lastWorkout.duration}</p><br></br>
-            <p className="last-workout-calories"><strong>Calories burned : </strong>{lastWorkout.calories}</p>
+          <div className="workout-container">
+            <div className="last-workout-div">
+              <h4 className="last-workout-heading">Last Workout</h4><br></br>
+              <p className="last-workout-date"><strong>Date : </strong>{lastWorkout.date}</p><br></br>
+              <p className="last-workout-time"><strong>Time : </strong>{lastWorkout.time}</p><br></br>
+              <p className="last-workout-duration"><strong>Duration : </strong>{lastWorkout.duration}</p><br></br>
+              <p className="last-workout-calories"><strong>Calories burned : </strong>{lastWorkout.calories}</p>
+            </div>
+            <div className="average-workout-div">
+              <h5>Weekly Average</h5>
+              <p><strong>Workout Duration : </strong>{lastWorkout.averageDuration} mins</p>
+              <p><strong>Calories burned  : </strong>{lastWorkout.averageCalories}</p>
+            </div>
           </div>
         </div>
       </div>
