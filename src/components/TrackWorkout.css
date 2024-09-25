@@ -17,24 +17,13 @@
 .form-group {
   display: flex;
   flex-direction: column;
-  align-items: flex-start; /* Aligns labels and inputs to the left */
-  width: 100%;
-  max-width: 300px;
-  box-sizing: border-box; /* Ensures padding is included in the element's total width/height */
+  align-items: flex-start;
+  box-sizing: border-box;
 }
 
 .form-group label {
   margin-bottom: 5px;
   font-size: 14px;
-}
-
-.form-group input,
-.form-group select {
-  width: 100%;
-  padding: 8px;
-  box-sizing: border-box; /* Includes padding in the width */
-  border-radius: 5px;
-  border: 1px solid #ccc;
 }
 
 .btn-submit {
@@ -48,4 +37,16 @@
 
 .workout-charts-container {
   width: 100%;
+}
+
+.workout-form {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+
+.workout-form > * {
+  margin-left: 0.05rem;
+  margin-right: 0.05rem;
 }

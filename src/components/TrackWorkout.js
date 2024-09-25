@@ -145,10 +145,9 @@ function TrackWorkout() {
         <div className="track-bp-container">
           <form onSubmit={handleSubmit} className="workout-form">
             {errorMessage && <p className="error-message">{errorMessage}</p>}
-            <div className="form-sub-group">
               <div className="form-group">
-                <label>Activity:</label>
-                <select name="category" value={formData.category} onChange={handleInputChange} required>
+                <label className="track-workout-label">Activity:</label>
+                <select name="category" className="workout-category" value={formData.category} onChange={handleInputChange} required>
                   <option value="">Select Category</option>
                   <option value="Walking">Walking</option>
                   <option value="Jogging">Jogging</option>
@@ -161,24 +160,21 @@ function TrackWorkout() {
                 </select>
               </div>
               <div className="form-group">
-                <label>Duration (mins):</label>
-                <input type="number" name="duration" value={formData.duration} step="1" onChange={handleInputChange} required />
+                <label className="track-workout-label">Duration (mins):</label>
+                <input type="number" name="duration" className="duration-input" value={formData.duration} step="1" onChange={handleInputChange} required />
               </div>
               <div className="form-group">
-                <label>Burned Calories:</label>
-                <input type="number" name="cburned" value={formData.cburned} step="1" onChange={handleInputChange} required />
+                <label className="track-workout-label">Burned Calories:</label>
+                <input type="number" name="cburned" className="calories-input"  value={formData.cburned} step="1" onChange={handleInputChange} required />
               </div>
-            </div>
-            <div className="form-sub-group">
               <div className="form-group">
-                <label>Date:</label>
+                <label className="track-workout-label">Date:</label>
                 <input type="date" name="date" value={formData.date} onChange={handleInputChange} required />
               </div>
               <div className="form-group">
-                <label>Time:</label>
+                <label className="track-workout-label">Time:</label>
                 <input type="time" name="time" value={formData.time} onChange={handleInputChange} required />
               </div>
-            </div>
             <button type="submit" className="btn-submit">Submit</button>
           </form>
         </div>
