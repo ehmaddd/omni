@@ -144,12 +144,13 @@ function TrackSugar() {
         <button type="submit" className="btn-submit">Submit</button>
       </form>
 
-
-        <div className="charts-container">
-          <div className="chart">
-            <h2>Random Sugar Levels</h2>
+        <br></br>
+        <div className="sugar-charts-container">
+          <h2>Random Sugar Levels</h2>
+          <div className="sugar-chart">
             <Chart
               type="line"
+              className="sugar-chart"
               options={{
                 chart: {
                   id: 'random-sugar-chart',
@@ -190,11 +191,11 @@ function TrackSugar() {
               height="400px"
             />
           </div>
-
-          <div className="chart">
-            <h2>Fasting Sugar Levels</h2>
+          <h2>Fasting Sugar Levels</h2>
+          <div className="sugar-chart">
             <Chart
               type="line"
+              className="sugar-chart"
               options={{
                 chart: {
                   id: 'fasting-sugar-chart',
