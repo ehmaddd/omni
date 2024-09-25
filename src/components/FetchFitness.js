@@ -28,24 +28,31 @@ const FetchFitness = () => {
         
           if (response2.ok) {
             const data2 = await response2.json();
-
-            // Assuming data2[0].date is a date string
-            const today = new Date();  // Start from today
-            const startDate = new Date(data2[0].date);  // Convert to Date object
-            
-            // Find the difference in milliseconds
-            const diffInMs = today - startDate;
-            
-            // Convert milliseconds to days (1000 ms * 60 sec * 60 min * 24 hours)
-            const diffInDays = diffInMs / (1000 * 60 * 60 * 24);
-            
-            if(diffInDays > 2) {
-              setWorkoutWarning('Not doing proper workout');
+          
+            // Get today's date and set up a set to track unique workout days
+            const today = new Date();
+            const uniqueDays = new Set();
+          
+            // Loop through the fetched workouts
+            data2.forEach(workout => {
+              const workoutDate = new Date(workout.date); // Convert to Date object
+              // Check if the workout is within the last 7 days
+              const diffInMs = today - workoutDate;
+              const diffInDays = diffInMs / (1000 * 60 * 60 * 24);
+          
+              if (diffInDays >= 0 && diffInDays < 7) {
+                uniqueDays.add(workoutDate.toDateString()); // Add the date to the set
+              }
+            });
+          
+            // Check if there are at least 5 unique workout days
+            if (uniqueDays.size >= 5) {
+              setWorkoutWarning('Doing proper workout');
             } else {
-              setWorkoutWarning('Doing Proper workout')
+              setWorkoutWarning('Not doing proper workout');
             }
           } else {
-            console.error('Failed to fitness data:', await response.text());
+            console.error('Failed to fetch fitness data:', await response.text());
           }
         }
       } catch (error) {
