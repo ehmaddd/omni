@@ -122,22 +122,22 @@ function TrackSugar() {
       <div className="track-sugar-container">
 
       <form onSubmit={handleSubmit} className="sugar-form">
-        <div className="form-group">
+        <div className="sugar-form-group">
           <label>Date:</label>
           <input type="date" name="date" value={formData.date} onChange={handleInputChange} required />
         </div>
-        <div className="form-group">
+        <div className="sugar-form-group">
           <label>Time:</label>
           <input type="time" name="time" value={formData.time} onChange={handleInputChange} required />
         </div>
-        <div className="form-group">
+        <div className="sugar-form-group">
           <label>Type:</label>
           <select name="type" value={formData.type} onChange={handleInputChange} required>
             <option value="Random">Random</option>
             <option value="Fasting">Fasting</option>
           </select>
         </div>
-        <div className="form-group">
+        <div className="sugar-form-group">
           <label>Sugar Level:</label>
           <input type="number" name="sugar_level" value={formData.sugar_level} step="0.1" onChange={handleInputChange} required />
         </div>

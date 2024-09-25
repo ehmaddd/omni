@@ -1,5 +1,32 @@
 .sugar-form {
   width: 100%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center; /* Align all elements vertically in the center */
+  justify-content: space-between; /* Distribute space between elements */
+  margin-top: 1rem;
+}
+
+.sugar-form-group {
+  display: flex;
+  flex-direction: row;
+  align-items: center; /* Align label and input vertically */
+  width: 24%; /* Ensure consistent width for all groups */
+  box-sizing: border-box;
+}
+
+.sugar-form-group label {
+  min-width: 100px; /* Set a consistent width for all labels */
+}
+
+.sugar-form-group input,
+.sugar-form-group select {
+  flex: 1; /* Let inputs take up remaining space */
+}
+
+.sugar-form button {
+  align-self: flex-start; /* Align the button on the left or change to center if needed */
 }
 
 .sugar-charts-container {
