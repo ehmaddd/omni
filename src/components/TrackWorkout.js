@@ -182,11 +182,12 @@ function TrackWorkout() {
             <button type="submit" className="btn-submit">Submit</button>
           </form>
         </div>
-        <div className="charts-container">
+        <div className="workout-charts-container">
+          <h2>Workout Duration Over Time</h2>
           <div className="chart">
-            <h2>Workout Duration Over Time</h2>
             <Chart
               type="line"
+              className="workout-chart"
               options={{
                 chart: {
                   id: 'duration-chart',
@@ -223,10 +224,11 @@ function TrackWorkout() {
               height="400px"
             />
           </div>
+          <h2>Calories Burned Over Time</h2>
           <div className="chart">
-            <h2>Calories Burned Over Time</h2>
             <Chart
               type="line"
+              className="workout-chart"
               options={{
                 chart: {
                   id: 'calories-chart',
@@ -263,10 +265,11 @@ function TrackWorkout() {
               height="400px"
             />
           </div>
+          <h2>Workout Categories</h2>
           <div className="chart">
-            <h2>Workout Categories</h2>
             <Chart
               type="pie"
+              className="workout-chart"
               options={{
                 chart: {
                   id: 'category-chart',

@@ -45,3 +45,7 @@
   border-radius: 5px;
   cursor: pointer;
 }
+
+.workout-charts-container {
+  width: 100%;
+}
