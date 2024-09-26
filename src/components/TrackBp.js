@@ -138,9 +138,9 @@ function TrackBp() {
         <button type="submit" className="btn-submit">Submit</button>
       </form>
 
-        <div className="charts-container">
+        <div className="bp-charts-container">
+          <h2>Systolic Blood Pressure</h2>
           <div className="chart">
-            <h2>Systolic Blood Pressure</h2>
             <Chart
               type="line"
               options={{
@@ -184,8 +184,8 @@ function TrackBp() {
             />
           </div>
 
+          <h2>Diastolic Blood Pressure</h2>
           <div className="chart">
-            <h2>Diastolic Blood Pressure</h2>
             <Chart
               type="line"
               options={{
