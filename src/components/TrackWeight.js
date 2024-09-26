@@ -113,19 +113,21 @@ function TrackWeight() {
       </div>
       <div className="track-weight-container">
         <form onSubmit={handleSubmit} className="weight-form">
-          <div className="weight-form-group">
-            <label>Date:</label>
-            <input type="date" name="date" value={formData.date} onChange={handleInputChange} required />
+          <div className="weight-form-elements">
+            <div className="weight-form-group">
+              <label>Date:</label>
+              <input type="date" name="date" value={formData.date} onChange={handleInputChange} required />
+            </div>
+            <div className="weight-form-group">
+              <label>Time:</label>
+              <input type="time" name="time" value={formData.time} onChange={handleInputChange} required />
+            </div>
+            <div className="weight-form-group">
+              <label>Weight:</label>
+              <input type="number" name="weight" value={formData.weight} step="0.1" onChange={handleInputChange} required />
+            </div>
           </div>
-          <div className="form-group">
-            <label>Time:</label>
-            <input type="time" name="time" value={formData.time} onChange={handleInputChange} required />
-          </div>
-          <div className="form-group">
-            <label>Weight:</label>
-            <input type="number" name="weight" value={formData.weight} step="0.1" onChange={handleInputChange} required />
-          </div>
-          <button type="submit" className="btn-submit">Submit</button>
+          <button type="submit" className="weight-btn-submit">Submit</button>
         </form>
 
         <div className="charts-container">

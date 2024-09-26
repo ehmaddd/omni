@@ -41,7 +41,8 @@
 }
 
 .sugar-charts-container {
-  width: 100%;
+  width: 98%;
+  margin: auto;
 }
 
 .sugar-chart {
