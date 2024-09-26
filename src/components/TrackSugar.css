@@ -50,3 +50,18 @@
   border-radius: 10px;
   padding: 10px;
 }
+
+.sugar-btn-submit {
+  padding: 10px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  width: 100%;
+}
+
+.sugar-btn-submit:hover {
+  background-color: #0056b3;
+}

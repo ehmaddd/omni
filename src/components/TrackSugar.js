@@ -140,7 +140,7 @@ function TrackSugar() {
             <label>Sugar Level:</label>
             <input type="number" name="sugar_level" value={formData.sugar_level} step="0.1" onChange={handleInputChange} required />
           </div>
-          <button type="submit" className="btn-submit">Submit</button>
+          <button type="submit" className="sugar-btn-submit">Submit</button>
         </form>
 
         <div className="sugar-charts-container">
