@@ -119,23 +119,25 @@ function TrackBp() {
       <div className="track-bp-container">
 
       <form onSubmit={handleSubmit} className="bp-form">
-        <div className="form-group">
-          <label>Date:</label>
-          <input type="date" name="date" value={formData.date} onChange={handleInputChange} required />
+        <div className="form-elements">
+          <div className="bp-form-group">
+            <label>Date:</label>
+            <input type="date" name="date" value={formData.date} onChange={handleInputChange} required />
+          </div>
+          <div className="bp-form-group">
+            <label>Time:</label>
+            <input type="time" name="time" value={formData.time} onChange={handleInputChange} required />
+          </div>
+          <div className="bp-form-group">
+            <label>Systolic:</label>
+            <input type="number" name="systolic" value={formData.systolic} step="0.1" onChange={handleInputChange} required />
+          </div>
+          <div className="bp-form-group">
+            <label>Diastolic:</label>
+            <input type="number" name="diastolic" value={formData.diastolic} step="0.1" onChange={handleInputChange} required />
+          </div>
         </div>
-        <div className="form-group">
-          <label>Time:</label>
-          <input type="time" name="time" value={formData.time} onChange={handleInputChange} required />
-        </div>
-        <div className="form-group">
-          <label>Systolic:</label>
-          <input type="number" name="systolic" value={formData.systolic} step="0.1" onChange={handleInputChange} required />
-        </div>
-        <div className="form-group">
-          <label>Diastolic:</label>
-          <input type="number" name="diastolic" value={formData.diastolic} step="0.1" onChange={handleInputChange} required />
-        </div>
-        <button type="submit" className="btn-submit">Submit</button>
+        <button type="submit" className="bp-btn-submit">Submit</button>
       </form>
 
         <div className="bp-charts-container">
