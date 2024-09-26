@@ -52,3 +52,8 @@
 .weight-btn-submit:hover {
   background-color: #0056b3;
 }
+
+.weight-charts-container {
+  width: 98%;
+  margin-top: 1rem;
+}

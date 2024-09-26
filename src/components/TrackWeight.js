@@ -130,9 +130,9 @@ function TrackWeight() {
           <button type="submit" className="weight-btn-submit">Submit</button>
         </form>
 
-        <div className="charts-container">
+        <div className="weight-charts-container">
+          <h2>Weight Records</h2>
           <div className="chart">
-            <h2>Weight Records</h2>
             <Chart
               type="line"
               options={{
