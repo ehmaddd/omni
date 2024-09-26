@@ -142,43 +142,42 @@ function TrackWorkout() {
         <FitNav id={userId} />
       </div>
       <div className="track-workout-container">
-        <div className="track-bp-container">
-          <form onSubmit={handleSubmit} className="workout-form">
+        <form onSubmit={handleSubmit} className="workout-form">
+          <div className="workout-form-elements">
             {errorMessage && <p className="error-message">{errorMessage}</p>}
-              <div className="form-group">
-                <label className="track-workout-label">Activity:</label>
-                <select name="category" className="workout-category" value={formData.category} onChange={handleInputChange} required>
-                  <option value="">Select Category</option>
-                  <option value="Walking">Walking</option>
-                  <option value="Jogging">Jogging</option>
-                  <option value="Cycling">Cycling</option>
-                  <option value="Swimming">Swimming</option>
-                  <option value="Boating">Boating</option>
-                  <option value="Sports">Sports</option>
-                  <option value="Athletics">Athletics</option>
-                  <option value="Yoga">Yoga</option>
-                </select>
-              </div>
-              <div className="form-group">
-                <label className="track-workout-label">Duration (mins):</label>
-                <input type="number" name="duration" className="duration-input" value={formData.duration} step="1" onChange={handleInputChange} required />
-              </div>
-              <div className="form-group">
-                <label className="track-workout-label">Burned Calories:</label>
-                <input type="number" name="cburned" className="calories-input"  value={formData.cburned} step="1" onChange={handleInputChange} required />
-              </div>
-              <div className="form-group">
-                <label className="track-workout-label">Date:</label>
-                <input type="date" className="workout-date-input " name="date" value={formData.date} onChange={handleInputChange} required />
-              </div>
-              <div className="form-group">
-                <label className="track-workout-label">Time:</label>
-                <input type="time" className="workout-time-input" name="time" value={formData.time} onChange={handleInputChange} required />
-              </div>
-            <button type="submit" className="btn-submit">Submit</button>
-          </form>
-        </div>
-        <br></br>
+            <div className="workout-form-group">
+              <label className="track-workout-label">Activity:</label>
+              <select name="category" className="workout-category" value={formData.category} onChange={handleInputChange} required>
+                <option value="">Select Category</option>
+                <option value="Walking">Walking</option>
+                <option value="Jogging">Jogging</option>
+                <option value="Cycling">Cycling</option>
+                <option value="Swimming">Swimming</option>
+                <option value="Boating">Boating</option>
+                <option value="Sports">Sports</option>
+                <option value="Athletics">Athletics</option>
+                <option value="Yoga">Yoga</option>
+              </select>
+            </div>
+            <div className="workout-form-group">
+              <label className="track-workout-label">Duration (mins):</label>
+              <input type="number" name="duration" className="duration-input" value={formData.duration} step="1" onChange={handleInputChange} required />
+            </div>
+            <div className="workout-form-group">
+              <label className="track-workout-label">Burned Calories:</label>
+              <input type="number" name="cburned" className="calories-input"  value={formData.cburned} step="1" onChange={handleInputChange} required />
+            </div>
+            <div className="workout-form-group">
+              <label className="track-workout-label">Date:</label>
+              <input type="date" className="workout-date-input " name="date" value={formData.date} onChange={handleInputChange} required />
+            </div>
+            <div className="workout-form-group">
+              <label className="track-workout-label">Time:</label>
+              <input type="time" className="workout-time-input" name="time" value={formData.time} onChange={handleInputChange} required />
+            </div>
+          </div>
+          <button type="submit" className="workout-btn-submit">Submit</button>
+        </form>
         <div className="workout-charts-container">
           <h2>Workout Duration Over Time</h2>
           <div className="chart">
