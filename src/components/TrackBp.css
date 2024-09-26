@@ -13,7 +13,7 @@
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  gap: 4rem;
+  gap: 2rem;
   align-items: center;  /* Centers items vertically */
   justify-content: center;
 }
@@ -30,7 +30,7 @@
 }
 
 .bp-form input {
-  width: 100%;
+  width: 12rem;
   padding: 8px;
   box-sizing: border-box;
 }
