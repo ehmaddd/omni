@@ -13,7 +13,7 @@
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  gap: 3rem;
+  gap: 4rem;
   align-items: center;  /* Centers items vertically */
   justify-content: center;
 }
@@ -36,14 +36,14 @@
 }
 
 .bp-btn-submit {
-  margin-top: 20px;
+  margin-top: 10px;
   padding: 10px 20px;
   background-color: #007bff;
   color: white;
   border: none;
   cursor: pointer;
   align-self: center;
-  width: 95%;
+  width: 99%;
 }
 
 .btn-submit:hover {
