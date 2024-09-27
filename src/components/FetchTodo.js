@@ -48,7 +48,9 @@ const FetchTodo = () => {
       <h5 style={{backgroundColor: 'orange', color: 'white', borderRadius: '16px', display: 'inline', padding: '3px 15px'}}>High Priority</h5>
       <ul style={{marginTop: '0.5rem'}}>
         {highPriorityTasks.length > 0 ? highPriorityTasks.map((todo, index) => (
-          <li key={index}>{todo.task}</li>
+          <li key={index} style={{ textDecoration: todo.status === "complete" ? 'line-through' : 'none' }}>
+            {todo.task}
+          </li>
         )) : <li>No High Priority Tasks</li>}
       </ul>
       <hr style={{border: '1px solid orange', marginBottom: '1rem'}}></hr>
@@ -56,7 +58,9 @@ const FetchTodo = () => {
       <h5 style={{backgroundColor: 'olive', color: 'white', borderRadius: '16px', display: 'inline', padding: '3px 15px'}}>Medium Priority</h5>
       <ul style={{marginTop: '0.5rem'}}>
         {mediumPriorityTasks.length > 0 ? mediumPriorityTasks.map((todo, index) => (
-          <li key={index}>{todo.task}</li>
+          <li key={index} style={{ textDecoration: todo.status === "complete" ? 'line-through' : 'none' }}>
+            {todo.task}
+          </li>
         )) : <li>No Medium Priority Tasks</li>}
       </ul>
       <hr style={{border: '1px solid olive', marginBottom: '1rem'}}></hr>
@@ -64,7 +68,9 @@ const FetchTodo = () => {
       <h5 style={{backgroundColor: 'green', color: 'white', borderRadius: '16px', display: 'inline', padding: '3px 15px'}}>Low Priority</h5>
       <ul style={{marginTop: '0.5rem'}}>
         {lowPriorityTasks.length > 0 ? lowPriorityTasks.map((todo, index) => (
-          <li key={index}>{todo.task}</li>
+          <li key={index} style={{ textDecoration: todo.status === "complete" ? 'line-through' : 'none' }}>
+            {todo.task}
+          </li>
         )) : <li>No Low Priority Tasks</li>}
       </ul>
       <hr style={{border: '1px solid green', marginBottom: '1rem'}}></hr>
