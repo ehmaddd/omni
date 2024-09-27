@@ -124,6 +124,8 @@ function FitnessTracker() {
         const today = new Date();
         const sevenDaysAgo = new Date(today);
         sevenDaysAgo.setDate(today.getDate() - 7);
+
+        console.log(today, sevenDaysAgo);
   
         const lastWeekWorkouts = data.filter(workout => {
           const workoutDate = new Date(workout.date);
@@ -134,14 +136,22 @@ function FitnessTracker() {
         const totalDuration = lastWeekWorkouts.reduce((total, workout) => total + workout.duration, 0);
         const totalCalories = lastWeekWorkouts.reduce((total, workout) => total + workout.calories, 0);
   
+        console.log(totalDuration, totalCalories);
+
         // Calculate averages
         const averageDuration = lastWeekWorkouts.length ? (totalDuration / lastWeekWorkouts.length) : 0;
         const averageCalories = lastWeekWorkouts.length ? (totalCalories / lastWeekWorkouts.length) : 0;
         
+        console.log(averageDuration, averageCalories);
+
         // Set the last workout state
         const latestWorkout = lastWeekWorkouts[0];
         const date = getLocalDate(new Date(latestWorkout.date)); // Convert fetched date to JS Date object
-        
+
+        console.log(lastWorkout);
+        console.log(latestWorkout);
+        console.log(date);
+
         setLastWorkout({
           date,
           time: latestWorkout.time,
