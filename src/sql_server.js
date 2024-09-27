@@ -463,17 +463,17 @@ app.get('/fetch_creatinine/:id', async (req, res) => {
   try {
     // Query to fetch the creatinine record by ID
     const result = await pool.query(
-      'SELECT * FROM creatinine_records WHERE user_id = $1',
+      'SELECT * FROM creatinine_records WHERE user_id = ?',
       [id]
     );
     
-    if (result.rowCount === 0) {
+    if (result[0].count === 0) {
       return res.status(404).json({ message: 'Creatinine record not found' });
     }
     
     res.json({
       message: 'Creatinine record fetched successfully',
-      data: result.rows,
+      data: result[0],
     });
   } catch (err) {
     console.error('Error fetching creatinine record:', err);
@@ -493,7 +493,7 @@ app.post('/record_creatinine', async (req, res) => {
     // Query to insert a new creatinine record
     await pool.query(
       `INSERT INTO creatinine_records (user_id, date, time, creatinine_level)
-       VALUES ($1, $2, $3, $4)`,
+       VALUES (?, ?, ?, ?)`,
       [user_id, date, time, creatinine_level]
     );
     
