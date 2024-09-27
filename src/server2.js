@@ -324,7 +324,7 @@ app.post('/record_sugar', async (req, res) => {
   try {
     await pool.query(
       `INSERT INTO sugar_levels (user_id, date, time, type, sugar_level)
-       VALUES ($1, $2, $3, $4, $5)`,
+       VALUES (?, ?, ?, ?, ?)`,
       [user_id, date, time, type, sugar_level]
     );
     res.status(201).json({ message: 'Sugar level recorded successfully' });
@@ -343,12 +343,12 @@ app.get('/sugar_levels/:userId', async (req, res) => {
   }
 
   try {
-    let query = 'SELECT * FROM sugar_levels WHERE user_id = $1';
+    let query = 'SELECT * FROM sugar_levels WHERE user_id = ?';
     const queryParams = [userId];
     query += ' ORDER BY date DESC, time DESC';
 
     const result = await pool.query(query, queryParams);
-    res.json(result.rows);
+    res.json(result[0]);
   } catch (err) {
     console.error('Error fetching sugar levels:', err);
     res.status(500).json({ message: 'Error fetching sugar levels' });
