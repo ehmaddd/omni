@@ -124,30 +124,30 @@ app.get('/mood-logs', async (req, res) => {
   const { userId, startDate, endDate } = req.query;
 
   if (!userId) {
-      return res.status(400).json({ message: 'User ID is required' });
+    return res.status(400).json({ message: 'User ID is required' });
   }
 
   try {
-      let query = 'SELECT * FROM mood_logs WHERE user_id = ?  ORDER BY date DESC, time DESC';
-      const queryParams = [userId];
+    let query = 'SELECT * FROM mood_logs WHERE user_id = ? ORDER BY date DESC, time DESC';
+    let queryParams = [userId];
 
-      if (startDate && endDate) {
-          query = 'SELECT * FROM mood_logs WHERE user_id = ? AND date BETWEEN ? AND ?  ORDER BY date DESC, time DESC';
-          queryParams = [userId, startDate, endDate];
-      } else if (startDate) {
-          query += 'SELECT * FROM mood_logs WHERE user_id = ? AND date >= ?  ORDER BY date DESC, time DESC';
-          queryParams = [userId, startDate];
-      } else if (endDate) {
-          query += 'SELECT * FROM mood_logs WHERE user_id = ? AND date <= ?  ORDER BY date DESC, time DESC';
-          queryParams = [userId, endDate];
-      }
+    // Adjust the query based on the presence of startDate and endDate
+    if (startDate && endDate) {
+      query = 'SELECT * FROM mood_logs WHERE user_id = ? AND date BETWEEN ? AND ? ORDER BY date DESC, time DESC';
+      queryParams = [userId, startDate, endDate];
+    } else if (startDate) {
+      query = 'SELECT * FROM mood_logs WHERE user_id = ? AND date >= ? ORDER BY date DESC, time DESC';
+      queryParams = [userId, startDate];
+    } else if (endDate) {
+      query = 'SELECT * FROM mood_logs WHERE user_id = ? AND date <= ? ORDER BY date DESC, time DESC';
+      queryParams = [userId, endDate];
+    }
 
-      const result = await pool.query(query, queryParams);
-      const result2 = result[0];
-      res.json(result2);
+    const [result] = await pool.query(query, queryParams);
+    res.json(result);
   } catch (err) {
-      console.error('Error fetching mood logs:', err);
-      res.status(500).json({ message: 'Error fetching mood logs' });
+    console.error('Error fetching mood logs:', err);
+    res.status(500).json({ message: 'Error fetching mood logs' });
   }
 });
 
@@ -750,12 +750,12 @@ app.get('/fetch_events/:userId', async (req, res) => {
   try {
     const result = await pool.query(
       `SELECT * FROM events 
-       WHERE user_id = $1 
-         AND datetime BETWEEN $2 AND $3
+       WHERE user_id = ? 
+         AND datetime BETWEEN ? AND ?
        ORDER BY datetime ASC`,
       [userId, start_date, end_date]
     );
-    res.json(result.rows);
+    res.json(result[0]);
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: 'Error fetching events' });
@@ -764,36 +764,39 @@ app.get('/fetch_events/:userId', async (req, res) => {
 
 app.post('/store_event', async (req, res) => {
   const { id, name, type, date_time, recurrence, location, notes } = req.body;
-  if (!id || !name || !type || !date_time|| !recurrence || !location) {
-      return res.status(400).json({ error: 'Missing required fields or invalid data' });
+  
+  // Validate required fields
+  if (!id || !name || !type || !date_time || !recurrence || !location) {
+    return res.status(400).json({ error: 'Missing required fields or invalid data' });
   }
 
   try {
-      const client = await pool.connect();
-      try {
-          // Check if an event with the same date and category already exists
-          const result = await client.query(
-              `SELECT * FROM events WHERE user_id = $1 AND name = $2 AND datetime = $3`,
-              [id, name, date_time]
-          );
+    const client = await pool.getConnection(); // Use getConnection() to get a MySQL connection from the pool
+    try {
+      // Check if an event with the same name and date_time already exists
+      const [result] = await client.query(
+        `SELECT * FROM events WHERE user_id = ? AND name = ? AND datetime = ?`,
+        [id, name, date_time]
+      );
 
-          if (result.rows.length > 0) {
-              res.status(500).json({ message: 'Event already exist' });
-          } else {
-              // Insert new expense
-              await client.query(
-                  `INSERT INTO events (user_id, name, type, datetime, recurrence, location, notes)
-                   VALUES ($1, $2, $3, $4, $5, $6, $7)`,
-                  [id, name, type, date_time, recurrence, location, notes]
-              );
-              res.status(201).json({ message: 'Event added successfully' });
-          }
-      } finally {
-          client.release();
+      if (result.length > 0) {
+        // Event already exists
+        return res.status(409).json({ message: 'Event already exists' });
+      } else {
+        // Insert new event
+        await client.query(
+          `INSERT INTO events (user_id, name, type, datetime, recurrence, location, notes)
+           VALUES (?, ?, ?, ?, ?, ?, ?)`,
+          [id, name, type, date_time, recurrence, location, notes]
+        );
+        res.status(201).json({ message: 'Event added successfully' });
       }
+    } finally {
+      client.release(); // Always release the connection back to the pool
+    }
   } catch (error) {
-      console.error('Database error:', error);
-      res.status(500).json({ error: 'Database error' });
+    console.error('Database error:', error);
+    res.status(500).json({ error: 'Database error' });
   }
 });
 
@@ -803,12 +806,12 @@ app.get('/fetch_events/:userId', async (req, res) => {
   try {
     const result = await pool.query(
       `SELECT * FROM events 
-       WHERE user_id = $1 
-         AND datetime BETWEEN $2 AND $3
+       WHERE user_id = ? 
+         AND datetime BETWEEN ? AND ?
        ORDER BY datetime ASC`,
       [userId, start_date, end_date]
     );
-    res.json(result.rows);
+    res.json(result[0]);
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: 'Error fetching events' });
