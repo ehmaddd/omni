@@ -228,7 +228,7 @@ app.post('/create_profile', async (req, res) => {
     // Example logic: update the profile if it exists or create a new one
     const result = await pool.query(
       `INSERT INTO health_profile (user_id, dob, gender, height, weight, blood_group, eye_sight_left, eye_sight_right, disability, heart_problem, diabetes, kidney_issue)
-       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)`,
+       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
       [user_id, dob, gender, height, weight, blood_group, eye_sight_left, eye_sight_right, disability, heart_problem, diabetes, kidney_issue]
   );
   return result;
@@ -271,18 +271,18 @@ app.get('/health_profile/:id', async (req, res) => {
 
   try {
     const result = await pool.query(
-      'SELECT * FROM health_profile WHERE user_id = $1',
+      'SELECT * FROM health_profile WHERE user_id = ?',
       [id]
     );
     
-    if (result.rowCount === 0) {
+    if (result[0].length === 0) {
       return res.status(404).json({ message: 'Health log not found' });
     }
     
     // Sending the fetched data back to the frontend
     res.json({
       message: 'Health log fetched successfully',
-      data: result.rows, // Including the fetched data in the response
+      data: result[0], // Including the fetched data in the response
     });
   } catch (err) {
     console.error(err);
