@@ -122,7 +122,6 @@ app.post('/log-mood', async (req, res) => {
 // Fetch a specific mood log by its ID
 app.get('/mood-logs', async (req, res) => {
   const { userId, startDate, endDate } = req.query;
-  console.log(startDate, endDate);
 
   if (!userId) {
       return res.status(400).json({ message: 'User ID is required' });
@@ -194,7 +193,8 @@ app.get('/fetch_mood_data', async (req, res) => {
       const queryParams = [userId, startDate, endDate];
 
       const result = await pool.query(query, queryParams);
-      res.json(result.rows);
+      const result2 = result[0];
+      res.json(result2);
   } catch (err) {
       console.error('Error fetching mood logs:', err);
       res.status(500).json({ message: 'Error fetching mood logs' });
