@@ -393,11 +393,11 @@ app.get('/weight/:userId', async (req, res) => {
 
   try {
     const result = await pool.query(
-      'SELECT date, time, weight FROM weights WHERE user_id = $1 ORDER BY date, time',
+      'SELECT date, time, weight FROM weights WHERE user_id = ? ORDER BY date, time',
       [userId]
     );
 
-    res.json(result.rows);
+    res.json(result[0]);
   } catch (err) {
     console.error('Error fetching weight data:', err);
     res.status(500).send('Server error');
@@ -411,12 +411,12 @@ app.post('/record_weight', async (req, res) => {
     await pool.query('BEGIN');
 
     await pool.query(
-      'INSERT INTO weights (user_id, date, time, weight) VALUES ($1, $2, $3, $4)',
+      'INSERT INTO weights (user_id, date, time, weight) VALUES (?, ?, ?, ?)',
       [user_id, date, time, weight]
     );
     await pool.query(
-      'UPDATE health_profile SET weight=$2 WHERE user_id=$1',
-      [user_id, weight]
+      'UPDATE health_profile SET weight=? WHERE user_id=?',
+      [weight, user_id]
     );
 
     await pool.query('COMMIT');
