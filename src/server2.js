@@ -432,8 +432,8 @@ app.post('/record_weight', async (req, res) => {
 app.get('/fetch_fevers/:userId', async (req, res) => {
   const { userId } = req.params;
   try {
-      const result = await pool.query('SELECT * FROM fever_records WHERE user_id = $1', [userId]);
-      res.json(result.rows);
+      const result = await pool.query('SELECT * FROM fever_records WHERE user_id = ?', [userId]);
+      res.json(result[0]);
   } catch (err) {
       console.error(err.message);
       res.status(500).send('Server Error');
@@ -446,11 +446,11 @@ app.post('/record_fever', async (req, res) => {
 
       // SQL query to insert data into the fever_records table
       const result = await pool.query(
-          'INSERT INTO fever_records (user_id, date, time, temperature) VALUES ($1, $2, $3, $4) RETURNING *',
+          'INSERT INTO fever_records (user_id, date, time, temperature) VALUES (?, ?, ?, ?)',
           [user_id, date, time, temperature]
       );
 
-      res.json(result.rows[0]);
+      res.json(result[0]);
   } catch (err) {
       console.error(err.message);
       res.status(500).send('Server Error');
