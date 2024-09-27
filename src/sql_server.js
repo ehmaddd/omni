@@ -560,10 +560,10 @@ app.get('/fetch_todos/:userId', async (req, res) => {
 
   try {
     const result = await pool.query(
-      'SELECT * FROM todos WHERE user_id = $1 AND date = $2 ORDER BY date DESC',
+      'SELECT * FROM todos WHERE user_id = ? AND date = ? ORDER BY date DESC',
       [userId, date]
     );
-    res.json(result.rows);
+    res.json(result[0]);
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: 'Error fetching workout logs' });
@@ -575,10 +575,10 @@ app.post('/complete_task/:taskId', async (req, res) => {
   const status = 'complete';
   try {
     const result = await pool.query(
-      'UPDATE todos SET status=$1 WHERE id=$2',
+      'UPDATE todos SET status=? WHERE id=?',
       [status, taskId]
     );
-    res.json(result.rows);
+    res.json(result[0]);
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: 'Error updating' });
@@ -589,10 +589,10 @@ app.delete('/delete_task/:taskId', async (req, res) => {
   const { taskId } = req.params;
   try {
     const result = await pool.query(
-      'DELETE FROM todos WHERE id=$1',
+      'DELETE FROM todos WHERE id=?',
       [taskId]
     );
-    res.json(result.rows);
+    res.json(result[0]);
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: 'Error deleting' });
@@ -603,10 +603,10 @@ app.post('/store_task/', async (req, res) => {
   const { user_id, date, priority, task } = req.body;
   try {
     const result = await pool.query(
-      'INSERT INTO todos (user_id, task, priority, date) VALUES($1, $2, $3, $4)',
+      'INSERT INTO todos (user_id, task, priority, date) VALUES(?, ?, ?, ?)',
       [user_id, task, priority, date]
     )
-    res.json(result.rows);
+    res.json(result[0]);
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: 'Error storing' });
@@ -618,10 +618,10 @@ app.post('/shift_task/', async (req, res) => {
   const { id, date } = req.body;
   try {
     const result = await pool.query(
-      'UPDATE todos SET date=$2 WHERE id=$1',
-      [id, date]
+      'UPDATE todos SET date=? WHERE id=?',
+      [date, id]
     )
-    res.json(result.rows);
+    res.json(result[0]);
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: 'Error storing' });
