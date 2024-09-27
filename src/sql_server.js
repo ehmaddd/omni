@@ -635,34 +635,34 @@ app.post('/store_income', async (req, res) => {
   }
 
   try {
-      const client = await pool.connect();
+      const client = await pool.getConnection(); // Use getConnection to get a connection from the pool
       try {
-          // Check if an expense with the same date and category already exists
-          const result = await client.query(
-              `SELECT * FROM income_record WHERE user_id = $1 AND year = $2 AND month = $3`,
+          // Check if an income record with the same user, year, and month already exists
+          const [result] = await client.query(
+              `SELECT * FROM income_record WHERE user_id = ? AND year = ? AND month = ?`,
               [userId, year, month]
           );
 
-          if (result.rows.length > 0) {
-              // Update existing expense
+          if (result.length > 0) {
+              // Update existing income record
               await client.query(
                   `UPDATE income_record
-                   SET amount = amount + $1
-                   WHERE user_id = $2 AND year = $3 AND month = $4`,
+                   SET amount = amount + ?
+                   WHERE user_id = ? AND year = ? AND month = ?`,
                   [amount, userId, year, month]
               );
           } else {
-              // Insert new expense
+              // Insert new income record
               await client.query(
                   `INSERT INTO income_record (user_id, year, month, amount)
-                   VALUES ($1, $2, $3, $4)`,
+                   VALUES (?, ?, ?, ?)`,
                   [userId, year, month, amount]
               );
           }
 
           res.status(201).json({ message: 'Income added/updated successfully' });
       } finally {
-          client.release();
+          client.release(); // Release the connection back to the pool
       }
   } catch (error) {
       console.error('Database error:', error);
@@ -674,13 +674,13 @@ app.get('/expenses/:userId/:year/:month', async (req, res) => {
   const { userId, year, month } = req.params;
   try {
     const result = await pool.query(
-      `SELECT date + INTERVAL '1 day' AS date, category, amount, description
+      `SELECT DATE_ADD(date, INTERVAL 1 DAY) AS date, category, amount, description
        FROM daily_expenses
-       WHERE user_id = $1 AND EXTRACT(YEAR FROM date) = $2 AND EXTRACT(MONTH FROM date) = $3
+       WHERE user_id = ? AND YEAR(date) = ? AND MONTH(date) = ?
        ORDER BY date ASC`,
       [userId, year, month]
     );
-    res.json(result.rows);
+    res.json(result[0]);
   } catch (error) {
     console.error(error);
     res.status(500).send('Server Error');
@@ -694,34 +694,34 @@ app.post('/store_expenses', async (req, res) => {
   }
 
   try {
-      const client = await pool.connect();
+      const client = await pool.getConnection(); // Get a connection from the pool
       try {
           // Check if an expense with the same date and category already exists
-          const result = await client.query(
-              `SELECT * FROM daily_expenses WHERE user_id = $1 AND date = $2 AND category = $3`,
+          const [result] = await client.query(
+              `SELECT * FROM daily_expenses WHERE user_id = ? AND date = ? AND category = ?`,
               [user_id, date, category]
           );
 
-          if (result.rows.length > 0) {
+          if (result.length > 0) {
               // Update existing expense
               await client.query(
                   `UPDATE daily_expenses
-                   SET amount = amount + $1, description = COALESCE($2, description)
-                   WHERE user_id = $3 AND date = $4 AND category = $5`,
+                   SET amount = amount + ?, description = COALESCE(?, description)
+                   WHERE user_id = ? AND date = ? AND category = ?`,
                   [amount, description, user_id, date, category]
               );
           } else {
               // Insert new expense
               await client.query(
                   `INSERT INTO daily_expenses (user_id, date, category, amount, description)
-                   VALUES ($1, $2, $3, $4, $5)`,
+                   VALUES (?, ?, ?, ?, ?)`,
                   [user_id, date, category, amount, description]
               );
           }
 
           res.status(201).json({ message: 'Expense added/updated successfully' });
       } finally {
-          client.release();
+          client.release(); // Release the connection back to the pool
       }
   } catch (error) {
       console.error('Database error:', error);
@@ -734,10 +734,10 @@ app.get('/fetch_income/:userId/:year/:month', async (req, res) => {
   try {
     const result = await pool.query(
       `SELECT amount FROM income_record 
-       WHERE user_id = $1 AND year=$2 AND month=$3`,
+       WHERE user_id = ? AND year=? AND month=?`,
       [userId, year, month]
     );
-    res.json(result.rows);
+    res.json(result[0]);
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: 'Error fetching income' });
