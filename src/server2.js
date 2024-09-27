@@ -359,8 +359,8 @@ app.get('/bp_levels/:userId', async (req, res) => {
   const { userId } = req.params;
 
   try {
-    const result = await pool.query('SELECT * FROM bp_levels WHERE user_id = $1', [userId]);
-    res.json(result.rows);
+    const result = await pool.query('SELECT * FROM bp_levels WHERE user_id = ?', [userId]);
+    res.json(result[0]);
   } catch (error) {
     console.error('Error fetching blood pressure data:', error);
     res.status(500).json({ error: 'Internal server error' });
@@ -377,10 +377,10 @@ app.post('/record_bp', async (req, res) => {
 
   try {
     const result = await pool.query(
-      'INSERT INTO bp_levels (user_id, date, time, systolic, diastolic) VALUES ($1, $2, $3, $4, $5) RETURNING *',
+      'INSERT INTO bp_levels (user_id, date, time, systolic, diastolic) VALUES (?, ?, ?, ?, ?)',
       [user_id, date, time, systolic, diastolic]
     );
-    res.status(201).json({ message: 'Blood pressure entry recorded successfully', data: result.rows[0] });
+    res.status(201).json({ message: 'Blood pressure entry recorded successfully', data: result[0] });
   } catch (error) {
     console.error('Error recording blood pressure data:', error);
     res.status(500).json({ error: 'Internal server error' });
