@@ -295,18 +295,18 @@ app.get('/fetch_specific_health/:userId', async (req, res) => {
 
   try {
     const result = await pool.query(
-      'SELECT gender, height, weight FROM health_profile WHERE user_id = $1',
+      'SELECT gender, height, weight FROM health_profile WHERE user_id = ?',
       [userId]
     );
     
-    if (result.rowCount === 0) {
+    if (result[0].length === 0) {
       return res.status(404).json({ message: 'Health log not found' });
     }
     
     // Sending the fetched data back to the frontend
     res.json({
       message: 'Health log fetched successfully',
-      data: result.rows, // Including the fetched data in the response
+      data: result[0], // Including the fetched data in the response
     });
   } catch (err) {
     console.error(err);
@@ -518,18 +518,18 @@ app.post('/store_workout', async (req, res) => {
   try {
     // Check if a workout record with the same user_id, date, and time already exists
     const existingRecord = await pool.query(
-      'SELECT * FROM workouts WHERE user_id = $1 AND date = $2 AND time = $3',
+      'SELECT * FROM workouts WHERE user_id = ? AND date = ? AND time = ?',
       [user_id, date, time]
     );
 
-    if (existingRecord.rowCount > 0) {
+    if (existingRecord[0].length > 0) {
       // If a record already exists, respond with a message
       return res.status(409).json({ message: 'Workout record already exists for this date and time' });
     }
 
     // Insert the new workout record into the database
     await pool.query(
-      'INSERT INTO workouts (user_id, date, time, duration, type, calories) VALUES ($1, $2, $3, $4, $5, $6)',
+      'INSERT INTO workouts (user_id, date, time, duration, type, calories) VALUES (?, ?, ?, ?, ?, ?)',
       [user_id, date, time, duration, category, cburned]
     );
     res.status(201).json({ message: 'Workout recorded successfully' });
@@ -544,10 +544,10 @@ app.get('/fetch_workout/:userId', async (req, res) => {
   const { userId } = req.params;
   try {
     const result = await pool.query(
-      'SELECT type, date::timestamptz AT TIME ZONE \'UTC\' AT TIME ZONE \'UTC+5\' as date, time, duration, calories FROM workouts WHERE user_id = $1 ORDER BY date DESC',
+      "SELECT type, CONVERT_TZ(date, 'UTC', 'UTC+5') AS date, time, duration, calories FROM workouts WHERE user_id = ? ORDER BY date DESC",
       [userId]
     );
-    res.json(result.rows);
+    res.json(result[0]);
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: 'Error fetching workout logs' });
