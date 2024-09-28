@@ -106,16 +106,22 @@ app.post('/log-mood', async (req, res) => {
       return res.status(400).json({ message: 'Missing required fields' });
   }
 
-  try {
+  const [result] = await pool.query('SELECT * from mood_logs WHERE user_id=? AND valence=? AND arousal=? and date=? AND time=?', [userId, valence, arousal, date, time])
+  if(result.length > 0){
+    res.status(500).json({ message: 'Record already present' });
+  }
+  else {
+    try {
       await pool.query(
           `INSERT INTO mood_logs (user_id, valence, arousal, duration, date, time, triggers)
            VALUES (?, ?, ?, ?, ?, ?, ?)`,
           [userId, valence, arousal, duration, date, time, trigger]
       );
       res.status(201).json({ message: 'Mood log added successfully' });
-  } catch (err) {
+    } catch (err) {
       console.error(err);
       res.status(500).json({ message: 'Error saving mood log' });
+    }
   }
 });
 
