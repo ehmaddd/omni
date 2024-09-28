@@ -200,11 +200,11 @@ const Prayer = () => {
                     </thead>
                     <tbody>
                       <tr>
-                        <td>{prayerTimes.fajr}</td>
-                        <td>{prayerTimes.dhuhr}</td>
-                        <td>{prayerTimes.asr}</td>
-                        <td>{prayerTimes.maghrib}</td>
-                        <td>{prayerTimes.isha}</td>
+                        <td>{prayerTimes.fajr.slice(0, -6)}</td>
+                        <td>{prayerTimes.dhuhr.slice(0, -6)}</td>
+                        <td>{prayerTimes.asr.slice(0, -6)}</td>
+                        <td>{prayerTimes.maghrib.slice(0, -6)}</td>
+                        <td>{prayerTimes.isha.slice(0, -6)}</td>
                       </tr>
                     </tbody>
                   </table>
@@ -239,11 +239,11 @@ const Prayer = () => {
                     <td>{entry.date}</td>
                     <td>{entry.city}, {entry.country}</td>
                     <td>{entry.lat}<br></br>{entry.lon}</td>
-                    <td>{entry.fajr}</td>
-                    <td>{entry.dhuhr}</td>
-                    <td>{entry.asr}</td>
-                    <td>{entry.maghrib}</td>
-                    <td>{entry.isha}</td>
+                    <td>{entry.fajr.slice(0, -6)}</td>
+                    <td>{entry.dhuhr.slice(0, -6)}</td>
+                    <td>{entry.asr.slice(0, -6)}</td>
+                    <td>{entry.maghrib.slice(0, -6)}</td>
+                    <td>{entry.isha.slice(0, -6)}</td>
                   </tr>
                 ))}
               </tbody>
