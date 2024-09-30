@@ -51,7 +51,7 @@ const FetchTodo = () => {
           <li key={index} style={{ textDecoration: todo.status === "complete" ? 'line-through' : 'none' }}>
             {todo.task}
           </li>
-        )) : <li>No High Priority Tasks</li>}
+        )) : <li style={{listStyleType: 'none'}}>- N/A -</li>}
       </ul>
       <hr style={{border: '1px solid orange', marginBottom: '1rem'}}></hr>
 
@@ -61,7 +61,7 @@ const FetchTodo = () => {
           <li key={index} style={{ textDecoration: todo.status === "complete" ? 'line-through' : 'none' }}>
             {todo.task}
           </li>
-        )) : <li>No Medium Priority Tasks</li>}
+        )) : <li style={{listStyleType: 'none'}}>- N/A -</li>}
       </ul>
       <hr style={{border: '1px solid olive', marginBottom: '1rem'}}></hr>
 
@@ -71,7 +71,7 @@ const FetchTodo = () => {
           <li key={index} style={{ textDecoration: todo.status === "complete" ? 'line-through' : 'none' }}>
             {todo.task}
           </li>
-        )) : <li>No Low Priority Tasks</li>}
+        )) : <li style={{listStyleType: 'none'}}>- N/A -</li>}
       </ul>
       <hr style={{border: '1px solid green', marginBottom: '1rem'}}></hr>
     </div>
