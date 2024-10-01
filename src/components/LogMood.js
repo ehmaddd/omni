@@ -125,9 +125,9 @@ function LogMood() {
             <tbody>
               <tr>
                 <td className="mood-form-group">
-                  <label>Valence Level
+                  <label>Valence
                     <br />
-                    <span style={{ color: 'grey' }}>(Positivity/Negativity)</span>
+                    <span style={{ color: 'grey', fontSize: '0.75rem'}}>(Positivity/Negativity)</span>
                   </label>
                   <input
                     type="range"
@@ -143,9 +143,9 @@ function LogMood() {
               </tr>
               <tr>
                 <td className="mood-form-group">
-                  <label>Arousal Level
+                  <label>Arousal
                     <br />
-                    <span style={{ color: 'grey' }}>(Intensity)</span>
+                    <span style={{ color: 'grey', fontSize: '0.75rem'}}>(Intensity)</span>
                   </label>
                   <input
                     type="range"
@@ -161,7 +161,10 @@ function LogMood() {
               </tr>
               <tr>
                 <td className="mood-form-group">
-                  <label>Estimated Duration (minutes):</label>
+                  <label>Duration
+                  <br />
+                  <span style={{ color: 'grey', fontSize: '0.75rem'}}>(minutes)</span>
+                  </label>
                   <input
                     type="number"
                     value={duration}
@@ -198,7 +201,7 @@ function LogMood() {
               </tr>
               <tr>
                 <td className="mood-form-group">
-                  <label>Contextual Trigger:</label>
+                  <label>Trigger:</label>
                   <select
                     value={trigger}
                     onChange={(e) => handleChange(e, 'trigger')}

@@ -1,6 +1,6 @@
 .mood-logger-container {
   padding: 2rem;
-  max-width: 800px; /* Restrict the width for better readability */
+  max-width: 60%; /* Restrict the width for better readability */
   margin: 0 auto; /* Center the container */
 }
 
@@ -16,7 +16,9 @@
 
 .mood-form-group {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  text-align: left;
+  gap: 1rem;
   align-items: flex-start; /* Align labels and inputs to the left */
   padding: 1rem;
   border-radius: 0.5rem;
@@ -28,6 +30,7 @@
 .mood-form-group label {
   font-size: 1.1rem;
   margin-bottom: 0.5rem; /* Add spacing between label and input */
+  width: 7rem;
 }
 
 .slider {
