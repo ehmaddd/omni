@@ -113,7 +113,7 @@ function TrackFever() {
       </div>
       <div className="track-fever-container">
         <form onSubmit={handleSubmit} className="fever-form">
-          <div className="form-row">
+          <div className="form-elements">
             <div className="form-group">
               <label>Date:</label>
               <input type="date" name="date" value={formData.date} onChange={handleInputChange} required />
@@ -123,58 +123,58 @@ function TrackFever() {
               <input type="time" name="time" value={formData.time} onChange={handleInputChange} required />
             </div>
             <div className="form-group">
-              <label>Temperature (°F):</label>
+              <label>Temp (°F):</label>
               <input type="number" name="temperature" value={formData.temperature} step="0.1" onChange={handleInputChange} required />
             </div>
           </div>
           <button type="submit" className="btn-submit">Submit</button>
         </form>
+      </div>
 
-        <div className="charts-container">
-          <h2>Fever Records</h2>
-          <div className="chart">
-            <Chart
-              type="line"
-              options={{
-                chart: {
-                  id: 'fever-chart',
-                },
-                xaxis: {
-                  categories: chartData.map(entry => format(new Date(entry.date), 'dd/MM')),
-                  title: {
-                    text: 'Date',
-                  },
-                  labels: {
-                    rotate: -45,
-                  },
-                },
-                yaxis: {
-                  title: {
-                    text: 'Temperature (°F)',
-                  },
-                },
+      <div className="charts-container">
+        <h2>Fever Records</h2>
+        <div className="chart">
+          <Chart
+            type="line"
+            options={{
+              chart: {
+                id: 'fever-chart',
+              },
+              xaxis: {
+                categories: chartData.map(entry => format(new Date(entry.date), 'dd/MM')),
                 title: {
-                  text: 'Fever Records',
-                  align: 'center',
+                  text: 'Date',
                 },
-                stroke: {
-                  curve: 'smooth',
-                  width: 2,
+                labels: {
+                  rotate: -45,
                 },
-                markers: {
-                  size: 4,
+              },
+              yaxis: {
+                title: {
+                  text: 'Temperature (°F)',
                 },
-              }}
-              series={[
-                {
-                  name: 'Temperature',
-                  data: chartData.map(entry => entry.temperature),
-                },
-              ]}
-              width="100%"
-              height="400px"
-            />
-          </div>
+              },
+              title: {
+                text: 'Fever Records',
+                align: 'center',
+              },
+              stroke: {
+                curve: 'smooth',
+                width: 2,
+              },
+              markers: {
+                size: 4,
+              },
+            }}
+            series={[
+              {
+                name: 'Temperature',
+                data: chartData.map(entry => entry.temperature),
+              },
+            ]}
+            width="100%"
+            height="400px"
+          />
         </div>
       </div>
     </div>

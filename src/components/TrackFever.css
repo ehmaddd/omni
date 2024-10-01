@@ -1,32 +1,40 @@
 .track-fever-container {
-  padding: 20px;
   width: 100%;
   margin: auto;
 }
 
 .fever-form {
   display: flex;
+  background-color: gainsboro;
   flex-direction: column;
-  gap: 15px;
-  margin-bottom: 30px;
+  gap: 5px;
+  width: 100%;
+  padding: 0 0 1rem 0;
+  margin: 1px solid gainsboro;
+  border-radius: 16px;
+}
+
+.form-elements {
+  width: 90%;
+  padding: 1rem;
+  margin: 0 auto;
 }
 
 .fever-form .form-group {
   display: flex;
-  align-items: center;
-  margin-right: 15px;
-}
-
-.fever-form .form-group label {
-  margin-right: 10px;
-  white-space: nowrap;
+  align-items: left;
+  margin-right: 25px;
+  margin-bottom: 0;
 }
 
 .fever-form .form-group input {
   padding: 10px;
   border: 1px solid #ccc;
   border-radius: 5px;
-  flex: 1;
+}
+
+.fever-form .form-group label {
+  margin-right: -2.5rem;
 }
 
 .form-row {
@@ -43,7 +51,9 @@
   border-radius: 5px;
   cursor: pointer;
   transition: background-color 0.3s;
-  width: 100%;
+  width: 97%;
+  margin-top: -0.75rem !important;
+  margin: auto;
 }
 
 .btn-submit:hover {
