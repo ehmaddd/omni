@@ -131,8 +131,8 @@ function TrackFever() {
         </form>
 
         <div className="charts-container">
+          <h2>Fever Records</h2>
           <div className="chart">
-            <h2>Fever Records</h2>
             <Chart
               type="line"
               options={{
