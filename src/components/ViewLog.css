@@ -63,8 +63,12 @@ p {
   font-weight: bold;
 }
 
-.mood-logs-table tr {
-  height: 2.5rem; /* Reduce row height */
+.mood-logs-table tr:nth-child(odd){
+  background-color: palegreen;
+}
+
+.mood-logs-table tbody tr td {
+  height: 0.5rem !important;
 }
 
 .delete-button {
@@ -74,6 +78,7 @@ p {
   padding: 0.3rem 0.5rem; /* Smaller padding for the button */
   border-radius: 4px;
   cursor: pointer;
+  margin: 0 !important;
 }
 
 .delete-button:hover {
