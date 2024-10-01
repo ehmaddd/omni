@@ -63,11 +63,13 @@
   background-color: #0056b3;
 }
 
-.charts-container {
-  margin-top: 20px;
+.fever-charts-container {
+  width: 97%;
+  margin: 1rem auto auto auto;
 }
 
 .chart {
+  width: 100%;
   background: #f9f9f9;
   padding: 20px;
   border-radius: 10px;

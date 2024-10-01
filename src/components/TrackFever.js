@@ -131,7 +131,7 @@ function TrackFever() {
         </form>
       </div>
 
-      <div className="charts-container">
+      <div className="fever-charts-container">
         <h2>Fever Records</h2>
         <div className="chart">
           <Chart
