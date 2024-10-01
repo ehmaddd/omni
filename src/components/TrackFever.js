@@ -112,23 +112,23 @@ function TrackFever() {
         <FitNav id={userId} />
       </div>
       <div className="track-fever-container">
-      <form onSubmit={handleSubmit} className="fever-form">
-        <div className="form-row">
-          <div className="form-group">
-            <label>Date:</label>
-            <input type="date" name="date" value={formData.date} onChange={handleInputChange} required />
+        <form onSubmit={handleSubmit} className="fever-form">
+          <div className="form-row">
+            <div className="form-group">
+              <label>Date:</label>
+              <input type="date" name="date" value={formData.date} onChange={handleInputChange} required />
+            </div>
+            <div className="form-group">
+              <label>Time:</label>
+              <input type="time" name="time" value={formData.time} onChange={handleInputChange} required />
+            </div>
+            <div className="form-group">
+              <label>Temperature (°F):</label>
+              <input type="number" name="temperature" value={formData.temperature} step="0.1" onChange={handleInputChange} required />
+            </div>
           </div>
-          <div className="form-group">
-            <label>Time:</label>
-            <input type="time" name="time" value={formData.time} onChange={handleInputChange} required />
-          </div>
-          <div className="form-group">
-            <label>Temperature (°F):</label>
-            <input type="number" name="temperature" value={formData.temperature} step="0.1" onChange={handleInputChange} required />
-          </div>
-        </div>
-        <button type="submit" className="btn-submit">Submit</button>
-      </form>
+          <button type="submit" className="btn-submit">Submit</button>
+        </form>
 
         <div className="charts-container">
           <div className="chart">
