@@ -14,7 +14,10 @@
   border-radius: 16px;
 }
 
-.form-elements {
+.fever-form .form-elements {
+  display: flex;
+  flex-direction: row;
+  gap: 2rem;
   width: 90%;
   padding: 1rem;
   margin: 0 auto;
