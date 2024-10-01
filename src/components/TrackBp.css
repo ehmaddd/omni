@@ -3,13 +3,13 @@
   flex-direction: column;
   border: 1px solid gainsboro;
   border-radius: 16px;
-  padding: 1rem;
+  padding: 0.5rem;
   background-color: gainsboro;
   width: 100%;
   justify-content: space-between;
 }
 
-.form-elements {
+.bp-form .form-elements {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
@@ -17,6 +17,7 @@
   align-items: center;  /* Centers items vertically */
   justify-content: center;
   width: 100% !important;
+  padding: 0;
 }
 
 .bp-form-group {
