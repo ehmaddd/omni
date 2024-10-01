@@ -92,6 +92,7 @@ hr {
   align-items: center;
   gap: 10px; /* Adds spacing between the elements */
   margin: 20px 0; /* Adds vertical spacing above and below the filter container */
+  padding: 0.25rem 1rem;
 }
 
 .log-filter-container label {
