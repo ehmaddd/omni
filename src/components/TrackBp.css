@@ -13,9 +13,10 @@
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  gap: 2rem;
+  gap: 3.5rem;
   align-items: center;  /* Centers items vertically */
   justify-content: center;
+  width: 100% !important;
 }
 
 .bp-form-group {
@@ -26,7 +27,7 @@
 .bp-form-group label {
   margin-top: 1rem;
   display: block;
-  margin-right: 2rem;
+  margin-right: 0.5rem;
 }
 
 .bp-form input {
